@@ -23,7 +23,7 @@ public class Group extends AbstractAuditingEntity implements Serializable {
 
     private String admin;
 
-    private String[] members;
+    private List<String> members;
 
     private String name;
 
