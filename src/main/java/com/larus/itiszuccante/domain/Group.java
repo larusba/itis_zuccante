@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.larus.itiszuccante.config.Constants;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -14,34 +12,82 @@ import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_group")
+@Document(collection = "group")
 public class Group extends AbstractAuditingEntity implements Serializable {
 
     @Id
     private String id;
 
-    @Size(min = 1, max = 100)
-    @NotNull
+    private String admin;
+
+    private String[] members;
+
     private String name;
 
-    @Size(min = 1, max = 500)
-    @NotNull
     private String description;
 
-    @Field("created_by")
-    @NotNull
-    private String creatorID;
+    private List<Location> location;
 
-    @Field("admin")
-    @NotNull
-    private String adminID;
+    public String getId() {
+        return id;
+    }
 
-    private boolean closed = false;
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    private boolean terminated = false;
+    public String getAdmin() {
+        return admin;
+    }
 
-    private boolean secret = false;
-    // TODO: moderators, coordinates, createdAt
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
+    public String[] getMembers() {
+        return members;
+    }
+
+    public void setMembers(String[] members) {
+        this.members = members;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Location> getLocation() {
+        return location;
+    }
+
+    public void setLocation(List<Location> location) {
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+            "id='" + id + '\'' +
+            ", admin='" + admin + '\'' +
+            ", members=" + Arrays.toString(members) +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", location=" + location +
+            '}';
+    }
 }

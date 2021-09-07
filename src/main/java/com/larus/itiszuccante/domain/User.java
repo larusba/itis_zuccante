@@ -5,6 +5,7 @@ import com.larus.itiszuccante.config.Constants;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javax.validation.constraints.Email;
@@ -76,6 +77,20 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
+
+    @NotNull
+    private boolean blocked;
+
+    @NotNull
+    private int points;
+
+    private Profile profile;
+
+    private List<Group> groups;
+
+    private List<Post> posts;
+
+    private List<Integer> badges;
 
     public String getId() {
         return id;
@@ -182,6 +197,54 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Integer> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Integer> badges) {
+        this.badges = badges;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -200,17 +263,29 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     // prettier-ignore
+
     @Override
     public String toString() {
         return "User{" +
-            "login='" + login + '\'' +
+            "id='" + id + '\'' +
+            ", login='" + login + '\'' +
+            ", password='" + password + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated='" + activated + '\'' +
+            ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
+            ", imageUrl='" + imageUrl + '\'' +
             ", activationKey='" + activationKey + '\'' +
-            "}";
+            ", resetKey='" + resetKey + '\'' +
+            ", resetDate=" + resetDate +
+            ", authorities=" + authorities +
+            ", blocked=" + blocked +
+            ", points=" + points +
+            ", profile=" + profile +
+            ", groups=" + groups +
+            ", posts=" + posts +
+            ", badges=" + badges +
+            '}';
     }
 }
