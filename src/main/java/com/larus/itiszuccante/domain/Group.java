@@ -24,6 +24,8 @@ public class Group extends AbstractAuditingEntity implements Serializable {
 
     @Size(min = 1, max = 100)
     @NotNull
+    private String admin;
+
     private String name;
 
     @Size(min = 1, max = 500)
