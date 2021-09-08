@@ -21,14 +21,15 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_group")
 public class Group extends AbstractAuditingEntity implements Serializable {
-    
-    @MongoId
+
+    @Id
     private String id;
 
-    @Size(min = 1, max = 100)
     @NotNull
     private String admin;
 
+    @NotNull
+    @Size(min = 1, max = 100)
     private String name;
 
     @Size(min = 1, max = 500)
@@ -38,10 +39,6 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     @Field("group_created_by")
     @NotNull
     private String creatorID;
-
-    @Field("admin_id")
-    @NotNull
-    private String adminID;
 
     private boolean closed = false;
 
@@ -95,14 +92,6 @@ public class Group extends AbstractAuditingEntity implements Serializable {
 
     public void setCreatorID(String creatorID) {
         this.creatorID = creatorID;
-    }
-
-    public String getAdminID() {
-        return adminID;
-    }
-
-    public void setAdminID(String adminID) {
-        this.adminID = adminID;
     }
 
     public boolean isClosed() {
@@ -178,9 +167,6 @@ public class Group extends AbstractAuditingEntity implements Serializable {
             '\'' +
             ", creatorID='" +
             creatorID +
-            '\'' +
-            ", adminID='" +
-            adminID +
             '\'' +
             ", closed=" +
             closed +

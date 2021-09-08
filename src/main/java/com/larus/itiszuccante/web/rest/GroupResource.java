@@ -34,9 +34,8 @@ public class GroupResource {
     public void delete(@PathVariable String id) {
         service.delete(id);
     }
-
-    @GetMapping
+    /*@GetMapping
     public List<Group> findAllByParticipant(@RequestParam User user) {
         return service.findAllByParticipant(user);
-    }
+    }*/
 }

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GroupRepository extends MongoRepository<Group, String> {
-    List<Group> findAllByParticipant(User user);
+    //List<Group> findAllByParticipant(User user);
 }

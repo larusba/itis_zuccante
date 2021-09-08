@@ -1,7 +1,6 @@
 package com.larus.itiszuccante.service.impl;
 
 import com.larus.itiszuccante.domain.Group;
-import com.larus.itiszuccante.domain.Suggestion;
 import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.repository.GroupRepository;
 import com.larus.itiszuccante.service.GroupService;
@@ -34,9 +33,8 @@ public class DefaultGroupService implements GroupService {
     public void delete(String id) {
         repository.deleteById(id);
     }
-
-    @Override
+    /*@Override
     public List<Group> findAllByParticipant(User user) {
         return repository.findAllByParticipant(user);
-    }
+    }*/
 }

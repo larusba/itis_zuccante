@@ -9,6 +9,5 @@ public interface GroupService {
     Group read(String id);
     Group update(Group g);
     void delete(String id);
-
-    List<Group> findAllByParticipant(User user);
+    //List<Group> findAllByParticipant(User user);
 }
