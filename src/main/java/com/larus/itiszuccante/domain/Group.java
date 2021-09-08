@@ -45,5 +45,12 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     private boolean terminated = false;
 
     private boolean secret = false;
+
     // TODO: moderators, coordinates, createdAt
+
+    @JsonIgnore
+    private HashSet<User> members = new HashSet<>();
+
+    @JsonIgnore
+    private HashSet<User> moderators = new HashSet<>();
 }
