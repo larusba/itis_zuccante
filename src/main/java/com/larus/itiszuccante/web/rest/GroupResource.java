@@ -5,7 +5,9 @@ import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.service.GroupService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -20,14 +22,14 @@ public class GroupResource {
     }
 
     @GetMapping("/{id}")
-    public Group read(@PathVariable String id) {
-        return service.read(id);
+    public ResponseEntity<Group> read(@PathVariable String id) {
+        return ResponseUtil.wrapOrNotFound(service.read(id));
     }
 
-    @PutMapping("/{id}")
-    public Group update(@RequestBody Group g, @PathVariable String id) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Group> update(@RequestBody Group g, @PathVariable String id) {
         g.setId(id);
-        return service.update(g);
+        return ResponseUtil.wrapOrNotFound(service.update(g));
     }
 
     @DeleteMapping("/{id}")
