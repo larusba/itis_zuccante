@@ -2,6 +2,7 @@ package com.larus.itiszuccante.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.larus.itiszuccante.config.Constants;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;

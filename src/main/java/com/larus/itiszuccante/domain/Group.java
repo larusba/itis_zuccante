@@ -32,11 +32,11 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     @NotNull
     private String description;
 
-    @Field("created_by")
+    @Field("group_created_by")
     @NotNull
     private String creatorID;
 
-    @Field("admin")
+    @Field("admin_id")
     @NotNull
     private String adminID;
 

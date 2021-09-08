@@ -2,33 +2,15 @@ package com.larus.itiszuccante.domain;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.mongodb.client.model.geojson.Polygon;
+
 import java.io.Serializable;
 
 @Document(collection = "location")
 public class Location extends AbstractAuditingEntity implements Serializable {
-
-    private int lat;
-    private int lon;
-
-    public int getLat() {
-        return lat;
-    }
-
-    public void setLat(int lat) {
-        this.lat = lat;
-    }
-
-    public int getLon() {
-        return lon;
-    }
-
-    public void setLon(int lon) {
-        this.lon = lon;
-    }
-
-    @Override
-    public String toString() {
-        return "Location [lat=" + lat + ", lon=" + lon + "]";
-    }
+    
+	private String description;
+	
+    private Polygon polygon;
 
 }

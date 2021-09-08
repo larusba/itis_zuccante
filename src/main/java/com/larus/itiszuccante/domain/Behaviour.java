@@ -45,8 +45,19 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
     private String wasteType;
 
     private int bags;
+    
+    @Field("walked_distance")
+    private float walkedDistance;
 
-    public String getId() {
+    public float getWalkedDistance() {
+		return walkedDistance;
+	}
+
+	public void setWalkedDistance(float walkedDistance) {
+		this.walkedDistance = walkedDistance;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -159,11 +170,12 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Behaviour [id=" + id + ", type=" + type + ", date=" + date + ", distance=" + distance
-            + ", electricLocation=" + electricLocation + ", emission=" + emission + ", from=" + from + ", to=" + to
-            + ", via=" + via + ", passengers=" + passengers + ", roundtrip=" + roundtrip + ", flightClass="
-            + flightClass + ", wasteType=" + wasteType + ", bags=" + bags + "]";
-    }
+	public String toString() {
+		return "Behaviour [id=" + id + ", type=" + type + ", date=" + date + ", distance=" + distance
+				+ ", electricLocation=" + electricLocation + ", emission=" + emission + ", from=" + from + ", to=" + to
+				+ ", via=" + via + ", passengers=" + passengers + ", roundtrip=" + roundtrip + ", flightClass="
+				+ flightClass + ", wasteType=" + wasteType + ", bags=" + bags + ", walkedDistance=" + walkedDistance
+				+ "]";
+	}
 
 }
