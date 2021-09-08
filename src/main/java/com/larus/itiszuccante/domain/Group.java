@@ -12,14 +12,17 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_group")
 public class Group extends AbstractAuditingEntity implements Serializable {
-
-    @Id
+    
+    @MongoId
     private String id;
 
     @Size(min = 1, max = 100)
@@ -53,4 +56,5 @@ public class Group extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     private HashSet<User> moderators = new HashSet<>();
+    
 }

@@ -12,6 +12,16 @@ public class Badge extends AbstractAuditingEntity implements Serializable {
 	private String id;
 	
 	private String name;
+	
+	private String description;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public String getId() {
 		return id;
@@ -31,7 +41,7 @@ public class Badge extends AbstractAuditingEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Badge [id=" + id + ", name=" + name + "]";
+		return "Badge [id=" + id + ", name=" + name + ", description=" + description + "]";
 	}
 
 }
