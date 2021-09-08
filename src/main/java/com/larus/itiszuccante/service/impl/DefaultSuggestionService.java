@@ -40,6 +40,4 @@ public class DefaultSuggestionService implements SuggestionService {
 		return repository.findByType(type);
 	}
 	
-	 
-
 }
