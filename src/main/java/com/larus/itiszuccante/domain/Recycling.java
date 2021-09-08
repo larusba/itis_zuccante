@@ -12,10 +12,10 @@ public class Recycling {
     @Field("organic_waste")
     private int organicWaste;
 
-    @Field("non_recycable_waste")
+    @Field("paper_waste")
     private int paperWaste;
 
-    @Field("paper_waste")
+    @Field("non_recyclable_waste")
     private int nonRecyclableWaste;
 
     public int getPlasticWaste() {

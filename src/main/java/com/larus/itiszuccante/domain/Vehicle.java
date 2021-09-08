@@ -16,6 +16,8 @@ public class Vehicle extends AbstractAuditingEntity implements Serializable {
     @Field("fuel_consumption")
     private int fuelConsumption;
 
+    // GETTERS AND SETTERS
+
     public String getCarType() {
         return carType;
     }
