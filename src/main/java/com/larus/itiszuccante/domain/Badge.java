@@ -5,14 +5,18 @@ import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+
 @Document(collection = "Badge")
 public class Badge extends AbstractAuditingEntity implements Serializable {
-	
+
 	@Id
 	private String id;
-	
+
+    @NotNull
 	private String name;
-	
+
+    @NotNull
 	private String description;
 
 	public String getDescription() {

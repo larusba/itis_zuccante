@@ -48,6 +48,8 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
     
     @Field("walked_distance")
     private float walkedDistance;
+    
+    //GETTERS AND SETTERS
 
     public float getWalkedDistance() {
 		return walkedDistance;

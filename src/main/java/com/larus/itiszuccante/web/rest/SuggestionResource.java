@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.larus.itiszuccante.domain.Suggestion;
 import com.larus.itiszuccante.service.SuggestionService;
-;
+
 
 @RestController
 @RequestMapping("/api/suggestions")
