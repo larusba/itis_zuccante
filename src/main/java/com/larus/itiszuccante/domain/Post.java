@@ -15,13 +15,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_post")
 public class Post extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
+    @MongoId
     private String id;
 
     @Field("author")
