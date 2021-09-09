@@ -19,7 +19,15 @@ public class Badge extends AbstractAuditingEntity implements Serializable {
     @NotNull
 	private String description;
 
-	public String getDescription() {
+    public Badge() {    // VUOTO
+    }
+
+    public Badge(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public String getDescription() {
 		return description;
 	}
 
