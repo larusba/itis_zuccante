@@ -47,10 +47,12 @@ public class BehaviourServiceTest {
         Date date = new Date();
         b.setDate(date);
         b.setType("car-trip");
-        Behaviour result = service.read(repository.save(b).getId());
-        assertEquals("car-trip", result.getType());
-        assertEquals(date, result.getDate());
+        Optional<Behaviour> result = service.read(repository.save(b).getId());
+        assertThat(result).isPresent();
+        assertThat(result.orElse(null).getType()).isEqualTo("car-trip");
+        assertThat(result.orElse(null).getDate()).isEqualTo(date);
     }
+
 
     @Test
     public void testUpdate() {

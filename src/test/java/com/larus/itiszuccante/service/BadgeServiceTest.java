@@ -42,9 +42,10 @@ public class BadgeServiceTest {
         Badge b = new Badge();
         b.setName("Recluta");
         b.setDescription("Sei al primo step");
-        Badge result = service.read(repository.save(b).getId());
-        assertEquals("Recluta", result.getName());
-        assertEquals("Sei al primo step", result.getDescription());
+        Optional<Badge> result = service.read(repository.save(b).getId());
+        assertThat(result).isPresent();
+        assertThat(result.orElse(null).getName()).isEqualTo("Recluta");
+        assertThat(result.orElse(null).getDescription()).isEqualTo("Sei al primo step");
     }
 
     @Test
