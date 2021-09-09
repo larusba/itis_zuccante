@@ -5,39 +5,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
+import com.larus.itiszuccante.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.larus.itiszuccante.IntegrationTest;
-import com.larus.itiszuccante.domain.PersonalFootprint;
-import com.larus.itiszuccante.domain.Profile;
-import com.larus.itiszuccante.domain.Recycling;
-import com.larus.itiszuccante.domain.Vehicle;
 import com.larus.itiszuccante.repository.ProfileRepository;
 
 @IntegrationTest
 public class ProfileServiceTest {
-	
+
 	@Autowired
 	ProfileRepository repository;
-	
+
 	@Autowired
 	ProfileService service;
-	
+
 	PersonalFootprint personalFootprint = new PersonalFootprint();
 	Vehicle vehicle = new Vehicle();
 	Recycling recycling = new Recycling();
 	Profile profile = new Profile(personalFootprint, vehicle, recycling);
-	
+
 	@BeforeEach
 	public void init() {
 		personalFootprint.setMobilityVehicles("MEDIUM");
-		vehicle.setFuelType("BIODIESEL");
+		vehicle.setFuelType(FuelType.BIODIESEL);
 		recycling.setOrganicWaste(0);
 		repository.deleteAll();
 	}
-	
+
 	@Test
 	public void testCreate() {
 		Profile createdPro = service.create(profile);
@@ -47,7 +44,7 @@ public class ProfileServiceTest {
         assertThat(result.orElse(null).getVehicle().toString()).isEqualTo(profile.getVehicle().toString());
         assertThat(result.orElse(null).getRecycling().toString()).isEqualTo(profile.getRecycling().toString());
 	}
-	
+
 	@Test
 	public void testRead() {
 		Optional<Profile> result = service.read(repository.save(profile).getId());
@@ -56,7 +53,7 @@ public class ProfileServiceTest {
         assertThat(result.orElse(null).getVehicle().toString()).isEqualTo(vehicle.toString());
         assertThat(result.orElse(null).getRecycling().toString()).isEqualTo(recycling.toString());
 	}
-	
+
 	@Test
 	public void testUpdate() {
 		Profile createdPro = repository.save(profile);
@@ -69,7 +66,7 @@ public class ProfileServiceTest {
 		Profile updatedPro = service.update(createdPro);
 		assertEquals(createdPro.getPersonalFootprint().toString(), updatedPro.getPersonalFootprint().toString());
 	}
-	
+
 	@Test
 	public void testDelete() {
 		Profile createdPro = repository.save(profile);

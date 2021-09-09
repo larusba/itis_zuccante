@@ -8,29 +8,29 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Vehicle extends AbstractAuditingEntity implements Serializable {
 
     @Field("car_type")
-    private String carType;
+    private CarType carType;
 
     @Field("fuel_type")
-    private String fuelType;
+    private FuelType fuelType;
 
     @Field("fuel_consumption")
     private int fuelConsumption;
 
     // GETTERS AND SETTERS
 
-    public String getCarType() {
+    public CarType getCarType() {
         return carType;
     }
 
-    public void setCarType(String carType) {
+    public void setCarType(CarType carType) {
         this.carType = carType;
     }
 
-    public String getFuelType() {
+    public FuelType getFuelType() {
         return fuelType;
     }
 
-    public void setFuelType(String fuelType) {
+    public void setFuelType(FuelType fuelType) {
         this.fuelType = fuelType;
     }
 
