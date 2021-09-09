@@ -7,6 +7,8 @@ import com.larus.itiszuccante.domain.Behaviour;
 import com.larus.itiszuccante.repository.BehaviourRepository;
 import com.larus.itiszuccante.service.BehaviourService;
 
+import java.util.Optional;
+
 @Service
 public class DefaultBehaviourService implements BehaviourService {
 
@@ -19,8 +21,8 @@ public class DefaultBehaviourService implements BehaviourService {
     }
 
     @Override
-    public Behaviour read(String id) {
-        return repository.findById(id).orElseThrow();
+    public Optional<Behaviour> read(String id) {
+        return repository.findById(id);
     }
 
     @Override

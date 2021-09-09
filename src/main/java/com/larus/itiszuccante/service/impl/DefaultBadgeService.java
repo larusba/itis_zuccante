@@ -7,6 +7,8 @@ import com.larus.itiszuccante.domain.Badge;
 import com.larus.itiszuccante.repository.BadgeRepository;
 import com.larus.itiszuccante.service.BadgeService;
 
+import java.util.Optional;
+
 @Service
 public class DefaultBadgeService implements BadgeService {
 
@@ -19,8 +21,8 @@ public class DefaultBadgeService implements BadgeService {
     }
 
     @Override
-    public Badge read(String id) {
-        return repository.findById(id).orElseThrow();
+    public Optional<Badge> read(String id) {
+        return repository.findById(id);
     }
 
     @Override
