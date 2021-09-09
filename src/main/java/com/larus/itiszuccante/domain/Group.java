@@ -1,18 +1,17 @@
 package com.larus.itiszuccante.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @org.springframework.data.mongodb.core.mapping.Document(collection = "jhi_group")
 public class Group extends AbstractAuditingEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
