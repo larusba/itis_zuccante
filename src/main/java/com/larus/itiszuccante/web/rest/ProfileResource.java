@@ -30,7 +30,7 @@ public class ProfileResource {
 		return new ResponseEntity<Profile>(service.create(p), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{id}")	
+	@GetMapping("/{id}")
 	public ResponseEntity<Profile> read(@PathVariable String id) {
         return ResponseUtil.wrapOrNotFound(service.read(id));
 	}
@@ -42,9 +42,9 @@ public class ProfileResource {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Suggestion> delete(@PathVariable String id) {
+	public ResponseEntity<Profile> delete(@PathVariable String id) {
 		service.delete(id);
-		return new ResponseEntity<Suggestion>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Profile>(HttpStatus.NO_CONTENT);
 	}
 
 }
