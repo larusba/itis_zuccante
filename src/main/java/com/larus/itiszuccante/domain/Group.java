@@ -28,17 +28,19 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     @NotNull
     private String description;
 
-    @Field("group_created_by")
-    @NotNull
-    private String creatorID;
-
     private boolean closed = false;
 
     private boolean terminated = false;
 
     private boolean secret = false;
 
-    // TODO: moderators, coordinates, createdAt
+    public Group() {}
+
+    public Group(String name, String description) {
+        this.admin = "user-1";
+        this.name = name;
+        this.description = description;
+    }
 
     @JsonIgnore
     private HashSet<User> members = new HashSet<>();
@@ -76,14 +78,6 @@ public class Group extends AbstractAuditingEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCreatorID() {
-        return creatorID;
-    }
-
-    public void setCreatorID(String creatorID) {
-        this.creatorID = creatorID;
     }
 
     public boolean isClosed() {
@@ -156,9 +150,6 @@ public class Group extends AbstractAuditingEntity implements Serializable {
             '\'' +
             ", description='" +
             description +
-            '\'' +
-            ", creatorID='" +
-            creatorID +
             '\'' +
             ", closed=" +
             closed +
