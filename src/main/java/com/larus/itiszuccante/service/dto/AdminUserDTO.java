@@ -1,12 +1,17 @@
 package com.larus.itiszuccante.service.dto;
 
-import com.larus.itiszuccante.config.Constants;
-import com.larus.itiszuccante.domain.Authority;
-import com.larus.itiszuccante.domain.User;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.larus.itiszuccante.config.Constants;
+import com.larus.itiszuccante.domain.Authority;
+import com.larus.itiszuccante.domain.User;
 
 /**
  * A DTO representing a user, with his authorities.

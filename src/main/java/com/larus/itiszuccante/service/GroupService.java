@@ -1,9 +1,8 @@
 package com.larus.itiszuccante.service;
 
-import com.larus.itiszuccante.domain.Group;
-import com.larus.itiszuccante.domain.User;
-import java.util.List;
 import java.util.Optional;
+
+import com.larus.itiszuccante.domain.Group;
 
 public interface GroupService {
     Group create(Group g);

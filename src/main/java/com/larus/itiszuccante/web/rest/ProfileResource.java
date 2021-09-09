@@ -16,30 +16,30 @@ import com.larus.itiszuccante.service.ProfileService;
 @RestController
 @RequestMapping("/api/profiles")
 public class ProfileResource {
-	
+
 	@Autowired
 	ProfileService service;
-	
+
 	@PostMapping
 	Profile create(@RequestBody Profile p) {
 		System.out.println(p);
 		return service.create(p);
 	}
-	
+
 	@GetMapping("/{id}")
 	Profile read(@PathVariable String id) {
 		return service.read(id);
 	}
-	
+
 	@PutMapping("/{id}")
 	Profile update(@RequestBody Profile p, @PathVariable String id) {
 		p.setId(id);
 		return service.update(p);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	void delete(@PathVariable String id) {
 		service.delete(id);
 	}
-	
+
 }

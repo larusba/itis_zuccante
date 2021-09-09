@@ -11,7 +11,7 @@ import com.larus.itiszuccante.service.SuggestionService;
 
 @Service
 public class DefaultSuggestionService implements SuggestionService {
-	
+
 	@Autowired
 	private SuggestionRepository repository;
 
@@ -39,5 +39,5 @@ public class DefaultSuggestionService implements SuggestionService {
 	public List<Suggestion> findByType(String type) {
 		return repository.findByType(type);
 	}
-	
+
 }

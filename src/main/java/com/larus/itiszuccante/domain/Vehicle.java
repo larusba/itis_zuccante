@@ -1,8 +1,8 @@
 package com.larus.itiszuccante.domain;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
 import java.io.Serializable;
+
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @org.springframework.data.mongodb.core.mapping.Document(collection = "vehicle")
 public class Vehicle extends AbstractAuditingEntity implements Serializable {

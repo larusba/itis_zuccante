@@ -2,13 +2,11 @@ package com.larus.itiszuccante.web.rest;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.larus.itiszuccante.IntegrationTest;
-import com.larus.itiszuccante.domain.User;
-import com.larus.itiszuccante.repository.UserRepository;
-import com.larus.itiszuccante.security.AuthoritiesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.repository.UserRepository;
+import com.larus.itiszuccante.security.AuthoritiesConstants;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.

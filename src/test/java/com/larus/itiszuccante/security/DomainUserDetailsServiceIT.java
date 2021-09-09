@@ -3,16 +3,18 @@ package com.larus.itiszuccante.security;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import com.larus.itiszuccante.IntegrationTest;
-import com.larus.itiszuccante.domain.User;
-import com.larus.itiszuccante.repository.UserRepository;
 import java.util.Locale;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.repository.UserRepository;
 
 /**
  * Integrations tests for {@link DomainUserDetailsService}.

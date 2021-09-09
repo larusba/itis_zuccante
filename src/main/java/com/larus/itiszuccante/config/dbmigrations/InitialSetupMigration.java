@@ -1,5 +1,7 @@
 package com.larus.itiszuccante.config.dbmigrations;
 
+import java.time.Instant;
+
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.github.cloudyrock.mongock.driver.mongodb.springdata.v3.decorator.impl.MongockTemplate;
@@ -7,7 +9,6 @@ import com.larus.itiszuccante.config.Constants;
 import com.larus.itiszuccante.domain.Authority;
 import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.security.AuthoritiesConstants;
-import java.time.Instant;
 
 /**
  * Creates the initial database setup.

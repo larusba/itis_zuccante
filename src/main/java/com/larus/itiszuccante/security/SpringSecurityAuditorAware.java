@@ -1,9 +1,11 @@
 package com.larus.itiszuccante.security;
 
-import com.larus.itiszuccante.config.Constants;
 import java.util.Optional;
+
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
+
+import com.larus.itiszuccante.config.Constants;
 
 /**
  * Implementation of {@link AuditorAware} based on Spring Security.

@@ -1,7 +1,8 @@
 package com.larus.itiszuccante.repository;
 
-import com.larus.itiszuccante.domain.Authority;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.larus.itiszuccante.domain.Authority;
 
 /**
  * Spring Data MongoDB repository for the {@link Authority} entity.

@@ -9,7 +9,7 @@ import com.larus.itiszuccante.service.ProfileService;
 
 @Service
 public class DefaultProfileService implements ProfileService {
-	
+
 	@Autowired
 	private ProfileRepository repository;
 

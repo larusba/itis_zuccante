@@ -1,7 +1,8 @@
 package com.larus.itiszuccante.web.rest.vm;
 
-import com.larus.itiszuccante.service.dto.AdminUserDTO;
 import javax.validation.constraints.Size;
+
+import com.larus.itiszuccante.service.dto.AdminUserDTO;
 
 /**
  * View Model extending the AdminUserDTO, which is meant to be used in the user management UI.

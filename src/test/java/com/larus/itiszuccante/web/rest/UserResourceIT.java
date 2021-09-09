@@ -2,22 +2,21 @@ package com.larus.itiszuccante.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.larus.itiszuccante.IntegrationTest;
-import com.larus.itiszuccante.domain.Authority;
-import com.larus.itiszuccante.domain.User;
-import com.larus.itiszuccante.repository.UserRepository;
-import com.larus.itiszuccante.security.AuthoritiesConstants;
-import com.larus.itiszuccante.service.dto.AdminUserDTO;
-import com.larus.itiszuccante.service.dto.UserDTO;
-import com.larus.itiszuccante.service.mapper.UserMapper;
-import com.larus.itiszuccante.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +25,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.Authority;
+import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.repository.UserRepository;
+import com.larus.itiszuccante.security.AuthoritiesConstants;
+import com.larus.itiszuccante.service.dto.AdminUserDTO;
+import com.larus.itiszuccante.service.mapper.UserMapper;
+import com.larus.itiszuccante.web.rest.vm.ManagedUserVM;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.

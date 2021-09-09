@@ -1,7 +1,6 @@
 package com.larus.itiszuccante.service;
 
 import com.larus.itiszuccante.domain.Behaviour;
-import org.springframework.stereotype.Service;
 
 public interface BehaviourService {
 

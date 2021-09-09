@@ -1,7 +1,5 @@
 package com.larus.itiszuccante.config;
 
-import com.larus.itiszuccante.security.*;
-import com.larus.itiszuccante.security.jwt.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -17,6 +15,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+
+import com.larus.itiszuccante.security.AuthoritiesConstants;
+import com.larus.itiszuccante.security.jwt.JWTConfigurer;
+import com.larus.itiszuccante.security.jwt.TokenProvider;
+
 import tech.jhipster.config.JHipsterProperties;
 
 @EnableWebSecurity
@@ -84,7 +87,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/api/**").permitAll()
+            .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()

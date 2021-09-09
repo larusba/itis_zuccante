@@ -1,9 +1,9 @@
 package com.larus.itiszuccante.domain;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.io.Serializable;
 
 /**
  * A Profile

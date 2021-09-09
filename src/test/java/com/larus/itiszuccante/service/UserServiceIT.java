@@ -2,21 +2,20 @@ package com.larus.itiszuccante.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.larus.itiszuccante.IntegrationTest;
-import com.larus.itiszuccante.config.Constants;
-import com.larus.itiszuccante.domain.User;
-import com.larus.itiszuccante.repository.UserRepository;
-import com.larus.itiszuccante.service.dto.AdminUserDTO;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.repository.UserRepository;
+
 import tech.jhipster.security.RandomUtil;
 
 /**

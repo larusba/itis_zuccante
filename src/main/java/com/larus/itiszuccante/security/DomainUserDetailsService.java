@@ -1,9 +1,9 @@
 package com.larus.itiszuccante.security;
 
-import com.larus.itiszuccante.domain.User;
-import com.larus.itiszuccante.repository.UserRepository;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
+
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.repository.UserRepository;
 
 /**
  * Authenticate a user from the database.

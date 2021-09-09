@@ -1,10 +1,11 @@
 package com.larus.itiszuccante.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.larus.itiszuccante.domain.Behaviour;
 import com.larus.itiszuccante.repository.BehaviourRepository;
 import com.larus.itiszuccante.service.BehaviourService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultBehaviourService implements BehaviourService {

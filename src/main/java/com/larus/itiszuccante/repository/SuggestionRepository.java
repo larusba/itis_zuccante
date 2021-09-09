@@ -9,7 +9,7 @@ import com.larus.itiszuccante.domain.Suggestion;
 
 @Repository
 public interface SuggestionRepository extends MongoRepository<Suggestion, String> {
-	
+
 	List<Suggestion> findByType(String type);
 
 }

@@ -2,10 +2,10 @@ package com.larus.itiszuccante.domain;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.constraints.NotNull;
 
 @Document(collection = "Badge")
 public class Badge extends AbstractAuditingEntity implements Serializable {

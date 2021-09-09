@@ -20,34 +20,34 @@ import com.larus.itiszuccante.service.SuggestionService;
 @RestController
 @RequestMapping("/api/suggestions")
 public class SuggestionResource {
-	
+
 	@Autowired
 	private SuggestionService service;
-	
+
 	@PostMapping
-	public Suggestion create(@RequestBody Suggestion s) {	
+	public Suggestion create(@RequestBody Suggestion s) {
 		return service.create(s);
 	}
-	
+
 	@GetMapping("/{id}")
 	public Suggestion read(@PathVariable String id) {
 		return service.read(id);
 	}
-	
+
 	@PutMapping("/{id}")
 	public Suggestion update(@RequestBody Suggestion s, @PathVariable String id) {
 		s.setId(id);
 		return service.update(s);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable String id) {
 		service.delete(id);
 	}
-	
+
 	@GetMapping
 	public List<Suggestion> findByType(@RequestParam String type) {
 		return service.findByType(type);
 	}
-	
+
 }

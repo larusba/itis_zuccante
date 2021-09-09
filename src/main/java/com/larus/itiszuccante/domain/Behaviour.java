@@ -1,12 +1,13 @@
 package com.larus.itiszuccante.domain;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.validation.constraints.Size;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.Date;
 
 @Document(collection = "behaviour")
 public class Behaviour extends AbstractAuditingEntity implements Serializable {
@@ -45,10 +46,10 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
     private String wasteType;
 
     private int bags;
-    
+
     @Field("walked_distance")
     private float walkedDistance;
-    
+
     //GETTERS AND SETTERS
 
     public float getWalkedDistance() {
