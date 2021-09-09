@@ -22,6 +22,16 @@ public class Profile extends AbstractAuditingEntity implements Serializable {
 
     @Field("personal_recycling")
     private Recycling recycling;
+    
+    public Profile() {
+    	
+    }
+    
+    public Profile(PersonalFootprint personalFootprint, Vehicle vehicle, Recycling recycling) {
+    	this.personalFootprint = personalFootprint;
+    	this.vehicle = vehicle;
+    	this.recycling = recycling;
+    }
 
     public String getId() {
         return id;
