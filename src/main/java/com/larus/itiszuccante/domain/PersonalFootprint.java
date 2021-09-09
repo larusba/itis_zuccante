@@ -8,83 +8,83 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class PersonalFootprint extends AbstractAuditingEntity implements Serializable {
 
     @Field("mobility_vehicles")
-    private String mobilityVehicles;
+    private MobilityVehicles mobilityVehicles;
 
     @Field("mobility_flight")
-    private String mobilityFlight;
+    private MobilityFlight mobilityFlight;
 
     @Field("consumption_food")
-    private String consumptionFood;
+    private FoodConsumption consumptionFood;
 
     @Field("consumption_shopping")
-    private String consumptionShopping;
+    private ShoppingConsumption consumptionShopping;
 
     @Field("household_area")
-    private String householdArea;
+    private HouseholdArea householdArea;
 
     @Field("household_building")
-    private String householdBuilding;
+    private HouseholdBuilding householdBuilding;
 
     @Field("household_heating")
-    private String householdHeating;
+    private HouseholdHeating householdHeating;
 
-    public String getMobilityVehicles() {
-        return mobilityVehicles;
-    }
+    public MobilityVehicles getMobilityVehicles() {
+		return mobilityVehicles;
+	}
 
-    public void setMobilityVehicles(String mobilityVehicles) {
-        this.mobilityVehicles = mobilityVehicles;
-    }
+	public void setMobilityVehicles(MobilityVehicles mobilityVehicles) {
+		this.mobilityVehicles = mobilityVehicles;
+	}
 
-    public String getMobilityFlight() {
-        return mobilityFlight;
-    }
+	public MobilityFlight getMobilityFlight() {
+		return mobilityFlight;
+	}
 
-    public void setMobilityFlight(String mobilityFlight) {
-        this.mobilityFlight = mobilityFlight;
-    }
+	public void setMobilityFlight(MobilityFlight mobilityFlight) {
+		this.mobilityFlight = mobilityFlight;
+	}
 
-    public String getConsumptionFood() {
-        return consumptionFood;
-    }
+	public FoodConsumption getConsumptionFood() {
+		return consumptionFood;
+	}
 
-    public void setConsumptionFood(String consumptionFood) {
-        this.consumptionFood = consumptionFood;
-    }
+	public void setConsumptionFood(FoodConsumption consumptionFood) {
+		this.consumptionFood = consumptionFood;
+	}
 
-    public String getConsumptionShopping() {
-        return consumptionShopping;
-    }
+	public ShoppingConsumption getConsumptionShopping() {
+		return consumptionShopping;
+	}
 
-    public void setConsumptionShopping(String consumptionShopping) {
-        this.consumptionShopping = consumptionShopping;
-    }
+	public void setConsumptionShopping(ShoppingConsumption consumptionShopping) {
+		this.consumptionShopping = consumptionShopping;
+	}
 
-    public String getHouseholdArea() {
-        return householdArea;
-    }
+	public HouseholdArea getHouseholdArea() {
+		return householdArea;
+	}
 
-    public void setHouseholdArea(String householdArea) {
-        this.householdArea = householdArea;
-    }
+	public void setHouseholdArea(HouseholdArea householdArea) {
+		this.householdArea = householdArea;
+	}
 
-    public String getHouseholdBuilding() {
-        return householdBuilding;
-    }
+	public HouseholdBuilding getHouseholdBuilding() {
+		return householdBuilding;
+	}
 
-    public void setHouseholdBuilding(String householdBuilding) {
-        this.householdBuilding = householdBuilding;
-    }
+	public void setHouseholdBuilding(HouseholdBuilding householdBuilding) {
+		this.householdBuilding = householdBuilding;
+	}
 
-    public String getHouseholdHeating() {
-        return householdHeating;
-    }
+	public HouseholdHeating getHouseholdHeating() {
+		return householdHeating;
+	}
 
-    public void setHouseholdHeating(String householdHeating) {
-        this.householdHeating = householdHeating;
-    }
+	public void setHouseholdHeating(HouseholdHeating householdHeating) {
+		this.householdHeating = householdHeating;
+	}
 
-    @Override
+	@Override
     public String toString() {
         return "PersonalFootprint{" +
             "mobilityVehicles='" + mobilityVehicles + '\'' +
