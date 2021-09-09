@@ -50,10 +50,11 @@ public class ProfileServiceTest {
 	
 	@Test
 	public void testRead() {
-		Profile result = service.read(repository.save(profile).getId());
-		assertEquals(personalFootprint.toString(), result.getPersonalFootprint().toString());
-		assertEquals(vehicle.toString(), result.getVehicle().toString());
-		assertEquals(recycling.toString(), result.getRecycling().toString());
+		Optional<Profile> result = service.read(repository.save(profile).getId());
+		assertThat(result).isPresent();
+        assertThat(result.orElse(null).getPersonalFootprint().toString()).isEqualTo(personalFootprint.toString());
+        assertThat(result.orElse(null).getVehicle().toString()).isEqualTo(vehicle.toString());
+        assertThat(result.orElse(null).getRecycling().toString()).isEqualTo(recycling.toString());
 	}
 	
 	@Test
@@ -63,6 +64,7 @@ public class ProfileServiceTest {
 		assertEquals(vehicle.toString(), createdPro.getVehicle().toString());
 		assertEquals(recycling.toString(), createdPro.getRecycling().toString());
 		PersonalFootprint updatedFootprint = new PersonalFootprint();
+		updatedFootprint.setMobilityVehicles("LOW");
 		createdPro.setPersonalFootprint(updatedFootprint);
 		Profile updatedPro = service.update(createdPro);
 		assertEquals(createdPro.getPersonalFootprint().toString(), updatedPro.getPersonalFootprint().toString());

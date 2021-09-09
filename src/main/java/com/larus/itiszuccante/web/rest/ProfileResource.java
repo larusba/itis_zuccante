@@ -1,6 +1,8 @@
 package com.larus.itiszuccante.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.larus.itiszuccante.domain.Profile;
+import com.larus.itiszuccante.domain.Suggestion;
 import com.larus.itiszuccante.service.ProfileService;
+
+import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -21,25 +26,25 @@ public class ProfileResource {
 	ProfileService service;
 
 	@PostMapping
-	Profile create(@RequestBody Profile p) {
-		System.out.println(p);
-		return service.create(p);
+	public ResponseEntity<Profile> create(@RequestBody Profile p) {
+		return new ResponseEntity<Profile>(service.create(p), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{id}")
-	Profile read(@PathVariable String id) {
-		return service.read(id);
+	@GetMapping("/{id}")	
+	public ResponseEntity<Profile> read(@PathVariable String id) {
+        return ResponseUtil.wrapOrNotFound(service.read(id));
 	}
 
 	@PutMapping("/{id}")
-	Profile update(@RequestBody Profile p, @PathVariable String id) {
-		p.setId(id);
-		return service.update(p);
+	public ResponseEntity<Profile> update(@RequestBody Profile s, @PathVariable String id) {
+		s.setId(id);
+		return new ResponseEntity<Profile>(service.update(s), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	void delete(@PathVariable String id) {
+	public ResponseEntity<Suggestion> delete(@PathVariable String id) {
 		service.delete(id);
+		return new ResponseEntity<Suggestion>(HttpStatus.NO_CONTENT);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.larus.itiszuccante.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,8 @@ public class DefaultProfileService implements ProfileService {
 	}
 
 	@Override
-	public Profile read(String id) {
-		return repository.findById(id).orElseThrow();
+	public Optional<Profile> read(String id) {
+		return repository.findById(id);
 	}
 
 	@Override
