@@ -19,6 +19,14 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
 
     private Date date;
 
+    public Behaviour() {
+    }
+
+    public Behaviour(String type, Date date) {
+        this.type = type;
+        this.date = date;
+    }
+
     private int distance;
 
     @Field("electric_location")
