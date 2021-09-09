@@ -12,6 +12,15 @@ public class Suggestion {
     private String type;
 
     private String description;
+    
+    public Suggestion() {
+    	
+    }
+    
+    public Suggestion(String type, String description) {
+    	this.type = type;
+    	this.description = description;
+    } 
 
     public String getId() {
         return id;
