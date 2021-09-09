@@ -57,7 +57,7 @@ public class ProfileResourceTest {
 		
         restUserMockMvc
         .perform(
-            post("/api/Profiles").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(profile))
+            post("/api/profiles").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(profile))
         )
         .andExpect(status().isCreated());
         
@@ -92,7 +92,7 @@ public class ProfileResourceTest {
     	createdPro.setPersonalFootprint(updatedFootprint);
         restUserMockMvc
         .perform(
-            put("/api/Profiles/{id}", createdPro.getId()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(createdPro))
+            put("/api/profiles/{id}", createdPro.getId()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(createdPro))
         )
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
