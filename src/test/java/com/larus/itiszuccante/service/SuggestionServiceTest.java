@@ -43,9 +43,10 @@ public class SuggestionServiceTest {
 		Suggestion s = new Suggestion();
 		s.setDescription("Getta la carta nel cestino giallo");
 		s.setType("Riciclo");
-		Suggestion result = service.read(repository.save(s).getId());
-		assertEquals("Riciclo", result.getType());
-		assertEquals("Getta la carta nel cestino giallo", result.getDescription());
+		Optional<Suggestion> result = service.read(repository.save(s).getId());
+		assertThat(result).isPresent();
+        assertThat(result.orElse(null).getType()).isEqualTo("Riciclo");
+        assertThat(result.orElse(null).getDescription()).isEqualTo("Getta la carta nel cestino giallo");
 	}
 	
 	@Test

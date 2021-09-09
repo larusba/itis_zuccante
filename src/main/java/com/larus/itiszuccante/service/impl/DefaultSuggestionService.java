@@ -1,6 +1,7 @@
 package com.larus.itiszuccante.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ public class DefaultSuggestionService implements SuggestionService {
 	}
 
 	@Override
-	public Suggestion read(String id) {
-		return repository.findById(id).orElseThrow();
+	public Optional<Suggestion> read(String id) {
+		return repository.findById(id);
 	}
 
 	@Override

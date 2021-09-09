@@ -3,6 +3,8 @@ package com.larus.itiszuccante.web.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.larus.itiszuccante.domain.Suggestion;
 import com.larus.itiszuccante.service.SuggestionService;
 
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
+
 
 @RestController
 @RequestMapping("/api/suggestions")
@@ -25,24 +30,25 @@ public class SuggestionResource {
 	private SuggestionService service;
 
 	@PostMapping
-	public Suggestion create(@RequestBody Suggestion s) {
-		return service.create(s);
+	public ResponseEntity<Suggestion> create(@RequestBody Suggestion s) {
+		return new ResponseEntity<Suggestion>(service.create(s), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{id}")
-	public Suggestion read(@PathVariable String id) {
-		return service.read(id);
+	public ResponseEntity<Suggestion> read(@PathVariable String id) {
+         return ResponseUtil.wrapOrNotFound(service.read(id));
 	}
 
 	@PutMapping("/{id}")
-	public Suggestion update(@RequestBody Suggestion s, @PathVariable String id) {
+	public ResponseEntity<Suggestion> update(@RequestBody Suggestion s, @PathVariable String id) {
 		s.setId(id);
-		return service.update(s);
+		return new ResponseEntity<Suggestion>(service.update(s), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable String id) {
+	public ResponseEntity<Suggestion> delete(@PathVariable String id) {
 		service.delete(id);
+		return new ResponseEntity<Suggestion>(HttpStatus.NO_CONTENT);
 	}
 
 	@GetMapping
