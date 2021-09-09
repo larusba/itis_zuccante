@@ -96,7 +96,7 @@ public class ProfileResourceTest {
         )
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(jsonPath("$.personalFootprint").value(createdPro.getPersonalFootprint()))
+        .andExpect(jsonPath("$.personalFootprint.mobilityVehicles").value(createdPro.getPersonalFootprint().getMobilityVehicles()))
         .andExpect(jsonPath("$.vehicle").value(createdPro.getVehicle()))
         .andExpect(jsonPath("$.recycling").value(createdPro.getRecycling()));
     }
