@@ -15,14 +15,14 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
     @Id
     private String id;
 
-    private String type;
+    private BehaviourType type;
 
     private Date date;
 
     public Behaviour() {
     }
 
-    public Behaviour(String type, Date date) {
+    public Behaviour(BehaviourType type, Date date) {
         this.type = type;
         this.date = date;
     }
@@ -32,7 +32,7 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
     @Field("electric_location")
     private ElectricLocation electricLocation;
 
-    private float emission;
+    private double emission;
 
     @Size(min = 3, max = 3)
     private String from;
@@ -66,11 +66,11 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getType() {
+	public BehaviourType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(BehaviourType type) {
 		this.type = type;
 	}
 
@@ -98,11 +98,11 @@ public class Behaviour extends AbstractAuditingEntity implements Serializable {
 		this.electricLocation = electricLocation;
 	}
 
-	public float getEmission() {
+	public double getEmission() {
 		return emission;
 	}
 
-	public void setEmission(float emission) {
+	public void setEmission(double emission) {
 		this.emission = emission;
 	}
 

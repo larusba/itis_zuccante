@@ -2,6 +2,7 @@ package com.larus.itiszuccante.web.rest;
 
 import com.larus.itiszuccante.IntegrationTest;
 import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.BehaviourType;
 import com.larus.itiszuccante.repository.BehaviourRepository;
 import com.larus.itiszuccante.security.AuthoritiesConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,7 +33,7 @@ public class BehaviourResourceTest {
 
     Date date = new Date(0);
 
-    private Behaviour behaviour = new Behaviour("car-trip", date);
+    private Behaviour behaviour = new Behaviour(BehaviourType.CAR_TRIP, date);
 
     @BeforeEach
     public void init() {
