@@ -18,6 +18,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.FuelType;
+import com.larus.itiszuccante.domain.MobilityVehicles;
 import com.larus.itiszuccante.domain.PersonalFootprint;
 import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.domain.Recycling;
@@ -44,8 +46,8 @@ public class ProfileResourceTest {
     
     @BeforeEach
     public void init() {
-    	personalFootprint.setMobilityVehicles("MEDIUM");
-    	vehicle.setFuelType("BIODIESEL");
+    	personalFootprint.setMobilityVehicles(MobilityVehicles.MEDIUM);
+    	vehicle.setFuelType(FuelType.BIODIESEL);
     	recycling.setOrganicWaste(0);
     	repository.deleteAll();
     }
@@ -88,7 +90,7 @@ public class ProfileResourceTest {
     public void testUpdate() throws Exception {
     	Profile createdPro = repository.save(profile);
     	PersonalFootprint updatedFootprint = new PersonalFootprint();
-    	updatedFootprint.setMobilityVehicles("LOW");
+    	updatedFootprint.setMobilityVehicles(MobilityVehicles.LOW);
     	createdPro.setPersonalFootprint(updatedFootprint);
         restUserMockMvc
         .perform(
@@ -96,7 +98,7 @@ public class ProfileResourceTest {
         )
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(jsonPath("$.personalFootprint.mobilityVehicles").value(createdPro.getPersonalFootprint().getMobilityVehicles()))
+        .andExpect(jsonPath("$.personalFootprint.mobilityVehicles").value(createdPro.getPersonalFootprint().getMobilityVehicles().toString()))
         .andExpect(jsonPath("$.vehicle").value(createdPro.getVehicle()))
         .andExpect(jsonPath("$.recycling").value(createdPro.getRecycling()));
     }

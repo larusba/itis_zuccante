@@ -5,12 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
-import com.larus.itiszuccante.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.FuelType;
+import com.larus.itiszuccante.domain.MobilityVehicles;
+import com.larus.itiszuccante.domain.PersonalFootprint;
+import com.larus.itiszuccante.domain.Profile;
+import com.larus.itiszuccante.domain.Recycling;
+import com.larus.itiszuccante.domain.Vehicle;
 import com.larus.itiszuccante.repository.ProfileRepository;
 
 @IntegrationTest
@@ -29,7 +34,7 @@ public class ProfileServiceTest {
 
 	@BeforeEach
 	public void init() {
-		personalFootprint.setMobilityVehicles("MEDIUM");
+		personalFootprint.setMobilityVehicles(MobilityVehicles.MEDIUM);
 		vehicle.setFuelType(FuelType.BIODIESEL);
 		recycling.setOrganicWaste(0);
 		repository.deleteAll();
@@ -61,7 +66,7 @@ public class ProfileServiceTest {
 		assertEquals(vehicle.toString(), createdPro.getVehicle().toString());
 		assertEquals(recycling.toString(), createdPro.getRecycling().toString());
 		PersonalFootprint updatedFootprint = new PersonalFootprint();
-		updatedFootprint.setMobilityVehicles("LOW");
+		updatedFootprint.setMobilityVehicles(MobilityVehicles.LOW);
 		createdPro.setPersonalFootprint(updatedFootprint);
 		Profile updatedPro = service.update(createdPro);
 		assertEquals(createdPro.getPersonalFootprint().toString(), updatedPro.getPersonalFootprint().toString());
