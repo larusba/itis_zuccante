@@ -62,7 +62,7 @@ public class BehaviourResourceTest {
             .perform(get("/api/behaviours/{id}", createdBehaviour.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.type").value(behaviour.getType()))
+            .andExpect(jsonPath("$.type").value(behaviour.getType().toString()))
             .andExpect(jsonPath("$.date").value("1970-01-01T00:00:00.000+00:00"));
     }
 
@@ -84,7 +84,7 @@ public class BehaviourResourceTest {
             )
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.type").value(createdBehaviour.getType()))
+            .andExpect(jsonPath("$.type").value(createdBehaviour.getType().toString()))
             .andExpect(jsonPath("$.date").value("1970-01-01T00:01:40.000+00:00"));
     }
 
