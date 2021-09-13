@@ -10,6 +10,8 @@ public class UserDTO {
     private String id;
 
     private String login;
+    
+    private double emissions;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -37,12 +39,21 @@ public class UserDTO {
         this.login = login;
     }
 
-    // prettier-ignore
+    public double getEmissions() {
+		return emissions;
+	}
+
+	public void setEmissions(double emission) {
+		emissions = emission;
+	}
+
+	// prettier-ignore
     @Override
     public String toString() {
         return "UserDTO{" +
             "id='" + id + '\'' +
             ", login='" + login + '\'' +
+            ", emissions=" + emissions + '\'' +
             "}";
     }
 }

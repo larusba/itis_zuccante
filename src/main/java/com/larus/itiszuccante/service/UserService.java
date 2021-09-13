@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.larus.itiszuccante.config.Constants;
 import com.larus.itiszuccante.domain.Authority;
+import com.larus.itiszuccante.domain.Behaviour;
 import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.repository.AuthorityRepository;
 import com.larus.itiszuccante.repository.UserRepository;
@@ -282,7 +283,18 @@ public class UserService {
     }
 
     public Page<UserDTO> getAllPublicUsers(Pageable pageable) {
-        return userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map(UserDTO::new);
+        Page<UserDTO> users = userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map(user -> {
+        	double emissions = 0;
+        	if (user.getBehaviour() == null) return new UserDTO(user);
+        	for (Behaviour behaviour : user.getBehaviour()) {
+        		emissions += behaviour.getEmission();
+        	}
+        	UserDTO userDTO = new UserDTO(user);
+        	userDTO.setEmissions(emissions);
+        	return userDTO;
+        });
+        
+        return users;
     }
 
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
@@ -316,5 +328,9 @@ public class UserService {
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+    
+    public List<Behaviour> getBehaviours(String id) {
+    	 return userRepository.findById(id).orElseThrow().getBehaviour();
     }
 }

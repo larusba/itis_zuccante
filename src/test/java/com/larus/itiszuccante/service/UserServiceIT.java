@@ -2,8 +2,10 @@ package com.larus.itiszuccante.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,10 +13,22 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.BehaviourType;
+import com.larus.itiszuccante.domain.CarType;
+import com.larus.itiszuccante.domain.FuelType;
+import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.domain.Vehicle;
 import com.larus.itiszuccante.repository.UserRepository;
+import com.larus.itiszuccante.security.AuthoritiesConstants;
+import com.larus.itiszuccante.service.dto.UserDTO;
 
 import tech.jhipster.security.RandomUtil;
 
@@ -41,6 +55,9 @@ class UserServiceIT {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private BehaviourService behaviourService;
 
     private User user;
 
@@ -156,5 +173,26 @@ class UserServiceIT {
         userService.removeNotActivatedUsers();
         Optional<User> maybeDbUser = userRepository.findById(dbUser.getId());
         assertThat(maybeDbUser).contains(dbUser);
+    }
+    
+    @Test
+    void getAllPublicUsersTest() {
+        Behaviour newBehaviour = new Behaviour();
+        newBehaviour.setDistance(100);
+        newBehaviour.setType(BehaviourType.CAR_TRIP);
+        newBehaviour.setEmission(0.01);
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarType(CarType.SMALL);
+        vehicle.setFuelType(FuelType.BIODIESEL);
+        Profile profile = new Profile();
+        profile.setVehicle(vehicle);
+		user.setProfile(profile);
+		ArrayList<Behaviour> behaviours = new ArrayList<Behaviour>();
+		behaviours.add(newBehaviour);
+		user.setBehaviour(behaviours);
+        user = userRepository.save(user);
+        Page<UserDTO> users = userService.getAllPublicUsers(null);
+        List<UserDTO> listUsers = users.getContent();
+        assertThat(listUsers.get(0).getEmissions()).isEqualTo(0.01);
     }
 }

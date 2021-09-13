@@ -94,6 +94,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private List<Post> posts;
 
     private List<Integer> badges;
+    
+    private List<Behaviour> behaviour;
 
     public String getId() {
         return id;
@@ -248,7 +250,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.badges = badges;
     }
 
-    @Override
+    public List<Behaviour> getBehaviour() {
+		return behaviour;
+	}
+
+	public void setBehaviour(List<Behaviour> behaviour) {
+		this.behaviour = behaviour;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
