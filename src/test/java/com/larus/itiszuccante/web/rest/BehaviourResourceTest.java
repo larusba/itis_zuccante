@@ -33,7 +33,7 @@ public class BehaviourResourceTest {
 
     Date date = new Date(0);
 
-    private Behaviour behaviour = new Behaviour(BehaviourType.CAR_TRIP, date);
+    private Behaviour behaviour = new Behaviour(BehaviourType.RECYCLING, date);
 
     @BeforeEach
     public void init() {

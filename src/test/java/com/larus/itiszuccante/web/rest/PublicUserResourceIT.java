@@ -100,6 +100,8 @@ class PublicUserResourceIT {
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(jsonPath("$").isArray())
-        .andExpect(jsonPath("$").value(Arrays.asList(hasItems(newBehaviour).toString())));
+        .andExpect(jsonPath("$[0].emission").value(newBehaviour.getEmission()))
+        .andExpect(jsonPath("$[0].type").value(newBehaviour.getType().toString()))
+        .andExpect(jsonPath("$[0].distance").value(newBehaviour.getDistance()));
     }
 }
