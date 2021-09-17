@@ -1,23 +1,25 @@
-import React from "react";
-import "./App.css";
-import { Link } from "react-router-dom";
-import { Paper, TextField, IconButton } from "@material-ui/core";
-import SendIcon from "@material-ui/icons/Send";
+import React from 'react';
+import './App.css';
+import { Link } from 'react-router-dom';
+import { Paper, TextField, IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
 export default function PasswordReset() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const data = new FormData(event.target);
     let option = {
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      method: "POST",
-      body: data.get("email"),
+      method: 'POST',
+      body: data.get('email'),
     };
-    fetch("/api/account/reset-password/init", option).then((res) =>
-      console.log(res.json()).catch((error) => console.log(error))
-    );
+    const res = await fetch('/api/account/reset-password/init', option);
+    console.log(res);
+    const text = await res.text();
+    console.log(text);
   };
   return (
     <div className="form-background blue">
