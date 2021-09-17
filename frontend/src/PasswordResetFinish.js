@@ -1,10 +1,39 @@
 import React from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
-import { Paper, TextField, Button } from "@material-ui/core";
+import {
+  Paper,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+} from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 export default function PasswordResetFinish() {
   const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [newPassword, setNewPassword] = React.useState("");
+
+  const handleConfirmChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  const handleError = () => {
+    if (password.length === 0 || newPassword.length === 0) return false;
+    if (
+      password.length > 0 &&
+      newPassword.length > 0 &&
+      password === newPassword
+    )
+      return false;
+    return true;
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = (event) => {
     const url = new URL(window.location.href);
@@ -31,17 +60,37 @@ export default function PasswordResetFinish() {
           variant="outlined"
           label="Nuova password"
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           onChange={(event) => setPassword(event.currentTarget.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleShowPassword}>
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <br />
         <br />
         <TextField
+          error={handleError()}
           className="pwreset-input finish"
           variant="outlined"
           label="Conferma password"
           name="password-confirm"
-          type="password"
+          type={showPassword ? "text" : "password"}
+          onChange={handleConfirmChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleShowPassword}>
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
 
         <br />

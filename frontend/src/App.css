@@ -74,6 +74,7 @@
 }
 
 .login-field {
+  width: 100%;
   background-color: rgba(180, 255, 110, 0.15);
 }
 

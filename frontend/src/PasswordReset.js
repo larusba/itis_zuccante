@@ -15,7 +15,9 @@ export default function PasswordReset() {
       method: "POST",
       body: data.get("email"),
     };
-    fetch("/api/account/reset-password/init", option).then(console.log("Ok"));
+    fetch("/api/account/reset-password/init", option).then((res) =>
+      console.log(res.json()).catch((error) => console.log(error))
+    );
   };
   return (
     <div className="form-background blue">
