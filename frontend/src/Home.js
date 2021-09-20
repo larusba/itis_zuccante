@@ -1,7 +1,7 @@
-import React from "react";
-import "./App.css";
-import ChatIcon from "@mui/icons-material/Chat";
-import ReportIcon from "@mui/icons-material/Report";
+import React from 'react';
+import './App.css';
+import ChatIcon from '@mui/icons-material/Chat';
+import ReportIcon from '@mui/icons-material/Report';
 import {
   IconButton,
   Drawer,
@@ -12,7 +12,9 @@ import {
   DialogTitle,
   DialogContent,
   CircularProgress,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 export default function Home() {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -35,99 +37,84 @@ export default function Home() {
   };
 
   const getDate = () => {
-    let date = new Date();
-    let dayOfWeek;
-    let day = date.getDate();
-    let month;
-    let year = date.getFullYear();
-    switch (date.getDay()) {
-      case 0:
-        dayOfWeek = "domenica";
-        break;
-      case 1:
-        dayOfWeek = "lunedì";
-        break;
-      case 2:
-        dayOfWeek = "martedì";
-        break;
-      case 3:
-        dayOfWeek = "mercoledì";
-        break;
-      case 4:
-        dayOfWeek = "giovedì";
-        break;
-      case 5:
-        dayOfWeek = "venerdì";
-        break;
-      case 6:
-        dayOfWeek = "sabato";
-    }
-    switch (date.getMonth()) {
-      case 0:
-        month = "gennaio";
-        break;
-      case 1:
-        month = "febbraio";
-        break;
-      case 2:
-        month = "marzo";
-        break;
-      case 3:
-        month = "aprile";
-        break;
-      case 4:
-        month = "maggio";
-        break;
-      case 5:
-        month = "giugno";
-        break;
-      case 6:
-        month = "luglio";
-        break;
-      case 7:
-        month = "agosto";
-        break;
-      case 8:
-        month = "settembre";
-        break;
-      case 9:
-        month = "ottobre";
-        break;
-      case 10:
-        month = "novembre";
-        break;
-      case 11:
-        month = "dicembre";
-        break;
-    }
-    return dayOfWeek + " " + day + " " + " " + month + " " + year;
+    return new Date().toLocaleDateString('it-IT', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   };
 
   return (
-    <div className="home-page">
-      <div className="home-text">
+    <Box
+      style={{
+        position: 'relative',
+        width: '100%',
+        marginLeft: '30px',
+        marginRight: '30px',
+      }}
+    >
+      <div style={{ fontFamily: 'Lato, sans-serif' }}>
         <h1>Ciao bello</h1>
         <h2>Oggi è {getDate()}</h2>
       </div>
-      <center>
-        <CircularProgress
-          className="home-progress"
-          variant="determinate"
-          value={50}
-          size={200}
-        />
-      </center>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+        width="500px"
+        style={{ margin: 'auto' }}
+      >
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+        <Grid item xs={4} style={{ textAlign: 'center' }}>
+          <CircularProgress variant="determinate" value={100} size={40} />
+        </Grid>
+      </Grid>
       <IconButton
-        className="chat-button"
         color="primary"
         onClick={handleChatClick}
+        style={{
+          position: 'fixed',
+          bottom: '100px',
+          left: '50px',
+          transform: 'scale(3)',
+        }}
       >
         <ChatIcon />
       </IconButton>
       <IconButton
-        className="report-button"
         color="secondary"
         onClick={handleReportClick}
+        style={{
+          position: 'fixed',
+          bottom: '100px',
+          right: '50px',
+          transform: 'scale(3)',
+        }}
       >
         <ReportIcon />
       </IconButton>
@@ -144,6 +131,6 @@ export default function Home() {
           Invia una segnalazione di comportamenti dannosi all'ambiente
         </DialogContent>
       </Dialog>
-    </div>
+    </Box>
   );
 }
