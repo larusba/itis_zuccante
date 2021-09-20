@@ -12,6 +12,7 @@ import Register from "./Register";
 import PasswordReset from "./PasswordReset";
 import AccountActivation from "./AccountActivation";
 import PasswordResetFinish from "./PasswordResetFinish";
+import Navigation from "./Navigation.js";
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
           </Route>
           <Route path="/password-reset">
             <PasswordReset />
+          </Route>
+          <Route path="/">
+            <Navigation />
           </Route>
         </Switch>
       </Router>

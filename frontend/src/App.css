@@ -160,6 +160,32 @@
   font-family: "Montserrat", sans-serif;
 }
 
+.chat-button {
+  left: 5vw;
+  top: 55vh;
+  transform: scale(3);
+}
+
+.report-button {
+  left: 88vw;
+  top: 55vh;
+  transform: scale(3);
+}
+
+.home-page {
+  width: 100%;
+  height: 100%;
+}
+
+.home-text {
+  font-family: "Lato", sans-serif;
+  margin-left: 2vw;
+}
+
+.home-progress {
+  position: absolute;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
