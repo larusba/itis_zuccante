@@ -48,6 +48,7 @@ export default function Register() {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     let option = {
       headers: {
         Accept: "application/json",
