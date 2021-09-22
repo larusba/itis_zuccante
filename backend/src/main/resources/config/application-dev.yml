@@ -35,10 +35,13 @@ spring:
       uri: mongodb://localhost:27017
       database: itis_zuccante
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_FROM}
+    password: ${MAIL_PASSWORD}
+      properties.mail.smtp:
+        starttls.enable: true
+        ssl.trust: ${MAIL_SSL_TRUST}
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:

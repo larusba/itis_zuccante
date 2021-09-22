@@ -1,0 +1,11 @@
+#logo {
+  /**/
+  /*border: 5px solid #e5ff00;*/
+  position: relative;
+  top: 30px;
+  margin: auto;
+  align-items: center;
+  display: inline-flex;
+  min-width: 100px;
+  min-height: 100px;
+}

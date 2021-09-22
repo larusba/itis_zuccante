@@ -1,0 +1,45 @@
+.container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.list {
+  margin: auto;
+  text-align: center;
+  position: fixed;
+}
+
+.fab {
+  top: 80%;
+  left: 40%;
+  position: fixed;
+}
+
+.box {
+  border: 5px solid rgb(0, 38, 255);
+  margin: auto;
+}
+
+.create {
+  position: absolute;
+  left: -30px;
+  bottom: 0%;
+}
+
+.create:hover {
+  background-color: aqua;
+}
+
+.cancel {
+  position: absolute;
+  left: -25px;
+  top: 85%;
+}
+
+.textField {
+  left: 0%;
+  width: auto;
+}
+
+.passengers {
+  width: 30%;
+}

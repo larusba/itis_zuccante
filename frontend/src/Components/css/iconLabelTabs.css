@@ -1,0 +1,12 @@
+#paper {
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    width: auto;
+}
+
+#tabs {
+    margin: auto;
+    align-items: center;
+    display: inline-flex;
+}
