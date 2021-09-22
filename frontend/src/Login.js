@@ -1,6 +1,6 @@
-import React from "react";
-import "./App.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './App.css';
+import { Link } from 'react-router-dom';
 import {
   TextField,
   Button,
@@ -8,15 +8,16 @@ import {
   IconButton,
   Container,
   Grid,
-} from "@material-ui/core";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+} from '@material-ui/core';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { WindowSharp } from '@mui/icons-material';
 
 export default function Login() {
   const [state, setState] = React.useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     showPassword: false,
   });
   const [status, setStatus] = React.useState(0);
@@ -37,20 +38,38 @@ export default function Login() {
     return false;
   };
 
+  const onEnterPress = (event) => {
+    if (state.email.length <= 2 || state.password.length <= 2) return;
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      console.log('enter');
+      handleSubmit();
+    }
+  };
+
   const handleSubmit = () => {
     let option = {
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         username: state.email,
         password: state.password,
       }),
     };
-    fetch("/api/authenticate", option).then((res) =>
-      res.json().then((res) => setStatus(res.status))
+    fetch('/api/authenticate', option).then((res) =>
+      res.json().then((res) => {
+        setStatus(res.status);
+        console.log(res);
+        if (res.id_token) {
+          window.localStorage.setItem('token', res.id_token);
+          window.location.href = '/';
+        } else {
+          console.log('bad login');
+        }
+      })
     );
   };
 
@@ -70,6 +89,7 @@ export default function Login() {
                 variant="outlined"
                 value={state.email}
                 onChange={handleInputChange}
+                onKeyPress={onEnterPress}
                 className="login-field"
               />
             </Grid>
@@ -77,10 +97,11 @@ export default function Login() {
               <TextField
                 error={handleError()}
                 label="Password"
-                type={state.showPassword ? "text" : "password"}
+                type={state.showPassword ? 'text' : 'password'}
                 name="password"
                 variant="outlined"
                 value={state.password}
+                onKeyPress={onEnterPress}
                 onChange={handleInputChange}
                 className="login-field"
                 InputProps={{
