@@ -40,5 +40,10 @@ public class DefaultSuggestionService implements SuggestionService {
 	public List<Suggestion> findByType(String type) {
 		return repository.findByType(type);
 	}
+	
+	public List<Suggestion> findAll() {
+		
+		return repository.findAll();
+	}
 
 }

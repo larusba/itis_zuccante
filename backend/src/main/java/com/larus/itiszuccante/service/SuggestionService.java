@@ -12,5 +12,5 @@ public interface SuggestionService {
 	Suggestion update(Suggestion s);
 	void delete(String id);
 	List<Suggestion> findByType(String type);
-
+	List<Suggestion> findAll();
 }

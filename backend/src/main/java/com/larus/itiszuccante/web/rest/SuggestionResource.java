@@ -40,9 +40,14 @@ public class SuggestionResource {
 		return new ResponseEntity<Suggestion>(HttpStatus.NO_CONTENT);
 	}
 
-	@GetMapping
-	public List<Suggestion> findByType(@RequestParam String type) {
+	@GetMapping("/{type}")
+	public List<Suggestion> findByType(@PathVariable String type) {
 		return service.findByType(type);
+	}
+	
+	@GetMapping
+	public List<Suggestion> findAll() {
+		return service.findAll();
 	}
 
 }
