@@ -1,21 +1,5 @@
 package com.larus.itiszuccante.service;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.larus.itiszuccante.config.Constants;
 import com.larus.itiszuccante.domain.Authority;
 import com.larus.itiszuccante.domain.Behaviour;
@@ -26,7 +10,23 @@ import com.larus.itiszuccante.security.AuthoritiesConstants;
 import com.larus.itiszuccante.security.SecurityUtils;
 import com.larus.itiszuccante.service.dto.AdminUserDTO;
 import com.larus.itiszuccante.service.dto.UserDTO;
-
+import com.larus.itiszuccante.service.exception.EmailAlreadyUsedException;
+import com.larus.itiszuccante.service.exception.InvalidPasswordException;
+import com.larus.itiszuccante.service.exception.UsernameAlreadyUsedException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import tech.jhipster.security.RandomUtil;
 
 /**
@@ -283,17 +283,21 @@ public class UserService {
     }
 
     public Page<UserDTO> getAllPublicUsers(Pageable pageable) {
-        Page<UserDTO> users = userRepository.findAllByIdNotNullAndActivatedIsTrue(pageable).map(user -> {
-        	double emissions = 0;
-        	if (user.getBehaviour() == null) return new UserDTO(user);
-        	for (Behaviour behaviour : user.getBehaviour()) {
-        		emissions += behaviour.getEmission();
-        	}
-        	UserDTO userDTO = new UserDTO(user);
-        	userDTO.setEmissions(emissions);
-        	return userDTO;
-        });
-        
+        Page<UserDTO> users = userRepository
+            .findAllByIdNotNullAndActivatedIsTrue(pageable)
+            .map(
+                user -> {
+                    double emissions = 0;
+                    if (user.getBehaviour() == null) return new UserDTO(user);
+                    for (Behaviour behaviour : user.getBehaviour()) {
+                        emissions += behaviour.getEmission();
+                    }
+                    UserDTO userDTO = new UserDTO(user);
+                    userDTO.setEmissions(emissions);
+                    return userDTO;
+                }
+            );
+
         return users;
     }
 
@@ -329,8 +333,8 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
-    
+
     public List<Behaviour> getBehaviours(String id) {
-    	 return userRepository.findById(id).orElseThrow().getBehaviour();
+        return userRepository.findById(id).orElseThrow().getBehaviour();
     }
 }

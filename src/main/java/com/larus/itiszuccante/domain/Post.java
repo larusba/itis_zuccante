@@ -17,7 +17,7 @@ public class Post extends AbstractAuditingEntity implements Serializable {
     private String id;
 
     @NotNull
-    private String type;
+    private PostType type;
 
     @NotNull
     private String group;
@@ -41,7 +41,7 @@ public class Post extends AbstractAuditingEntity implements Serializable {
 
     public Post() {}
 
-    public Post(String type, String group, String content) {
+    public Post(PostType type, String group, String content) {
         this.type = type;
         this.group = group;
         this.content = content;
@@ -55,11 +55,11 @@ public class Post extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
+    public PostType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(PostType type) {
         this.type = type;
     }
 

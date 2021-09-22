@@ -1,6 +1,7 @@
 package com.larus.itiszuccante.service;
 
 import com.larus.itiszuccante.domain.Post;
+import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
@@ -8,4 +9,8 @@ public interface PostService {
     Optional<Post> read(String id);
     Post update(Post p);
     void delete(String id);
+
+    List<Post> findAllByGroup(String groupid);
+
+    boolean isAuthorOrMod(Post p, String groupid, String postid);
 }

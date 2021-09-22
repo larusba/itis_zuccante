@@ -6,7 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.larus.itiszuccante.IntegrationTest;
 import com.larus.itiszuccante.IntegrationTest;
 import com.larus.itiszuccante.domain.Group;
+import com.larus.itiszuccante.domain.Post;
+import com.larus.itiszuccante.domain.PostType;
 import com.larus.itiszuccante.repository.GroupRepository;
+import com.larus.itiszuccante.repository.PostRepository;
+import java.util.List;
 import java.util.Optional;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +25,7 @@ public class GroupServiceTest {
     @BeforeEach
     public void init() {
         repository.deleteAll();
+        postRepository.deleteAll();
     }
 
     @Autowired
@@ -29,7 +34,14 @@ public class GroupServiceTest {
     @Autowired
     private GroupService service;
 
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private PostService postService;
+
     Group group = new Group("Prova", "Descrizione");
+    Post post = new Post(PostType.REPORT, "6138c1ae94cc8d093a86ef4f", "Some content");
 
     @Test
     public void testCreate() {
@@ -80,5 +92,24 @@ public class GroupServiceTest {
         Optional<Group> readSug = repository.findById(createdGroup.getId());
         assertThat(readSug).isNotPresent();
         assertEquals(0, repository.findAll().size());
+    }
+
+    @Test
+    public void testFindByGroup() {
+        Group createdGroup = repository.save(group);
+
+        post.setGroup(createdGroup.getId());
+
+        Post createdPost = postRepository.save(post);
+
+        Post secondPost = new Post(PostType.ANNOUNCEMENT, "InvalidGroup", "Should not be there");
+        Post secondCreatedPost = postRepository.save(secondPost);
+
+        List<Post> posts = postRepository.findAllByGroup(createdGroup.getId());
+
+        assertThat(posts).contains(createdPost);
+        assertThat(posts).doesNotContain(secondCreatedPost);
+
+        assertEquals(1, posts.size());
     }
 }

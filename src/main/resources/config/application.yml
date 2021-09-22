@@ -134,7 +134,7 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: itis_zuccante@localhost
+    from: ${MAIL_FROM}
   api-docs:
     default-include-pattern: ${server.servlet.context-path:}/api/.*
     management-include-pattern: ${server.servlet.context-path:}/management/.*

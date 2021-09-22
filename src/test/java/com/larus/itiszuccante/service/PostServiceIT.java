@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.larus.itiszuccante.IntegrationTest;
 import com.larus.itiszuccante.domain.Post;
+import com.larus.itiszuccante.domain.PostType;
 import com.larus.itiszuccante.repository.PostRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,7 @@ public class PostServiceIT {
     @Autowired
     private PostService service;
 
-    Post post = new Post("REPORT", "6138c1ae94cc8d093a86ef4f", "Some content");
+    Post post = new Post(PostType.REPORT, "6138c1ae94cc8d093a86ef4f", "Some content");
 
     @Test
     public void testCreate() {
@@ -42,7 +43,7 @@ public class PostServiceIT {
     @Test
     public void testRead() {
         Post g = new Post();
-        g.setType("REPORT");
+        g.setType(PostType.REPORT);
         g.setGroup("6138c1ae94cc8d093a86ef4f");
         g.setContent("Some content");
 

@@ -1,13 +1,11 @@
 package com.larus.itiszuccante.service.impl;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.larus.itiszuccante.domain.Group;
 import com.larus.itiszuccante.repository.GroupRepository;
 import com.larus.itiszuccante.service.GroupService;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultGroupService implements GroupService {
@@ -34,8 +32,4 @@ public class DefaultGroupService implements GroupService {
     public void delete(String id) {
         repository.deleteById(id);
     }
-    /*@Override
-    public List<Group> findAllByParticipant(User user) {
-        return repository.findAllByParticipant(user);
-    }*/
 }

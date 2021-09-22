@@ -1,4 +1,4 @@
-package com.larus.itiszuccante.service;
+package com.larus.itiszuccante.service.exception;
 
 public class UsernameAlreadyUsedException extends RuntimeException {
 

@@ -1,19 +1,15 @@
 package com.larus.itiszuccante.web.rest;
 
+import com.larus.itiszuccante.domain.Group;
+import com.larus.itiszuccante.domain.Post;
+import com.larus.itiszuccante.service.CommentService;
+import com.larus.itiszuccante.service.GroupService;
+import com.larus.itiszuccante.service.PostService;
+import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.larus.itiszuccante.domain.Group;
-import com.larus.itiszuccante.service.GroupService;
-
+import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
@@ -22,6 +18,12 @@ public class GroupResource {
 
     @Autowired
     private GroupService service;
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
 
     @PostMapping
     public Group create(@RequestBody Group g) {
@@ -43,8 +45,4 @@ public class GroupResource {
     public void delete(@PathVariable String id) {
         service.delete(id);
     }
-    /*@GetMapping
-    public List<Group> findAllByParticipant(@RequestParam User user) {
-        return service.findAllByParticipant(user);
-    }*/
 }
