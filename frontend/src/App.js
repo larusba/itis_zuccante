@@ -7,8 +7,8 @@ import Behaviour from "./Components/Behaviour";
 function App() {
   return (
     <div className="App">
-      {/*<Behaviour />*/}
-      <Profile />
+      <Behaviour />
+      {/*<Profile />*/}
 
       {/*<header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

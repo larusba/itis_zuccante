@@ -33,7 +33,6 @@ function Profile() {
     },
   }));
   const [disable, setDisable] = React.useState(true);
-  const [btnState, btnSet] = React.useState(true);
   const [firstName, setFirstName] = React.useState("First name");
   const [lastName, setLastName] = React.useState("Last name");
   const [email, setEmail] = React.useState("E-mail");
@@ -136,7 +135,7 @@ function Profile() {
                 className="outlined-basic"
                 variant="outlined"
                 size="small"
-                disabled={btnState}
+                disabled={disable}
                 placeholder={firstName}
                 onChange={handleChangeFirst}
               />{" "}
@@ -148,7 +147,7 @@ function Profile() {
                 className="outlined-basic"
                 variant="outlined"
                 size="small"
-                disabled={btnState}
+                disabled={disable}
                 placeholder={lastName}
                 onChange={handleChangeLast}
               />{" "}
@@ -165,7 +164,7 @@ function Profile() {
                 className="outlined-basic"
                 variant="outlined"
                 size="small"
-                disabled={btnState}
+                disabled={disable}
                 placeholder={email}
                 onChange={handleChangeEmail}
               />{" "}
@@ -183,7 +182,7 @@ function Profile() {
                 className="outlined-basic"
                 variant="outlined"
                 size="small"
-                disabled={btnState}
+                disabled={disable}
                 placeholder={birth}
                 onChange={handleChangeBirth}
               />{" "}
@@ -200,7 +199,7 @@ function Profile() {
                 className="outlined-basic"
                 variant="outlined"
                 size="small"
-                disabled={btnState}
+                disabled={disable}
                 placeholder={locality}
                 onChange={handleChangeLocality}
               />{" "}

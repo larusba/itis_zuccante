@@ -61,21 +61,35 @@ export default function FolderList() {
   const [openSelect, setSelect] = React.useState(false);
   const [openClass, setClass] = React.useState(false);
   const [openWaste, setWaste] = React.useState(false);
+  const [openElectric, setOpenElectric] = React.useState(false);
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
   const [activity, setActivity] = React.useState("");
   const [flightClass, setFlightClass] = React.useState("");
   const [wasteType, setWasteType] = React.useState("");
+  const [electricLocation, setElectricLocation] = React.useState("");
   const [date, setDate] = React.useState(new Date("2014-08-10T00:00:00"));
   const [distance, setDistance] = React.useState(0);
   const [passengers, setPassengers] = React.useState(0);
-  const [roundrip, setRoundrip] = React.useState("no");
+  const [roundtrip, setRoundtrip] = React.useState("no");
+  const [electric, setElectric] = React.useState(false);
   const [iata1, setIATA1] = React.useState("");
   const [iata2, setIATA2] = React.useState("");
   const [iata3, setIATA3] = React.useState("");
 
   const handleChangeRadio = (event) => {
-    setRoundrip(event.target.value);
+    setRoundtrip(event.target.value);
+  };
+
+  const handleChangeElectric = (event) => {
+    setElectric(event.target.value);
+  };
+
+  const isElectric = () => {
+    if (electric) {
+      return true;
+    }
+    return false;
   };
 
   const handleDateChange = (newDate) => {
@@ -132,6 +146,18 @@ export default function FolderList() {
     setWasteType(event.target.value);
   };
 
+  const handleCloseElectric = () => {
+    setElectric(false);
+  };
+
+  const handleOpenElectric = () => {
+    setElectric(true);
+  };
+
+  const handleChangeElectricLocation = (event) => {
+    setElectricLocation(event.target.value);
+  };
+
   const handleChangeDistance = (event, newDistance) => {
     setDistance(newDistance);
   };
@@ -151,14 +177,29 @@ export default function FolderList() {
   const recycling = "RECYCLING";
   const walk = "WALK";
 
+  const [behaviours, setBehaviours] = React.useState([]);
+  let accountId;
+  fetch("/api/account").then((res) =>
+    res.json().then((res) => (accountId = res))
+  );
+  fetch("/api/users/" + accountId + "/behaviours").then((res) =>
+    res.json().then((res) => (behaviours = res))
+  );
   const avatarChoice = () => {
-    fetch("/api/user/{id}/behaviour").then();
-    /*for (let i=0; i<result.size(); i++) {
-      switch (result.get(i).getType()) {
+    for (let i = 0; i < behaviours.length; i++) {
+      switch (behaviours.get(i).getType()) {
         case car_trip:
-
+          return <DirectionsCarIcon />;
+        case flight:
+          return <FlightIcon />;
+        case recycling:
+          return <DeleteIcon />;
+        case walk:
+          return <DirectionsRunIcon />;
+        default:
+          return null;
       }
-    }*/
+    }
   };
 
   const enableCartrip = () => {
@@ -197,6 +238,75 @@ export default function FolderList() {
     document.getElementById("flight").style.display = "none";
   };
 
+  const behaviourDescription = () => {
+    for (let i = 0; i < behaviours.length; i++) {
+      let item = behaviours.get(i);
+      let date = item.getDate();
+      switch (item.getType()) {
+        case car_trip:
+          return (
+            <Container>
+              <ListItemButton onClick={handleShow}>
+                <ListItemAvatar>
+                  <Avatar>{avatarChoice()}</Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Viaggio in macchina"
+                  secondary={date.toString()}
+                />
+                {show ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={show} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem sx={{ pl: 10 }}>
+                    <ListItemText>
+                      Distanza: {item.getDistance().toString()}
+                    </ListItemText>
+                    <ListItemText>
+                      Emissioni di CO2: {item.getEmission().toString()}
+                    </ListItemText>
+                  </ListItem>
+                </List>
+              </Collapse>
+            </Container>
+          );
+        case flight:
+          return (
+            <Container>
+              <ListItemButton onClick={handleShow}>
+                <ListItemAvatar>
+                  <Avatar>{avatarChoice()}</Avatar>
+                </ListItemAvatar>
+                <ListItemText primary="Volo" secondary={date.toString()} />
+                {show ? <ExpandLess /> : <ExpandMore />}
+              </ListItemButton>
+              <Collapse in={show} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem sx={{ pl: 10 }}>
+                    <ListItemText>
+                      Distanza: {item.getDistance().toString()}
+                    </ListItemText>
+                    <ListItemText>
+                      Partenza: {item.getFrom().toString()}
+                    </ListItemText>
+                    <ListItemText>
+                      Arrivo: {item.getTo().toString()}
+                    </ListItemText>
+                    <ListItemText>
+                      Classe di volo: {item.getFlightClass().toString()}
+                    </ListItemText>
+                    <ListItemText>
+                      Emissioni di CO2: {item.getEmission().toString()}
+                    </ListItemText>
+                  </ListItem>
+                </List>
+              </Collapse>
+            </Container>
+          );
+      }
+    }
+  };
+
   return (
     <Container className="container">
       <h2>LE MIE ATTIVITA'</h2>
@@ -207,9 +317,7 @@ export default function FolderList() {
         >
           <ListItemButton onClick={handleShow}>
             <ListItemAvatar>
-              <Avatar>
-                <DirectionsCarIcon />
-              </Avatar>
+              <Avatar>{avatarChoice()}</Avatar>
             </ListItemAvatar>
             <ListItemText
               primary="Viaggio in macchina"
@@ -227,7 +335,7 @@ export default function FolderList() {
           <ListItemButton>
             <ListItemAvatar>
               <Avatar>
-                <FlightIcon />
+                <avatarChoice />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary="Volo" secondary="Jan 7, 2014" />
@@ -235,7 +343,7 @@ export default function FolderList() {
           <ListItemButton>
             <ListItemAvatar>
               <Avatar>
-                <DeleteIcon />
+                <avatarChoice />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary="Riciclo" secondary="July 20, 2014" />
@@ -243,7 +351,7 @@ export default function FolderList() {
           <ListItemButton>
             <ListItemAvatar>
               <Avatar>
-                <DirectionsRunIcon />
+                <avatarChoice />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary="Passeggiata" secondary="July 20, 2014" />
@@ -331,6 +439,68 @@ export default function FolderList() {
                   </FormControl>
                 </div>
                 <br />
+                Hai utilizzato un veicolo elettrico/ibrido?
+                <br />
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    aria-label="roundtrip"
+                    name="controlled-radio-buttons-group"
+                    value={electric}
+                    onChange={handleChangeElectric}
+                  >
+                    <FormControlLabel
+                      value="sì"
+                      control={<Radio size="small" />}
+                      label="Sì"
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<Radio size="small" />}
+                      label="No"
+                      checked="checked"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <div id="electric">
+                  Dove hai ricaricato il veicolo?
+                  <br />
+                  <FormControl className={classes.formControl}>
+                    <Select
+                      open={openElectric}
+                      value={electricLocation}
+                      onClose={handleCloseElectric}
+                      onOpen={handleOpenElectric}
+                      onChange={handleChangeElectricLocation}
+                    >
+                      <MenuItem value={"CH"}>Svizzera</MenuItem>
+                      <MenuItem value={"DE"}>Germania</MenuItem>
+                      <MenuItem value={"AT"}>Austria</MenuItem>
+                      <MenuItem value={"CERTIFIED_GREEN"}>
+                        Certificato verde
+                      </MenuItem>
+                      <MenuItem value={"SE"}>Svezia</MenuItem>
+                      <MenuItem value={"REST"}>Altro</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+                <br />
+                <br />
+                Classe di volo
+                <br />
+                <FormControl className={classes.formControl}>
+                  <Select
+                    open={openClass}
+                    value={flightClass}
+                    onClose={handleCloseClass}
+                    onOpen={handleOpenClass}
+                    onChange={handleChangeClass}
+                  >
+                    <MenuItem value={"economy"}>Economy</MenuItem>
+                    <MenuItem value={"first"}>Prima classe</MenuItem>
+                    <MenuItem value={"business"}>Business</MenuItem>
+                    <MenuItem value={"premium"}>Premium economy</MenuItem>
+                  </Select>
+                </FormControl>
                 <div id="flight">
                   Inserire i relativi codici aeroportuali IATA
                   <br />
@@ -378,9 +548,9 @@ export default function FolderList() {
                   <br />
                   <FormControl component="fieldset">
                     <RadioGroup
-                      aria-label="roundrip"
+                      aria-label="roundtrip"
                       name="controlled-radio-buttons-group"
-                      value={roundrip}
+                      value={roundtrip}
                       onChange={handleChangeRadio}
                     >
                       <FormControlLabel
@@ -395,24 +565,6 @@ export default function FolderList() {
                         checked="checked"
                       />
                     </RadioGroup>
-                  </FormControl>
-                  <br />
-                  <br />
-                  Classe di volo
-                  <br />
-                  <FormControl className={classes.formControl}>
-                    <Select
-                      open={openClass}
-                      value={flightClass}
-                      onClose={handleCloseClass}
-                      onOpen={handleOpenClass}
-                      onChange={handleChangeClass}
-                    >
-                      <MenuItem value={"economy"}>Economy</MenuItem>
-                      <MenuItem value={"first"}>Prima classe</MenuItem>
-                      <MenuItem value={"business"}>Business</MenuItem>
-                      <MenuItem value={"premium"}>Premium economy</MenuItem>
-                    </Select>
                   </FormControl>
                   <br />
                 </div>
