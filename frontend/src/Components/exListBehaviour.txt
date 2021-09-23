@@ -1,0 +1,41 @@
+<ListItemButton onClick={handleShow}>
+            <ListItemAvatar>
+              <Avatar>{avatarChoice()}</Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary="Viaggio in macchina"
+              secondary="Jan 9, 2014"
+            />
+            {show ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={show} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem sx={{ pl: 10 }}>
+                <ListItemText primary="Descrizione behaviour"></ListItemText>
+              </ListItem>
+            </List>
+          </Collapse>
+          <ListItemButton>
+            <ListItemAvatar>
+              <Avatar>
+                <avatarChoice />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Volo" secondary="Jan 7, 2014" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemAvatar>
+              <Avatar>
+                <avatarChoice />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Riciclo" secondary="July 20, 2014" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemAvatar>
+              <Avatar>
+                <avatarChoice />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Passeggiata" secondary="July 20, 2014" />
+          </ListItemButton>
