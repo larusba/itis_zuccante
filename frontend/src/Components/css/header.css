@@ -1,0 +1,15 @@
+.header {
+  /**/
+  background-color: rgba(10, 240, 60, 0.521);
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  width: 60%;
+  height: 40px;
+  border-radius: 30px;
+  border: 15px solid beige;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+  font-style: oblique;
+  font-weight: bold;
+}

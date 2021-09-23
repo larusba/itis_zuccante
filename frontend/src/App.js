@@ -13,25 +13,14 @@ import PasswordReset from "./PasswordReset";
 import AccountActivation from "./AccountActivation";
 import PasswordResetFinish from "./PasswordResetFinish";
 import Navigation from "./Navigation.js";
+import Profile from "./Components/Profile";
+import Dashboard from "./Dashboard";
+import Behaviour from "./Components/Behaviour";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        {/*<header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>*/}
         <Switch>
           <Route path="/login">
             <Login />
