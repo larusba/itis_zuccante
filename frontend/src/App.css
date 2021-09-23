@@ -206,6 +206,7 @@
   height: 60vh;
   left: 20vw;
   top: 20vh;
+  padding: 1%;
 }
 
 @keyframes App-logo-spin {

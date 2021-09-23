@@ -207,12 +207,13 @@ export default function Survey() {
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
+              variant="outlined"
               sx={{ mr: 1 }}
             >
               Back
             </Button>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleNext}>
+            <Button onClick={handleNext} variant="contained">
               {activeStep === Array.from(steps.keys()).length - 1
                 ? "Finish"
                 : "Next"}
