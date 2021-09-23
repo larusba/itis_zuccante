@@ -199,6 +199,15 @@
   width: 25vw;
 }
 
+.survey-paper {
+  position: absolute;
+  text-align: center;
+  width: 60vw;
+  height: 60vh;
+  left: 20vw;
+  top: 20vh;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -207,4 +216,3 @@
     transform: rotate(360deg);
   }
 }
-

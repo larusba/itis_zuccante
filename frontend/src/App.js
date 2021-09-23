@@ -13,9 +13,7 @@ import PasswordReset from "./PasswordReset";
 import AccountActivation from "./AccountActivation";
 import PasswordResetFinish from "./PasswordResetFinish";
 import Navigation from "./Navigation.js";
-import Profile from "./Components/Profile";
-import Dashboard from "./Dashboard";
-import Behaviour from "./Components/Behaviour";
+import ProfileSurvey from "./ProfileSurvey.js";
 
 function App() {
   return (
@@ -36,6 +34,9 @@ function App() {
           </Route>
           <Route path="/password-reset">
             <PasswordReset />
+          </Route>
+          <Route path="/set-profile">
+            <ProfileSurvey />
           </Route>
           <Route path="/">
             <Navigation />

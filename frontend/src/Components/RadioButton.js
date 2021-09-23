@@ -10,7 +10,7 @@ export default function FormControlLabelPlacement() {
   return (
     <FormControl component="fieldset">
       <div className="background">
-        <p className="text">LIFE STYLE</p>
+        <p className="text">STILE DI VITA</p>
       </div>
       <br />
       <RadioGroup
@@ -22,19 +22,19 @@ export default function FormControlLabelPlacement() {
         <FormControlLabel
           value="1"
           control={<Radio color="primary" />}
-          label="None of these"
+          label="Nessuno di questi"
           labelPlacement="start"
         />
         <FormControlLabel
           value="2"
           control={<Radio color="primary" />}
-          label="Vegan"
+          label="Vegano"
           labelPlacement="start"
         />
         <FormControlLabel
           value="3"
           control={<Radio color="primary" />}
-          label="Vegetarian"
+          label="Vegetariano"
           labelPlacement="start"
         />
       </RadioGroup>

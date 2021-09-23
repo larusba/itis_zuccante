@@ -1,72 +1,135 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import React from "react";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
-const stepss = new Map([
+const steps = new Map([
   [
-    'Means of transport',
+    "Mezzi di trasporto",
     [
-      'I walk or ride a bicycle, and I use public transport only occasionally.',
-      'I predominately use public transport (2/3) and sometimes walk or ride a bicycle (1/3).',
-      'I usually drive a car, but I also occasionally use public transport or walk.',
-      'I mainly drive a car.',
+      {
+        answer:
+          "Cammino o utilizzo una bicicletta, utilizzo i mezzi pubblici solo occasionalmente.",
+        value: "LOW",
+      },
+      {
+        answer:
+          "Uso soprattutto i mezzi di trasporto e a volte cammino o uso la bici.",
+        value: "MEDIUM",
+      },
+      {
+        answer:
+          "Solitamente guido, ma a volte cammino o uso anche i mezzi pubblici.",
+        value: "HIGH",
+      },
+      { answer: "Prevalentemente guido.", value: "GIANT" },
     ],
   ],
   [
-    'Flying',
+    "Volo",
     [
-      'I never fly privately.',
-      'I fly privately once or twice a year within Europe.',
-      'I fly long haul privately about once a year (or about four times within Europe).',
-      'I fly long haul privately two or three times a year (or regularly).',
+      { answer: "Non volo privatamente.", value: "LOW" },
+      {
+        answer:
+          "Volo privatamente una o due volte l'anno all'interno dell'Europa.",
+        value: "MEDIUM",
+      },
+      {
+        answer: "Volo privatamente a lungo raggio circa una volta l'anno.",
+        value: "HIGH",
+      },
+      {
+        answer:
+          "Volo privatamente a lungo raggio due o tre volte l'anno (o regolarmente).",
+        value: "GIANT",
+      },
     ],
   ],
   [
-    'Food',
+    "Cibo",
     [
-      'I eat only vegan food.',
-      'I mostly eat vegetarian food.',
-      'I eat meat every other day on average.',
-      'I eat meat at almost every meal.',
+      { answer: "Mangio solo vegano.", value: "LOW" },
+      { answer: "Mangio per lo più cibo vegetariano.", value: "MEDIUM" },
+      {
+        answer: "In media mangio la carne un giorno sì e un giorno no.",
+        value: "HIGH",
+      },
+      { answer: "Mangio carne in quasi tutti i pasti.", value: "GIANT" },
     ],
   ],
   [
-    'Shopping, leisure, culture',
+    "Shopping, divertimento, cultura",
     [
-      'I purchase new clothing, devices and furniture very rarely (these expenses are 60 euros a month). Expenses for leisure time, culture and health are below average.',
-      'I purchase half of my clothing, devices and furniture second-hand (these expenses are 170 euros a month). Expenses for leisure time, culture and health are slightly below average.',
-      'I occasionally purchase new clothing, devices and furniture (these expenses are 210 euros a month). Expenses for leisure time, culture and health are average (360 euros a month).',
-      'I frequently purchase new clothing, devices and furniture (these expenses are 420 euros a month). Expenses for leisure time, culture and health are slightly above average.',
+      {
+        answer:
+          "Acquisto nuovi vestiti, dispositivi e mobili molto raramente (queste spese sono 60 euro al mese). Spese per il tempo libero, cultura e salute sono sotto la media.",
+        value: "LOW",
+      },
+      {
+        answer:
+          "Acquisto metà dei miei vestiti, dispositivi e mobili di seconda mano (queste spese sono 170 euro al mese). Spese per il tempo libero, cultura e salute sono leggermente sotto la media.",
+        value: "MEDIUM",
+      },
+      {
+        answer:
+          "Acquisto occasionalmente vestiti, dispositivi e mobili (queste spese sono 210 euro al mese). Spese per il tempo libero, cultura e salute sono medie (360 euros a month).",
+        value: "HIGH",
+      },
+      {
+        answer:
+          "Acquisto frequentemente vestiti, dispositivi e mobili (queste spese sono 420 euro al mese). Spese per il tempo libero, cultura e salute sono leggermente sopra la media.",
+        value: "GIANT",
+      },
     ],
   ],
   [
-    'Living space',
+    "Spazio per vivere",
     [
-      'I live in a small space (for example, a flat with several people).',
-      'I live in a large area (e.g. detached house).',
+      {
+        answer:
+          "Vivo in uno spazio piccolo (per esempio, un appartamento con più persone).",
+        value: "LOW",
+      },
+      {
+        answer: "Vivo in uno spazio grande (es. casa singola).",
+        value: "HIGH",
+      },
     ],
   ],
   [
-    'Construction standard',
+    "Standard di costruzione",
     [
-      'I live in a renovated, energy-efficient house.',
-      'The house I inhabit is an older structure.',
+      {
+        answer: "Vivo in una casa rinnovata e a basso consumo energetico",
+        value: "LOW",
+      },
+      {
+        answer: "La casa in cui abito è una struttura più vecchia",
+        value: "HIGH",
+      },
     ],
   ],
   [
-    'Heating system',
+    "Sistema di riscaldamento",
     [
-      'Our home is heated using renewable energies (wood, heat pumps, etc.).',
-      'Our home is heated using fossil fuels (petroleum, natural gas, etc.).',
+      {
+        answer:
+          "La nostra casa è riscaldata usando fonti rinnovabili (legno, pompe di calore, ecc.).",
+        value: "LOW",
+      },
+      {
+        answer:
+          "La nostra casa è riscaldata usando combustibili fossili (petrolio, gas naturale, ecc.).",
+        value: "HIGH",
+      },
     ],
   ],
 ]);
@@ -74,6 +137,9 @@ const stepss = new Map([
 export default function Survey() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [personalFootprint, setPersonalFootprint] = React.useState(new Map());
+  const [vehicle, setVehicle] = React.useState();
+  const [recycling, setRecycling] = React.useState();
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -94,10 +160,18 @@ export default function Survey() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleFootprintChange = (event, step) => {
+    console.log(step);
+    const personalFootprintTmp = new Map(personalFootprint);
+    personalFootprintTmp.set(step, event.target.value);
+    setPersonalFootprint(personalFootprintTmp);
+  };
+
+  console.log(personalFootprint);
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep}>
-        {Array.from(stepss.keys()).map((label, index) => {
+        {Array.from(steps.keys()).map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           return (
@@ -107,7 +181,7 @@ export default function Survey() {
           );
         })}
       </Stepper>
-      {activeStep === Array.from(stepss.keys()).length - 1 ? (
+      {activeStep === Array.from(steps.keys()).length - 1 ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
             Grazie per le risposte :)
@@ -116,18 +190,19 @@ export default function Survey() {
       ) : (
         <React.Fragment>
           <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
-            {Array.from(stepss.keys())[activeStep]}
+            {Array.from(steps.keys())[activeStep]}
           </Typography>
-          <RadioGroup
-            aria-label="gender"
-            defaultValue="female"
-            name="radio-buttons-group"
-          >
-            {stepss.get(Array.from(stepss.keys())[activeStep]).map((q) => (
-              <FormControlLabel value={q} control={<Radio />} label={q} />
+          <RadioGroup name="radio-buttons-group">
+            {steps.get(Array.from(steps.keys())[activeStep]).map((q) => (
+              <FormControlLabel
+                value={q.value}
+                control={<Radio />}
+                label={q.answer}
+                onChange={(event) => handleFootprintChange(event, activeStep)}
+              />
             ))}
           </RadioGroup>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Button
               color="inherit"
               disabled={activeStep === 0}
@@ -136,11 +211,11 @@ export default function Survey() {
             >
               Back
             </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
+            <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleNext}>
-              {activeStep === Array.from(stepss.keys()).length - 1
-                ? 'Finish'
-                : 'Next'}
+              {activeStep === Array.from(steps.keys()).length - 1
+                ? "Finish"
+                : "Next"}
             </Button>
           </Box>
         </React.Fragment>

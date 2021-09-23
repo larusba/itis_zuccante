@@ -8,6 +8,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import BookIcon from "@mui/icons-material/Book";
 import Paper from "@mui/material/Paper";
 import Home from "./Home.js";
+import Behaviour from "./Components/Behaviour";
 
 export default function FixedBottomNavigation() {
   const [value, setValue] = React.useState(1);
@@ -17,7 +18,7 @@ export default function FixedBottomNavigation() {
       <CssBaseline />
       {value === 0}
       {value === 1 && <Home />}
-      {value === 2}
+      {value === 2 && <Behaviour />}
       <Paper
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
         elevation={3}

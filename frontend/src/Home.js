@@ -23,6 +23,7 @@ import {
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Grid from "@mui/material/Grid";
+import Profile from "./Components/Profile";
 
 function Suggestions() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -244,8 +245,9 @@ export default function Home() {
         </DialogContent>
       </Dialog>
       <Dialog open={profileOpen} scroll="paper" onClose={handleProfileClose}>
-        <DialogTitle>Profilo</DialogTitle>
-        <DialogContent>Profilo</DialogContent>
+        <DialogContent>
+          <Profile />
+        </DialogContent>
       </Dialog>
     </Box>
   );

@@ -101,7 +101,7 @@ function Profile() {
 
         <label htmlFor="contained-button-file">
           <Button variant="contained" component="span">
-            Upload new photo
+            Carica nuova foto
           </Button>
         </label>
       </div>
@@ -110,11 +110,11 @@ function Profile() {
         <br />
         <br />
         <div className="background">
-          <p className="text">PERSONAL DATA</p>
+          <p className="text">DATI PERSONALI</p>
         </div>
         <br />
         <form noValidate autoComplete="off" className="form">
-          NAME:
+          NOME:
           <br />
           <br />
           <div>
@@ -161,7 +161,7 @@ function Profile() {
           </div>
           <br />
           <br />
-          BIRTH DATE:
+          DATA DI NASCITA:
           <br />
           <div>
             <div>
@@ -178,7 +178,7 @@ function Profile() {
             </div>
           </div>
           <br />
-          LOCALITY:
+          LOCALIT&Agrave;:
           <br />
           <div>
             <div>
