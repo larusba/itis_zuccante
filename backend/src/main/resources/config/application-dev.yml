@@ -39,15 +39,9 @@ spring:
     port: 587
     username: ${MAIL_FROM}
     password: ${MAIL_PASSWORD}
-<<<<<<< HEAD
     properties.mail.smtp:
       starttls.enable: true
       ssl.trust: ${MAIL_HOST}
-=======
-      properties.mail.smtp:
-        starttls.enable: true
-        ssl.trust: ${MAIL_SSL_TRUST}
->>>>>>> reactBranch
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
@@ -99,3 +93,4 @@ jhipster:
 # ===================================================================
 
 # application:
+user.pic.path: ${USER_PIC_PATH}
