@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import "./css/formField.css";
 import "./css/textTitle.css";
 import ChangePasswordButton from "./ChangePassword.js";
+import Survey from "./Survey";
 
 function Profile() {
   const useStyles = makeStyles((theme) => ({
@@ -41,16 +42,6 @@ function Profile() {
   const classes2 = useStyles2();
   const [img, setImg] = React.useState();
 
-  fetch("/account").then((res) =>
-    res.json().then((res) => (firstName = res.first_name))
-  );
-  fetch("/account").then((res) =>
-    res.json().then((res) => (lastName = res.last_name))
-  );
-  fetch("/account").then((res) =>
-    res.json().then((res) => (email = res.email))
-  );
-
   const handleChangeFirst = (event) => {
     setFirstName(event.target.value);
   };
@@ -68,9 +59,6 @@ function Profile() {
   };
 
   let imgUrl = "";
-  fetch("/account").then((res) =>
-    res.json().then((res) => (imgUrl = res.image_url))
-  );
 
   const changePhoto = () => {
     console.log(img);
@@ -219,6 +207,7 @@ function Profile() {
       <br />
       <br />
       <br />
+      <Survey />
       <SaveButton
         btnState={disable}
         btnSet={setDisable}
