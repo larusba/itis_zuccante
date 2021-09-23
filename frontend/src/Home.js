@@ -24,6 +24,7 @@ import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Grid from "@mui/material/Grid";
 import Profile from "./Components/Profile";
+import { WindowSharp } from "@mui/icons-material";
 
 function Suggestions() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -114,7 +115,8 @@ export default function Home() {
       if (json.status === 401) {
         console.log("unauto");
         window.location.href = "/login";
-      } else console.log("auto");
+      } else if (!json.profile) window.location.href = "/set-profile";
+      else console.log("auto");
       setAccount(json);
     };
     getAccount();
