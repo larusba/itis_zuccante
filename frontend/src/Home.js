@@ -115,7 +115,7 @@ export default function Home() {
       if (json.status === 401) {
         console.log("unauto");
         window.location.href = "/login";
-      } else if (!json.profile) window.location.href = "/set-profile";
+      } //else if (!json.profile) window.location.href = "/set-profile";
       else console.log("auto");
       setAccount(json);
     };

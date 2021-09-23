@@ -105,7 +105,7 @@ export default function FolderList() {
   };
 
   const behaviourDescription = () => {
-    if (behaviours.length != 0) {
+    if (behaviours && behaviours.length != 0) {
       for (let i = 0; i < behaviours.length; i++) {
         let item = behaviours.get(i);
         let date = item.getDate();
