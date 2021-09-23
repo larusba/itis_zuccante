@@ -19,15 +19,15 @@ import com.larus.itiszuccante.service.ProfileService;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
-@RequestMapping("/api/profiles")
+@RequestMapping("/api/{userId}/profiles")
 public class ProfileResource {
 
 	@Autowired
 	ProfileService service;
 
 	@PostMapping
-	public ResponseEntity<Profile> create(@RequestBody Profile p) {
-		return new ResponseEntity<Profile>(service.create(p), HttpStatus.CREATED);
+	public ResponseEntity<Profile> create(@PathVariable String userId, @RequestBody Profile p) {
+		return new ResponseEntity<Profile>(service.create(userId, p), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{id}")

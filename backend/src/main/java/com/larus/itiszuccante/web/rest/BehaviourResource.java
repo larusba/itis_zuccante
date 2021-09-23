@@ -18,15 +18,15 @@ import com.larus.itiszuccante.service.BehaviourService;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
-@RequestMapping("/api/behaviours")
+@RequestMapping("/api/{userId}/behaviours")
 public class BehaviourResource {
 
     @Autowired
     private BehaviourService service;
 
     @PostMapping
-    public ResponseEntity<Behaviour> create(@RequestBody Behaviour b) {
-        return new ResponseEntity<Behaviour>(service.create(b), HttpStatus.CREATED);
+    public ResponseEntity<Behaviour> create(@PathVariable String userId, @RequestBody Behaviour b) {
+        return new ResponseEntity<Behaviour>(service.create(userId, b), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

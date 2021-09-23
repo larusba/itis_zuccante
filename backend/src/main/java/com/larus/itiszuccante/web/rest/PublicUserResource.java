@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.service.UserService;
 import com.larus.itiszuccante.service.dto.UserDTO;
 
@@ -74,5 +75,10 @@ public class PublicUserResource {
     @GetMapping("/users/{id}/behaviours")
     public List<Behaviour> getBehaviours(@PathVariable String id) {
     	return userService.getBehaviours(id);
+    }
+    
+    @GetMapping("/users/{id}/profile")
+    public Profile getProfile(@PathVariable String id) {
+    	return userService.getProfile(id);
     }
 }

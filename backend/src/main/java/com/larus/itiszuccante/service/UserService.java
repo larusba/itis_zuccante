@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.larus.itiszuccante.config.Constants;
 import com.larus.itiszuccante.domain.Authority;
 import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.repository.AuthorityRepository;
 import com.larus.itiszuccante.repository.UserRepository;
@@ -332,5 +333,9 @@ public class UserService {
     
     public List<Behaviour> getBehaviours(String id) {
     	 return userRepository.findById(id).orElseThrow().getBehaviour();
+    }
+    
+    public Profile getProfile(String id) {
+    	return userRepository.findById(id).orElseThrow().getProfile();
     }
 }
