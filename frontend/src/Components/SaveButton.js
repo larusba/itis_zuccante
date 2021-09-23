@@ -1,15 +1,15 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
-import EditIcon from "@material-ui/icons/Edit";
-import "./css/saveButton.css";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
+import EditIcon from '@material-ui/icons/Edit';
+import './css/saveButton.css';
 
 export default function SaveButton(props) {
   const { btnSet, changeData } = props;
 
   const saveAll = () => {
     btnSet(true);
-    changeData();
+    //changeData();
   };
 
   return (
@@ -31,7 +31,7 @@ export default function SaveButton(props) {
         startIcon={<EditIcon />}
         onClick={() => {
           btnSet(false);
-          console.log("pp");
+          console.log('pp');
         }}
       >
         Edit
