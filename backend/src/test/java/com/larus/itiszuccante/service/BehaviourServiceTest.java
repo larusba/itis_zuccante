@@ -32,27 +32,30 @@ import com.larus.itiszuccante.security.AuthoritiesConstants;
 public class BehaviourServiceTest {
 
     @Autowired
-    BehaviourRepository repository;
-    
-    @Autowired
-    UserRepository userRepository;
+    private BehaviourRepository repository;
 
     @Autowired
-    BehaviourService service;
+    private UserRepository userRepository;
 
-    Date date = new Date();
+    @Autowired
+    private BehaviourService service;
 
-    Behaviour behaviour = new Behaviour(BehaviourType.RECYCLING, date);
+    private Date date = new Date();
+
+    private Behaviour behaviour = new Behaviour(BehaviourType.RECYCLING, date);
 
     @BeforeEach
     public void init() {
         repository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     public void testCreate() {
-    	Principal principal = SecurityContextHolder.getContext().getAuthentication();
-		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = new User();
+        user.setLogin(principal.getName());
+        user.setPassword("$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K");
         user = userRepository.save(user);
         Behaviour createdBehaviour = service.create(user.getId(), behaviour);
         Optional<Behaviour> result = repository.findById(createdBehaviour.getId());
@@ -96,7 +99,7 @@ public class BehaviourServiceTest {
         assertThat(readBehaviour).isNotPresent();
         assertEquals(0, repository.findAll().size());
     }
-    
+
     @Test
     public void testCalculateEmissions() {
         Behaviour newBehaviour = new Behaviour();
@@ -107,9 +110,11 @@ public class BehaviourServiceTest {
         vehicle.setFuelType(FuelType.BIODIESEL);
         Profile profile = new Profile();
         profile.setVehicle(vehicle);
-		Principal principal = SecurityContextHolder.getContext().getAuthentication();
-		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
-		user.setProfile(profile);
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = new User();
+        user.setLogin(principal.getName());
+        user.setPassword("$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K");
+        user.setProfile(profile);
         user = userRepository.save(user);
         newBehaviour = service.create(user.getId(), newBehaviour);
         Optional<Behaviour> result = repository.findById(newBehaviour.getId());

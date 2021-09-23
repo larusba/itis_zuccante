@@ -30,35 +30,38 @@ import com.larus.itiszuccante.repository.UserRepository;
 import com.larus.itiszuccante.security.AuthoritiesConstants;
 
 @AutoConfigureMockMvc
-@WithMockUser(authorities = AuthoritiesConstants.ADMIN)
+@WithMockUser(authorities = AuthoritiesConstants.ADMIN, username = "user-test")
 @IntegrationTest
 public class BehaviourResourceTest {
 
     @Autowired
     private BehaviourRepository repository;
-    
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private MockMvc restUserMockMvc;
 
-    Date date = new Date(0);
+    private Date date = new Date(0);
 
     private Behaviour behaviour = new Behaviour(BehaviourType.RECYCLING, date);
 
     @BeforeEach
     public void init() {
         repository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
     public void testCreate() throws Exception {
 
         assertEquals(0, repository.findAll().size());
-        
+
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
-		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
+        User user = new User();
+        user.setLogin(principal.getName());
+        user.setPassword("$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K");
         user = userRepository.save(user);
 
         restUserMockMvc

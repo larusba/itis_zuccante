@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.ResponseUtil;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class SuggestionResource {
 
 	@PostMapping
 	public ResponseEntity<Suggestion> create(@RequestBody Suggestion s) {
-		return new ResponseEntity<Suggestion>(service.create(s), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.create(s), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{id}")
@@ -31,23 +32,18 @@ public class SuggestionResource {
 	@PutMapping("/{id}")
 	public ResponseEntity<Suggestion> update(@RequestBody Suggestion s, @PathVariable String id) {
 		s.setId(id);
-		return new ResponseEntity<Suggestion>(service.update(s), HttpStatus.OK);
+		return new ResponseEntity<>(service.update(s), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Suggestion> delete(@PathVariable String id) {
 		service.delete(id);
-		return new ResponseEntity<Suggestion>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
-	@GetMapping("/{type}")
-	public List<Suggestion> findByType(@PathVariable String type) {
-		return service.findByType(type);
-	}
-	
 	@GetMapping
-	public List<Suggestion> findAll() {
-		return service.findAll();
+	public List<Suggestion> findAll(@RequestParam(value = "type", defaultValue = "ALL", required = false) String type) {
+		return service.findByType(type);
 	}
 
 }

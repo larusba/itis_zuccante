@@ -18,32 +18,32 @@ import com.larus.itiszuccante.service.BehaviourService;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
-@RequestMapping("/api/{userId}/behaviours")
+@RequestMapping("/api")
 public class BehaviourResource {
 
     @Autowired
     private BehaviourService service;
 
-    @PostMapping
+    @PostMapping("/{userId}/behaviours")
     public ResponseEntity<Behaviour> create(@PathVariable String userId, @RequestBody Behaviour b) {
-        return new ResponseEntity<Behaviour>(service.create(userId, b), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(userId, b), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/behaviours/{id}")
     public ResponseEntity<Behaviour> read(@PathVariable String id) {
         return ResponseUtil.wrapOrNotFound(service.read(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/behaviours/{id}")
     public ResponseEntity<Behaviour> update(@RequestBody Behaviour b, @PathVariable String id) {
         b.setId(id);
-        return new ResponseEntity<Behaviour>(service.update(b), HttpStatus.OK);
+        return new ResponseEntity<>(service.update(b), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/behaviours/{id}")
     public ResponseEntity<Behaviour> delete(@PathVariable String id) {
         service.delete(id);
-        return new ResponseEntity<Behaviour>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
