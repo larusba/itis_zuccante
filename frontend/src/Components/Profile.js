@@ -41,6 +41,7 @@ function Profile() {
   const [locality, setLocality] = React.useState("Locality");
   const classes2 = useStyles2();
   const [img, setImg] = React.useState();
+  let imgUrl = "";
 
   const handleChangeFirst = (event) => {
     setFirstName(event.target.value);
@@ -57,8 +58,6 @@ function Profile() {
   const handleChangeLocality = (event) => {
     setLocality(event.target.value);
   };
-
-  let imgUrl = "";
 
   const changePhoto = () => {
     console.log(img);

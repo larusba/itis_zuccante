@@ -8,10 +8,29 @@
   position: fixed;
 }
 
-.fab {
-  top: 80%;
-  left: 40%;
-  position: fixed;
+.add {
+  position: absolute;
+  margin: auto;
+  left: 80%;
+  top: 75%;
+}
+
+.update {
+  position: absolute;
+  margin: auto;
+  left: 80%;
+  top: 15%;
+  transform: scale(2);
+}
+
+.avatarSad {
+  position: absolute;
+  left: -5%;
+  transform: scale(2);
+}
+
+.buttonSad {
+  margin: auto;
 }
 
 .box {
