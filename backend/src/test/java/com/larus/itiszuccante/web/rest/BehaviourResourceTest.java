@@ -1,24 +1,33 @@
 package com.larus.itiszuccante.web.rest;
 
-import com.larus.itiszuccante.IntegrationTest;
-import com.larus.itiszuccante.domain.Behaviour;
-import com.larus.itiszuccante.domain.BehaviourType;
-import com.larus.itiszuccante.repository.BehaviourRepository;
-import com.larus.itiszuccante.security.AuthoritiesConstants;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.security.Principal;
+import java.util.Date;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.larus.itiszuccante.IntegrationTest;
+import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.BehaviourType;
+import com.larus.itiszuccante.domain.User;
+import com.larus.itiszuccante.repository.BehaviourRepository;
+import com.larus.itiszuccante.repository.UserRepository;
+import com.larus.itiszuccante.security.AuthoritiesConstants;
 
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
@@ -27,6 +36,9 @@ public class BehaviourResourceTest {
 
     @Autowired
     private BehaviourRepository repository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private MockMvc restUserMockMvc;
@@ -44,10 +56,14 @@ public class BehaviourResourceTest {
     public void testCreate() throws Exception {
 
         assertEquals(0, repository.findAll().size());
+        
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
+        user = userRepository.save(user);
 
         restUserMockMvc
             .perform(
-                post("/api/behaviours").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(behaviour))
+                post("/api/{userId}/behaviours", user.getId()).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(behaviour))
             )
             .andExpect(status().isCreated());
 

@@ -3,11 +3,13 @@ package com.larus.itiszuccante.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.larus.itiszuccante.IntegrationTest;
 import com.larus.itiszuccante.domain.FuelType;
@@ -15,14 +17,19 @@ import com.larus.itiszuccante.domain.MobilityVehicles;
 import com.larus.itiszuccante.domain.PersonalFootprint;
 import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.domain.Recycling;
+import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.domain.Vehicle;
 import com.larus.itiszuccante.repository.ProfileRepository;
+import com.larus.itiszuccante.repository.UserRepository;
 
 @IntegrationTest
 public class ProfileServiceTest {
 
 	@Autowired
 	ProfileRepository repository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Autowired
 	ProfileService service;
@@ -42,7 +49,10 @@ public class ProfileServiceTest {
 
 	@Test
 	public void testCreate() {
-		Profile createdPro = service.create(profile);
+		Principal principal = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
+        user = userRepository.save(user);
+		Profile createdPro = service.create(user.getId(), profile);
 		Optional<Profile> result = repository.findById(createdPro.getId());
         assertThat(result).isPresent();
         assertThat(result.orElse(null).getPersonalFootprint().toString()).isEqualTo(profile.getPersonalFootprint().toString());

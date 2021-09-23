@@ -51,7 +51,10 @@ public class BehaviourServiceTest {
 
     @Test
     public void testCreate() {
-        Behaviour createdBehaviour = service.create(behaviour);
+    	Principal principal = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
+        user = userRepository.save(user);
+        Behaviour createdBehaviour = service.create(user.getId(), behaviour);
         Optional<Behaviour> result = repository.findById(createdBehaviour.getId());
         assertThat(result).isPresent();
         assertThat(result.orElse(null).getType()).isEqualTo(behaviour.getType());
@@ -108,7 +111,7 @@ public class BehaviourServiceTest {
 		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
 		user.setProfile(profile);
         user = userRepository.save(user);
-        newBehaviour = service.create(newBehaviour);
+        newBehaviour = service.create(user.getId(), newBehaviour);
         Optional<Behaviour> result = repository.findById(newBehaviour.getId());
         assertThat(result).isPresent();
         assertThat(result.orElse(null).getEmission()).isEqualTo(0.019874000000000003);
