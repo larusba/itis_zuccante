@@ -8,7 +8,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import BookIcon from "@mui/icons-material/Book";
 import Paper from "@mui/material/Paper";
 import Home from "./Home.js";
-import Behaviour from "./Components/Behaviour";
+import Behaviour from "./Components/Behaviour.js";
 
 export default function FixedBottomNavigation() {
   const [value, setValue] = React.useState(1);

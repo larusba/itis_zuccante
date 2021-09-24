@@ -12,7 +12,8 @@ import { DialogContent } from "@mui/material";
 import { DialogContentText } from "@mui/material";
 import { DialogTitle } from "@mui/material";
 import { Slide } from "@mui/material";
-import { Fab } from "@mui/material";
+import Fab from "@mui/material/Fab";
+import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
@@ -64,7 +65,7 @@ export default function FolderList() {
   const [openElectric, setOpenElectric] = React.useState(false);
   const classes = useStyles();
   const [activity, setActivity] = React.useState("");
-  const [flightClass, setFlightClass] = React.useState("");
+  const [flightClass, setFlightClass] = React.useState();
   const [wasteType, setWasteType] = React.useState("");
   const [electricLocation, setElectricLocation] = React.useState("");
   const [date, setDate] = React.useState(new Date("2014-08-10T00:00:00"));
@@ -81,12 +82,22 @@ export default function FolderList() {
   const [accountId, setAccountId] = React.useState();
 
   React.useEffect(() => {
-    fetch("/api/account").then((res) =>
-      res.json().then((res) => setAccountId(res.id))
+    const options = {
+      headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("token"),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    fetch("/api/account", options).then((res) =>
+      res.json().then((res) => {
+        setAccountId(res.id);
+        console.log(res.id);
+      })
     );
-    fetch("/api/users/" + accountId + "/behaviours").then((res) =>
-      res.json().then((res) => setBehaviours(res.behaviours))
-    );
+    //fetch("/api/users/" + accountId + "/behaviours").then((res) =>
+    //  res.json().then((res) => setBehaviours(res.behaviours))
+    //);
   }, []);
 
   const createBehaviour = () => {
@@ -95,142 +106,138 @@ export default function FolderList() {
   };
 
   const updateBehaviours = () => {
-    fetch("/api/account").then((res) =>
-      res.json().then((res) => setAccountId(res.id))
+    const options = {
+      headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("token"),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch("/api/users/" + accountId + "/behaviours", options).then((res) =>
+      res.json().then((res) => {
+        setBehaviours(res);
+        console.log(res);
+      })
     );
-    fetch("/api/users/" + accountId + "/behaviours").then((res) =>
-      res.json().then((res) => setBehaviours(res.behaviours))
-    );
-    behaviourDescription();
-    console.log("description updated");
+    //behaviourDescription();
+    console.log("list of behaviours updated");
   };
 
-  const behaviourDescription = () => {
-    if (behaviours && behaviours.length != 0) {
-      for (let i = 0; i < behaviours.length; i++) {
-        let item = behaviours.get(i);
-        let date = item.getDate();
-        switch (item.getType()) {
-          case car_trip:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Viaggio in macchina"
-                    secondary={date.toString()}
-                  />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Distanza percorsa: {item.getDistance().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Tipo di veicolo: {item.getCarType().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.getEmission().toString()}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          case flight:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Volo" secondary={date.toString()} />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Distanza percorsa: {item.getDistance().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Partenza: {item.getFrom().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Arrivo: {item.getTo().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Classe di volo: {item.getFlightClass().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.getEmission().toString()}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          case recycling:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Riciclo" secondary={date.toString()} />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Tipo di riciclo: {item.getWasteType().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.getEmission().toString()}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          case walk:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Camminata"
-                    secondary={date.toString()}
-                  />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Distanza percorsa: {item.getDistance().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.getEmission().toString()}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          default:
-            return null;
-        }
-      }
-    } else {
-      return (
+  const behaviourDescription = (item) => {
+    console.log("item ->", item);
+    let date = item.date;
+    console.log("=======> ", item);
+    switch (item.type) {
+      case car_trip:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Viaggio in macchina"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>
+                    Distanza percorsa: {item.distance}
+                  </ListItemText>
+                  <ListItemText>Tipo di veicolo: {item.carType}</ListItemText>
+                  <ListItemText>Emissioni di CO2: {item.emission}</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      case flight:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Volo"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>
+                    Distanza percorsa: {item.distance}
+                  </ListItemText>
+                  <ListItemText>Partenza: {item.from}</ListItemText>
+                  <ListItemText>Arrivo: {item.to}</ListItemText>
+                  <ListItemText>
+                    Classe di volo: {item.flightClass}
+                  </ListItemText>
+                  <ListItemText>Emissioni di CO2: {item.emission}</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      case recycling:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Riciclo"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>Tipo di riciclo: {item.wasteType}</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      case walk:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Camminata"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>
+                    Distanza percorsa: {item.distance}
+                  </ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      default:
+        return null;
+    }
+  };
+
+  /*
+        return (
         <Container>
           <ListItemButton className="buttonSad" onClick={handleShow}>
             <ListItemAvatar className="avatarSad">
@@ -240,16 +247,16 @@ export default function FolderList() {
           </ListItemButton>
         </Container>
       );
-    }
-  };
+      */
 
   const handleSubmit = () => {
     let submit = {
       headers: {
+        Authorization: "Bearer " + window.localStorage.getItem("token"),
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      method: "Post",
+      method: "POST",
       body: JSON.stringify({
         type: activity,
         date: date,
@@ -266,7 +273,7 @@ export default function FolderList() {
         bags: bags,
       }),
     };
-    fetch("/api/users/" + accountId + "/behaviours", submit).then(
+    fetch("/api/" + accountId + "/behaviours", submit).then(
       console.log("behaviour saved")
     );
   };
@@ -294,19 +301,19 @@ export default function FolderList() {
 
   const handleClick = () => {
     setOpen(!open);
-    setActivity("");
+    setActivity();
     setDate(new Date("2020-08-10T00:00:00"));
     setBags(0);
-    setIATA1("");
-    setIATA2("");
-    setIATA3("");
+    setIATA1();
+    setIATA2();
+    setIATA3();
     setPassengers(0);
-    setWasteType("");
-    setElectricLocation("");
+    setWasteType();
+    setElectricLocation(null);
     setDistance(0);
     setWalkedDistance(0);
-    setRoundtrip("no");
-    setElectric("no");
+    setRoundtrip(false);
+    setElectric(false);
   };
 
   const handleClose = () => {
@@ -365,8 +372,9 @@ export default function FolderList() {
     setDistance(newDistance);
   };
 
-  const handleChangeWalkedDistance = (event, newDistance) => {
-    setWalkedDistance(newDistance);
+  const handleChangeWalkedDistance = (event) => {
+    console.log("distance", event.target.value);
+    setWalkedDistance(event.target.value);
   };
 
   const handleChangeIATA1 = (event) => {
@@ -384,32 +392,37 @@ export default function FolderList() {
   const recycling = "RECYCLING";
   const walk = "WALK";
 
-  const avatarChoice = () => {
-    for (let i = 0; i < behaviours.length; i++) {
-      switch (behaviours.get(i).getType()) {
-        case car_trip:
-          return <DirectionsCarIcon />;
-        case flight:
-          return <FlightIcon />;
-        case recycling:
-          return <DeleteIcon />;
-        case walk:
-          return <DirectionsRunIcon />;
-        default:
-          return null;
-      }
+  const avatarChoice = (item) => {
+    switch (item.type) {
+      case car_trip:
+        return <DirectionsCarIcon />;
+      case flight:
+        return <FlightIcon />;
+      case recycling:
+        return <DeleteIcon />;
+      case walk:
+        return <DirectionsRunIcon />;
+      default:
+        return null;
     }
   };
 
   return (
     <Container className="container">
-      <h2>LE MIE ATTIVITA'</h2>
+      <div className="activity">
+        <h2>LE MIE ATTIVITA'</h2>
+      </div>
+      <br />
       <center>
         <List
           className="list"
           sx={{ width: "100%", maxWidth: 450, bgcolor: "background.paper" }}
         >
-          {behaviourDescription()}
+          {console.log({ behaviours })}
+          {behaviours !== undefined &&
+            behaviours !== null &&
+            behaviours.length > 0 &&
+            behaviours.map((item) => behaviourDescription(item))}
         </List>
       </center>
       <div className="update">
@@ -421,11 +434,11 @@ export default function FolderList() {
           <RefreshIcon />
         </IconButton>
       </div>
-      <div className="add">
+      <Box sx={{ "& > :not(style)": { m: 1 } }} className="add">
         <Fab color="primary" aria-label="add" onClick={handleClick}>
           <AddIcon />
         </Fab>
-      </div>
+      </Box>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -668,10 +681,10 @@ export default function FolderList() {
                         onOpen={handleOpenWaste}
                         onChange={handleChangeWaste}
                       >
-                        <MenuItem value={"organic"}>Organico</MenuItem>
-                        <MenuItem value={"paper"}>Carta</MenuItem>
-                        <MenuItem value={"plastic"}>Plastica</MenuItem>
-                        <MenuItem value={"non_recyclable"}>
+                        <MenuItem value={"ORGANIC"}>Organico</MenuItem>
+                        <MenuItem value={"PAPER"}>Carta</MenuItem>
+                        <MenuItem value={"PLASTIC"}>Plastica</MenuItem>
+                        <MenuItem value={"NONRECYCLABLE"}>
                           Indifferenziato
                         </MenuItem>
                       </Select>
