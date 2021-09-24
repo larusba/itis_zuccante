@@ -105,6 +105,7 @@ export default function Home() {
   const [profileOpen, setProfileOpen] = React.useState(false);
 
   React.useEffect(() => {
+    let accountTmp;
     const getAccount = async (event) => {
       const res = await fetch("/api/account", {
         headers: {
@@ -118,17 +119,17 @@ export default function Home() {
       } //else if (!json.profile) window.location.href = "/set-profile";
       else console.log("auto");
       setAccount(json);
+      accountTmp = json;
+      console.log(accountTmp.id);
     };
     getAccount();
-    const getBehaviours = async (event) => {
-      const res = await fetch(
-        "/api/users/" + (account && account.id) + "/behaviours",
-        {
-          headers: {
-            Authorization: "Bearer " + window.localStorage.getItem("token"),
-          },
-        }
-      );
+    const getBehaviours = async (event, id) => {
+      console.log(id);
+      const res = await fetch("/api/users/" + id + "/behaviours", {
+        headers: {
+          Authorization: "Bearer " + window.localStorage.getItem("token"),
+        },
+      });
       const json = await res.json();
       console.log(json);
       if (json.status === 401) {
@@ -137,7 +138,7 @@ export default function Home() {
       } else console.log("auto");
       setBehaviours(json);
     };
-    getBehaviours();
+    getBehaviours(accountTmp.id);
   }, []);
 
   const handleChatClick = () => {
