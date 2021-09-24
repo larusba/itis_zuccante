@@ -39,7 +39,6 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import { set } from "date-fns";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -81,12 +80,14 @@ export default function FolderList() {
   const [behaviours, setBehaviours] = React.useState([]);
   const [accountId, setAccountId] = React.useState();
 
-  fetch("/api/account").then((res) =>
-    res.json().then((res) => setAccountId(res.id))
-  );
-  fetch("/api/users/" + accountId + "/behaviours").then((res) =>
-    res.json().then((res) => setBehaviours(res.behaviours))
-  );
+  React.useEffect(() => {
+    fetch("/api/account").then((res) =>
+      res.json().then((res) => setAccountId(res.id))
+    );
+    fetch("/api/users/" + accountId + "/behaviours").then((res) =>
+      res.json().then((res) => setBehaviours(res.behaviours))
+    );
+  }, []);
 
   const createBehaviour = () => {
     handleSubmit();
@@ -95,10 +96,10 @@ export default function FolderList() {
 
   const updateBehaviours = () => {
     fetch("/api/account").then((res) =>
-      res.json().then((res) => (accountId = res))
+      res.json().then((res) => setAccountId(res.id))
     );
     fetch("/api/users/" + accountId + "/behaviours").then((res) =>
-      res.json().then((res) => (behaviours = res))
+      res.json().then((res) => setBehaviours(res.behaviours))
     );
     behaviourDescription();
     console.log("description updated");

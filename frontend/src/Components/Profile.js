@@ -37,8 +37,6 @@ function Profile() {
   const [firstName, setFirstName] = React.useState("First name");
   const [lastName, setLastName] = React.useState("Last name");
   const [email, setEmail] = React.useState("E-mail");
-  const [birth, setBirth] = React.useState("Birth date");
-  const [locality, setLocality] = React.useState("Locality");
   const classes2 = useStyles2();
   const [img, setImg] = React.useState();
   let imgUrl = "";
@@ -51,12 +49,6 @@ function Profile() {
   };
   const handleChangeEmail = (event) => {
     setEmail(event.target.value);
-  };
-  const handleChangeBirth = (event) => {
-    setBirth(event.target.value);
-  };
-  const handleChangeLocality = (event) => {
-    setLocality(event.target.value);
   };
 
   const changePhoto = () => {
@@ -160,39 +152,6 @@ function Profile() {
           </div>
           <br />
           <br />
-          BIRTH DATE:
-          <br />
-          <div>
-            <div>
-              <br />
-              <TextField
-                className="outlined-basic"
-                variant="outlined"
-                size="small"
-                disabled={disable}
-                placeholder={birth}
-                onChange={handleChangeBirth}
-              />{" "}
-              <br />
-            </div>
-          </div>
-          <br />
-          LOCALITY:
-          <br />
-          <div>
-            <div>
-              <br />
-              <TextField
-                className="outlined-basic"
-                variant="outlined"
-                size="small"
-                disabled={disable}
-                placeholder={locality}
-                onChange={handleChangeLocality}
-              />{" "}
-              <br />
-            </div>
-          </div>
         </form>
       </div>
 
