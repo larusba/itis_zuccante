@@ -678,7 +678,7 @@ class AccountResourceIT {
     void testRequestPasswordResetWrongEmail() throws Exception {
         restAccountMockMvc
             .perform(post("/api/account/reset-password/init").content("password-reset-wrong-email@example.com"))
-            .andExpect(status().isOk());
+            .andExpect(status().isNotFound());
     }
 
     @Test

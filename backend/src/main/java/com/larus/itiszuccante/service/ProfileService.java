@@ -6,7 +6,7 @@ import com.larus.itiszuccante.domain.Profile;
 
 public interface ProfileService {
 
-	Profile create(Profile p);
+	Profile create(String userId, Profile p);
 	Optional<Profile> read(String id);
 	Profile update(Profile p);
 	void delete(String id);

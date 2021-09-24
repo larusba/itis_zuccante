@@ -1,5 +1,10 @@
 package com.larus.itiszuccante.service;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
@@ -10,6 +15,8 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,6 +26,7 @@ import org.springframework.stereotype.Service;
 import com.larus.itiszuccante.config.Constants;
 import com.larus.itiszuccante.domain.Authority;
 import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.repository.AuthorityRepository;
 import com.larus.itiszuccante.repository.UserRepository;
@@ -27,6 +35,7 @@ import com.larus.itiszuccante.security.SecurityUtils;
 import com.larus.itiszuccante.service.dto.AdminUserDTO;
 import com.larus.itiszuccante.service.dto.UserDTO;
 
+import org.springframework.web.multipart.MultipartFile;
 import tech.jhipster.security.RandomUtil;
 
 /**
@@ -36,6 +45,8 @@ import tech.jhipster.security.RandomUtil;
 public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
+
+    private final Path root = Paths.get("uploads");
 
     private final UserRepository userRepository;
 
@@ -47,6 +58,11 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        try {
+            Files.createDirectory(root);
+        } catch (IOException e) {
+            log.info("Could not create folder uploads: "+e.getLocalizedMessage());
+        }
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -293,7 +309,7 @@ public class UserService {
         	userDTO.setEmissions(emissions);
         	return userDTO;
         });
-        
+
         return users;
     }
 
@@ -329,8 +345,39 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
-    
+
     public List<Behaviour> getBehaviours(String id) {
     	 return userRepository.findById(id).orElseThrow().getBehaviour();
+    }
+
+    public Profile getProfile(String id) {
+    	return userRepository.findById(id).orElseThrow().getProfile();
+    }
+
+    public void uploadPic(String id, MultipartFile file) throws IOException {
+        String[] split = file.getOriginalFilename().split("\\.");
+        String fileName = id+"."+split[split.length-1];
+        Files.deleteIfExists(this.root.resolve(fileName));
+        Files.copy(file.getInputStream(), this.root.resolve(fileName));
+
+        Optional<User> byId = userRepository.findById(id);
+        User user = byId.get();
+        user.setImageUrl("/pics/"+fileName);
+        userRepository.save(user);
+    }
+
+    public Resource getPic(String id) {
+        try {
+            Path file = root.resolve(id+".jpg");
+            Resource resource = new UrlResource(file.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("Could not read the file!");
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
     }
 }

@@ -28,8 +28,11 @@ public class DefaultBehaviourService implements BehaviourService {
     private UserRepository userRepository;
 
     @Override
-    public Behaviour create(Behaviour behaviour) {
+    public Behaviour create(String userId, Behaviour behaviour) {
     	behaviour.setEmission(behaviour.getType() == BehaviourType.CAR_TRIP || behaviour.getType() == BehaviourType.FLIGHT?calculateEmissions(behaviour):0);
+    	User user = userRepository.findById(userId).orElseThrow();
+    	user.addBehaviour(behaviour);
+    	userRepository.save(user);
         return repository.save(behaviour);
     }
 
@@ -38,10 +41,9 @@ public class DefaultBehaviourService implements BehaviourService {
 		Principal principal = SecurityContextHolder.getContext().getAuthentication();
 		User user = userRepository.findOneByLogin(principal.getName()).orElseThrow();
 		Profile profile = user.getProfile();
-		
 		switch(type) {
+		
 			case CAR_TRIP:
-				
 				Vehicle vehicle = profile.getVehicle();
 				double fuelEmission;
 				if (vehicle.getFuelType() != FuelType.ELECTRIC && vehicle.getFuelType() != FuelType.PLUG_IN_HYBRID)

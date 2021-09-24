@@ -38,7 +38,10 @@ public class DefaultSuggestionService implements SuggestionService {
 
 	@Override
 	public List<Suggestion> findByType(String type) {
-		return repository.findByType(type);
+	    if(type.equals("ALL"))
+		    return repository.findAll();
+	    else
+	        return repository.findByType(type);
 	}
 
 }

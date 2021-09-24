@@ -2,6 +2,7 @@ package com.larus.itiszuccante.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -95,7 +96,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private List<Integer> badges;
     
-    private List<Behaviour> behaviour;
+    private List<Behaviour> behaviour = new ArrayList<Behaviour>();
 
     public String getId() {
         return id;
@@ -256,6 +257,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
 	public void setBehaviour(List<Behaviour> behaviour) {
 		this.behaviour = behaviour;
+	}
+	
+	public void addBehaviour(Behaviour behaviour) {
+		this.behaviour.add(behaviour);
 	}
 
 	@Override

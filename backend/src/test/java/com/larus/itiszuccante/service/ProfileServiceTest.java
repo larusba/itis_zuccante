@@ -3,11 +3,14 @@ package com.larus.itiszuccante.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.security.Principal;
 import java.util.Optional;
 
+import com.larus.itiszuccante.security.AuthoritiesConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.larus.itiszuccante.IntegrationTest;
 import com.larus.itiszuccante.domain.FuelType;
@@ -15,22 +18,29 @@ import com.larus.itiszuccante.domain.MobilityVehicles;
 import com.larus.itiszuccante.domain.PersonalFootprint;
 import com.larus.itiszuccante.domain.Profile;
 import com.larus.itiszuccante.domain.Recycling;
+import com.larus.itiszuccante.domain.User;
 import com.larus.itiszuccante.domain.Vehicle;
 import com.larus.itiszuccante.repository.ProfileRepository;
+import com.larus.itiszuccante.repository.UserRepository;
+import org.springframework.security.test.context.support.WithMockUser;
 
 @IntegrationTest
+@WithMockUser(authorities = AuthoritiesConstants.ADMIN)
 public class ProfileServiceTest {
 
 	@Autowired
-	ProfileRepository repository;
+	private ProfileRepository repository;
 
 	@Autowired
-	ProfileService service;
+    private UserRepository userRepository;
 
-	PersonalFootprint personalFootprint = new PersonalFootprint();
-	Vehicle vehicle = new Vehicle();
-	Recycling recycling = new Recycling();
-	Profile profile = new Profile(personalFootprint, vehicle, recycling);
+	@Autowired
+    private ProfileService service;
+
+    private PersonalFootprint personalFootprint = new PersonalFootprint();
+    private Vehicle vehicle = new Vehicle();
+    private Recycling recycling = new Recycling();
+    private Profile profile = new Profile(personalFootprint, vehicle, recycling);
 
 	@BeforeEach
 	public void init() {
@@ -38,11 +48,17 @@ public class ProfileServiceTest {
 		vehicle.setFuelType(FuelType.BIODIESEL);
 		recycling.setOrganicWaste(0);
 		repository.deleteAll();
+		userRepository.deleteAll();
 	}
 
 	@Test
 	public void testCreate() {
-		Profile createdPro = service.create(profile);
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = new User();
+        user.setLogin(principal.getName());
+        user.setPassword("$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K");
+        user = userRepository.save(user);
+		Profile createdPro = service.create(user.getId(), profile);
 		Optional<Profile> result = repository.findById(createdPro.getId());
         assertThat(result).isPresent();
         assertThat(result.orElse(null).getPersonalFootprint().toString()).isEqualTo(profile.getPersonalFootprint().toString());

@@ -1,28 +1,27 @@
 package com.larus.itiszuccante.web.rest;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
+import com.larus.itiszuccante.domain.Behaviour;
+import com.larus.itiszuccante.domain.Profile;
+import com.larus.itiszuccante.service.UserService;
+import com.larus.itiszuccante.service.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.larus.itiszuccante.domain.Behaviour;
-import com.larus.itiszuccante.service.UserService;
-import com.larus.itiszuccante.service.dto.UserDTO;
-
 import tech.jhipster.web.util.PaginationUtil;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -70,9 +69,26 @@ public class PublicUserResource {
     public List<String> getAuthorities() {
         return userService.getAuthorities();
     }
-    
+
     @GetMapping("/users/{id}/behaviours")
     public List<Behaviour> getBehaviours(@PathVariable String id) {
     	return userService.getBehaviours(id);
+    }
+
+    @GetMapping("/users/{id}/profile")
+    public Profile getProfile(@PathVariable String id) {
+    	return userService.getProfile(id);
+    }
+
+    @PostMapping("/users/{id}/pic")
+    public void uploadPic(@PathVariable String id, @RequestParam MultipartFile file) throws IOException {
+        userService.uploadPic(id, file);
+    }
+
+    @GetMapping("/users/{id}/pic")
+    public ResponseEntity<Resource> getPic(@PathVariable String id) throws IOException {
+        Resource file = userService.getPic(id);
+        return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 }

@@ -86,24 +86,26 @@ export default function ChangePassword() {
             helperText={helperText}
             type="password"
           />{" "}
-          <Button
-            variant="outlined"
-            size="small"
-            color="primary"
-            className="confirm"
-            onClick={() => changePassword()}
-          >
-            Confirm
-          </Button>
-          <Button
-            variant="outlined"
-            color="default"
-            size="small"
-            className="cancel"
-            onClick={() => cancel()}
-          >
-            Cancel
-          </Button>
+          <div className="button">
+            <Button
+              variant="outlined"
+              size="small"
+              color="primary"
+              className="confirm"
+              onClick={() => changePassword()}
+            >
+              Confirm
+            </Button>
+            <Button
+              variant="outlined"
+              color="default"
+              size="small"
+              className="cancel"
+              onClick={() => cancel()}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       )}
     </div>

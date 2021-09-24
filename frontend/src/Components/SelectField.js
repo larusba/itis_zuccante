@@ -39,7 +39,7 @@ export default function ControlledOpenSelect() {
   return (
     <div id="selectField">
       <div className="background">
-        <p className="text">LEVEL OF PHYSICAL ACTIVITY</p>
+        <p className="text">LIVELLO DI ATTIVIT&Agrave;</p>
       </div>
       <FormControl className={classes.formControl}>
         <Select
@@ -51,12 +51,12 @@ export default function ControlledOpenSelect() {
           onChange={handleChange}
         >
           <MenuItem>
-            <em>None</em>
+            <em>Nessuno</em>
           </MenuItem>
-          <MenuItem value={0}>Lazy</MenuItem>
-          <MenuItem value={1}>Normal</MenuItem>
-          <MenuItem value={2}>Active</MenuItem>
-          <MenuItem value={3}>Sporty</MenuItem>
+          <MenuItem value={0}>Sedentario</MenuItem>
+          <MenuItem value={1}>Normale</MenuItem>
+          <MenuItem value={2}>Attivo</MenuItem>
+          <MenuItem value={3}>Sportivo</MenuItem>
         </Select>
       </FormControl>
     </div>

@@ -19,32 +19,32 @@ import com.larus.itiszuccante.service.ProfileService;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
-@RequestMapping("/api/profiles")
+@RequestMapping("/api")
 public class ProfileResource {
 
 	@Autowired
 	ProfileService service;
 
-	@PostMapping
-	public ResponseEntity<Profile> create(@RequestBody Profile p) {
-		return new ResponseEntity<Profile>(service.create(p), HttpStatus.CREATED);
+	@PostMapping("/{userId}/profiles")
+	public ResponseEntity<Profile> create(@PathVariable String userId, @RequestBody Profile p) {
+		return new ResponseEntity<>(service.create(userId, p), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/profiles/{id}")
 	public ResponseEntity<Profile> read(@PathVariable String id) {
         return ResponseUtil.wrapOrNotFound(service.read(id));
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/profiles/{id}")
 	public ResponseEntity<Profile> update(@RequestBody Profile s, @PathVariable String id) {
 		s.setId(id);
-		return new ResponseEntity<Profile>(service.update(s), HttpStatus.OK);
+		return new ResponseEntity<>(service.update(s), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/profiles/{id}")
 	public ResponseEntity<Profile> delete(@PathVariable String id) {
 		service.delete(id);
-		return new ResponseEntity<Profile>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }

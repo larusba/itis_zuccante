@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface BehaviourService {
 
-    Behaviour create(Behaviour s);
+    Behaviour create(String userId, Behaviour s);
     Optional<Behaviour> read(String id);
     Behaviour update(Behaviour s);
     void delete(String id);
