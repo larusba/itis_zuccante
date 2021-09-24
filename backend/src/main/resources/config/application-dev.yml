@@ -36,21 +36,12 @@ spring:
       database: itis_zuccante
   mail:
     host: ${MAIL_HOST}
-<<<<<<< HEAD:src/main/resources/config/application-dev.yml
-    port: 25
-=======
     port: 587
->>>>>>> bed1a12b91a8833537565bbe722dbfd2f5346d0b:backend/src/main/resources/config/application-dev.yml
     username: ${MAIL_FROM}
     password: ${MAIL_PASSWORD}
     properties.mail.smtp:
       starttls.enable: true
-<<<<<<< HEAD:src/main/resources/config/application-dev.yml
       ssl.trust: ${MAIL_SSL_TRUST}
-      port: 587
-=======
-      ssl.trust: ${MAIL_HOST}
->>>>>>> bed1a12b91a8833537565bbe722dbfd2f5346d0b:backend/src/main/resources/config/application-dev.yml
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:

@@ -1,0 +1,19 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="itis_zuccante" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../Library/Java/JavaVirtualMachines/corretto-11.0.12/Contents/Home" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="MAIL_HOST" value="x.ghe-sboro.com" />
+      <env name="MAIL_FROM" value="itis_zuccante@ghe-sboro.com" />
+      <env name="MAIL_PASSWORD" value="bellabella12" />
+      <env name="MAIL_SSL_TRUST" value="x.ghe-sboro.com" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.larus.itiszuccante.ItisZuccanteApp" />
+    <module name="itis_zuccantea" />
+    <option name="PROGRAM_PARAMETERS" value="-Dspring.profiles.active=dev" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
