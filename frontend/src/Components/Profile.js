@@ -154,25 +154,19 @@ function Profile() {
           <br />
         </form>
       </div>
-
+      <br />
       <br />
       <hr className="hr" />
       <br />
-      <ControlledOpenSelect />
-      <br />
-
-      <RadioButton />
-      <br />
-      <br />
       <br />
       <Survey />
+      <br />
+      <br />
       <SaveButton
         btnState={disable}
         btnSet={setDisable}
         changeData={changeData}
       />
-      <br />
-      <br />
       <br />
     </div>
   );

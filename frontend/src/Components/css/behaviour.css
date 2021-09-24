@@ -2,6 +2,12 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.activity {
+  left: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
 .list {
   margin: auto;
   text-align: center;
@@ -12,7 +18,7 @@
   position: absolute;
   margin: auto;
   left: 80%;
-  top: 75%;
+  top: 50%;
 }
 
 .update {
@@ -49,9 +55,7 @@
 }
 
 .cancel {
-  position: absolute;
   left: -25px;
-  top: 85%;
 }
 
 .textField {
