@@ -55,9 +55,7 @@
 }
 
 .cancel {
-  position: absolute;
   left: -25px;
-  top: 85%;
 }
 
 .textField {

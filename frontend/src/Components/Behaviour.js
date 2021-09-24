@@ -120,138 +120,124 @@ export default function FolderList() {
         console.log(res);
       })
     );
-    behaviourDescription();
+    //behaviourDescription();
     console.log("list of behaviours updated");
   };
 
   const behaviourDescription = (item) => {
-    if (behaviours && behaviours.length != 0) {
-      const listToRender = [];
-      for (let i = 0; i < behaviours.length; i++) {
-        let item = behaviours[i];
-        let date = item.date;
-        console.log("=======> ", item, i);
-        switch (item.type) {
-          case car_trip:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Viaggio in macchina"
-                    secondary={date.toString()}
-                  />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Distanza percorsa: {item.distance}
-                      </ListItemText>
-                      <ListItemText>
-                        Tipo di veicolo: {item.carType}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.emission}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          case flight:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Volo" secondary={date.toString()} />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Distanza percorsa: {item.getDistance().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Partenza: {item.getFrom().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Arrivo: {item.getTo().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Classe di volo: {item.getFlightClass().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.getEmission().toString()}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          case recycling:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary="Riciclo" secondary={date.toString()} />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Tipo di riciclo: {item.getWasteType().toString()}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.getEmission().toString()}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          case walk:
-            return (
-              <Container>
-                <ListItemButton onClick={handleShow}>
-                  <ListItemAvatar>
-                    <Avatar>{avatarChoice()}</Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Camminata"
-                    secondary={new Date(date).toLocaleDateString()}
-                  />
-                  {show ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
-                <Collapse in={show} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    <ListItem sx={{ pl: 10 }}>
-                      <ListItemText>
-                        Distanza percorsa: {item.distance}
-                      </ListItemText>
-                      <ListItemText>
-                        Emissioni di CO2: {item.emission}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </Container>
-            );
-          default:
-            return null;
-        }
-      }
-    } else {
-      return (
+    console.log("item ->", item);
+    let date = item.date;
+    console.log("=======> ", item);
+    switch (item.type) {
+      case car_trip:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Viaggio in macchina"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>
+                    Distanza percorsa: {item.distance}
+                  </ListItemText>
+                  <ListItemText>Tipo di veicolo: {item.carType}</ListItemText>
+                  <ListItemText>Emissioni di CO2: {item.emission}</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      case flight:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Volo"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>
+                    Distanza percorsa: {item.distance}
+                  </ListItemText>
+                  <ListItemText>Partenza: {item.from}</ListItemText>
+                  <ListItemText>Arrivo: {item.to}</ListItemText>
+                  <ListItemText>
+                    Classe di volo: {item.flightClass}
+                  </ListItemText>
+                  <ListItemText>Emissioni di CO2: {item.emission}</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      case recycling:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Riciclo"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>Tipo di riciclo: {item.wasteType}</ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      case walk:
+        return (
+          <Container>
+            <ListItemButton onClick={handleShow}>
+              <ListItemAvatar>
+                <Avatar>{avatarChoice(item)}</Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Camminata"
+                secondary={new Date(date).toLocaleDateString()}
+              />
+              {show ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={show} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem sx={{ pl: 10 }}>
+                  <ListItemText>
+                    Distanza percorsa: {item.distance}
+                  </ListItemText>
+                </ListItem>
+              </List>
+            </Collapse>
+          </Container>
+        );
+      default:
+        return null;
+    }
+  };
+
+  /*
+        return (
         <Container>
           <ListItemButton className="buttonSad" onClick={handleShow}>
             <ListItemAvatar className="avatarSad">
@@ -261,8 +247,7 @@ export default function FolderList() {
           </ListItemButton>
         </Container>
       );
-    }
-  };
+      */
 
   const handleSubmit = () => {
     let submit = {
@@ -407,20 +392,18 @@ export default function FolderList() {
   const recycling = "RECYCLING";
   const walk = "WALK";
 
-  const avatarChoice = () => {
-    for (let i = 0; i < behaviours.length; i++) {
-      switch (behaviours[i].type) {
-        case car_trip:
-          return <DirectionsCarIcon />;
-        case flight:
-          return <FlightIcon />;
-        case recycling:
-          return <DeleteIcon />;
-        case walk:
-          return <DirectionsRunIcon />;
-        default:
-          return null;
-      }
+  const avatarChoice = (item) => {
+    switch (item.type) {
+      case car_trip:
+        return <DirectionsCarIcon />;
+      case flight:
+        return <FlightIcon />;
+      case recycling:
+        return <DeleteIcon />;
+      case walk:
+        return <DirectionsRunIcon />;
+      default:
+        return null;
     }
   };
 
@@ -435,7 +418,11 @@ export default function FolderList() {
           className="list"
           sx={{ width: "100%", maxWidth: 450, bgcolor: "background.paper" }}
         >
-          {behaviourDescription()}
+          {console.log({ behaviours })}
+          {behaviours !== undefined &&
+            behaviours !== null &&
+            behaviours.length > 0 &&
+            behaviours.map((item) => behaviourDescription(item))}
         </List>
       </center>
       <div className="update">
