@@ -81,12 +81,14 @@ export default function FolderList() {
   const [behaviours, setBehaviours] = React.useState([]);
   const [accountId, setAccountId] = React.useState();
 
-  fetch("/api/account").then((res) =>
-    res.json().then((res) => setAccountId(res.id))
-  );
-  fetch("/api/users/" + accountId + "/behaviours").then((res) =>
-    res.json().then((res) => setBehaviours(res.behaviours))
-  );
+  React.useEffect(() => {
+    fetch("/api/account").then((res) =>
+      res.json().then((res) => setAccountId(res.id))
+    );
+    fetch("/api/users/" + accountId + "/behaviours").then((res) =>
+      res.json().then((res) => setBehaviours(res.behaviours))
+    );
+  }, []);
 
   const createBehaviour = () => {
     handleSubmit();
