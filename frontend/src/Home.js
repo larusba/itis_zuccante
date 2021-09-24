@@ -99,9 +99,9 @@ function Suggestions() {
 export default function Home() {
   const [account, setAccount] = React.useState();
   const [behaviours, setBehaviours] = React.useState();
-  const [emissions, setEmissions] = React.useState();
-  const [walkedDistance, setWalkedDistance] = React.useState();
-  const [trash, setTrash] = React.useState();
+  const [emissions, setEmissions] = React.useState(0);
+  const [walkedDistance, setWalkedDistance] = React.useState(0);
+  const [trash, setTrash] = React.useState(0);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [reportOpen, setReportOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
@@ -131,11 +131,11 @@ export default function Home() {
       const jsonBehaviour = await resBehaviour.json();
       console.log(jsonBehaviour);
       jsonBehaviour.forEach((item) => {
-        setEmissions(item.emissions);
+        setEmissions((emissions) => (emissions += item.emission));
         setWalkedDistance(
           (walkedDistance) => (walkedDistance += item.walkedDistance)
         );
-        setTrash((trash) => (trash += item.walkedDistance));
+        setTrash((trash) => (trash += item.bags));
       });
       if (json.status === 401) {
         console.log("unauto");
@@ -212,9 +212,7 @@ export default function Home() {
           </CircularProgressbarWithChildren>
         </Grid>
         <Grid item xs={6} style={{ textAlign: "center" }}>
-          <CircularProgressbarWithChildren
-            value={emissions && (emissions / 365) * 100}
-          >
+          <CircularProgressbarWithChildren value={(trash / 365) * 100}>
             <DeleteOutlineOutlinedIcon />
           </CircularProgressbarWithChildren>
         </Grid>
