@@ -99,14 +99,15 @@ function Suggestions() {
 export default function Home() {
   const [account, setAccount] = React.useState();
   const [behaviours, setBehaviours] = React.useState();
-  const [behaviourValues, setBehaviourValues] = React.useState();
+  const [emissions, setEmissions] = React.useState();
+  const [walkedDistance, setWalkedDistance] = React.useState();
+  const [trash, setTrash] = React.useState();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [reportOpen, setReportOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
 
   React.useEffect(() => {
-    let accountTmp;
-    const getAccount = async (event) => {
+    const fetchData = async (event) => {
       const res = await fetch("/api/account", {
         headers: {
           Authorization: "Bearer " + window.localStorage.getItem("token"),
@@ -119,26 +120,31 @@ export default function Home() {
       } //else if (!json.profile) window.location.href = "/set-profile";
       else console.log("auto");
       setAccount(json);
-      accountTmp = json;
-      console.log(accountTmp.id);
-    };
-    getAccount();
-    const getBehaviours = async (event, id) => {
-      console.log(id);
-      const res = await fetch("/api/users/" + id + "/behaviours", {
-        headers: {
-          Authorization: "Bearer " + window.localStorage.getItem("token"),
-        },
+      const resBehaviour = await fetch(
+        "/api/users/" + json.id + "/behaviours",
+        {
+          headers: {
+            Authorization: "Bearer " + window.localStorage.getItem("token"),
+          },
+        }
+      );
+      const jsonBehaviour = await resBehaviour.json();
+      console.log(jsonBehaviour);
+      jsonBehaviour.forEach((item) => {
+        setEmissions(item.emissions);
+        setWalkedDistance(
+          (walkedDistance) => (walkedDistance += item.walkedDistance)
+        );
+        setTrash((trash) => (trash += item.walkedDistance));
       });
-      const json = await res.json();
-      console.log(json);
       if (json.status === 401) {
         console.log("unauto");
         window.location.href = "/login";
       } else console.log("auto");
-      setBehaviours(json);
+      setBehaviours(jsonBehaviour);
     };
-    getBehaviours(accountTmp.id);
+
+    fetchData();
   }, []);
 
   const handleChatClick = () => {
@@ -182,6 +188,7 @@ export default function Home() {
         marginRight: "30px",
       }}
     >
+      {console.log({ emissions, walkedDistance, trash })}
       <div style={{ fontFamily: "Lato, sans-serif" }}>
         <h1>Ciao {account && account.login}</h1>
         <h2>Oggi è {getDate()}</h2>
@@ -195,18 +202,18 @@ export default function Home() {
         style={{ margin: "auto" }}
       >
         <Grid item xs={12} style={{ textAlign: "center" }}>
-          <CircularProgressbarWithChildren value={70}>
+          <CircularProgressbarWithChildren value={(emissions / 8.5) * 100}>
             <CloudOutlinedIcon />
           </CircularProgressbarWithChildren>
         </Grid>
         <Grid item xs={6} style={{ textAlign: "center" }}>
-          <CircularProgressbarWithChildren value={80}>
+          <CircularProgressbarWithChildren value={(walkedDistance / 20) * 100}>
             <DirectionsRunIcon />
           </CircularProgressbarWithChildren>
         </Grid>
         <Grid item xs={6} style={{ textAlign: "center" }}>
           <CircularProgressbarWithChildren
-            value={behaviours && (behaviours.bags / 365) * 100}
+            value={emissions && (emissions / 365) * 100}
           >
             <DeleteOutlineOutlinedIcon />
           </CircularProgressbarWithChildren>
