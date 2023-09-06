@@ -22,7 +22,7 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 /**
  * A user.
  */
-@Node("jhi_user")
+@Node("User")
 public class User extends AbstractAuditingEntity<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;

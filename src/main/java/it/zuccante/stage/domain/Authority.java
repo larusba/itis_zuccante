@@ -10,7 +10,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 /**
  * An authority (a security role) used by Spring Security.
  */
-@Node("jhi_authority")
+@Node("Authority")
 public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;

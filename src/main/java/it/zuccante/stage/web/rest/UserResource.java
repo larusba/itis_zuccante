@@ -4,7 +4,6 @@ import it.zuccante.stage.config.Constants;
 import it.zuccante.stage.domain.User;
 import it.zuccante.stage.repository.UserRepository;
 import it.zuccante.stage.security.AuthoritiesConstants;
-import it.zuccante.stage.service.MailService;
 import it.zuccante.stage.service.UserService;
 import it.zuccante.stage.service.dto.AdminUserDTO;
 import it.zuccante.stage.web.rest.errors.BadRequestAlertException;
@@ -85,12 +84,9 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    private final MailService mailService;
-
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    public UserResource(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
     }
 
     /**
@@ -119,7 +115,6 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))

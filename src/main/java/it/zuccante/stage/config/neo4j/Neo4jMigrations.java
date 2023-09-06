@@ -38,8 +38,8 @@ final class Neo4jMigrations {
 
             JavaType type = om.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
 
-            String userLabel = "jhi_user";
-            String authorityLabel = "jhi_authority";
+            String userLabel = "User";
+            String authorityLabel = "Authority";
 
             String query = String.format(
                 "" +

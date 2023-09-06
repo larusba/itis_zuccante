@@ -40,11 +40,11 @@ spring:
   neo4j:
     pool:
       metrics-enabled: true
-    uri: bolt://localhost:7687
+    uri: bolt+ssc://labs.larus-ba.it:7687
     # Uncomment to use an authenticated connection
-    # authentication:
-    #   username: neo4j
-    #   password: secret
+    authentication:
+      username: studenti
+      password: AmbulanzaVeloce123!@
   mail:
     host: localhost
     port: 25
