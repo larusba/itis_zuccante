@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api")
-public class AccountResource {
+public class    AccountResource {
 
     private static class AccountResourceException extends RuntimeException {
 

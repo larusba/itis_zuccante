@@ -1,10 +1,7 @@
 package it.zuccante.stage.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Property;
-import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.schema.*;
 
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -16,7 +13,8 @@ import java.util.Set;
 public class Ward {
 
     @Id
-    @Property("id")
+    @GeneratedValue
+    //@Property("id")
     private Long id;
 
     @Size(max = 100)
