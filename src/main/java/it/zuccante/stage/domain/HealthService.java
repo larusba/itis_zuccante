@@ -53,7 +53,6 @@ public class HealthService {
     public String toString() {
         return "HealthService{" +
             "name='" + name + '\'' +
-            ", wards=" + wards +
             '}';
     }
 }
