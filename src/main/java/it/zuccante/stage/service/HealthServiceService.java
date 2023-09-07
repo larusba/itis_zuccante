@@ -19,7 +19,7 @@ public class HealthServiceService {
         this.healthServiceRepository = healthServiceRepository;
     }
 
-    public List<HealthService> findHospital(HospitalDTO hospitalDTO) {
+    public List<HealthService> findAll() {
         return this.healthServiceRepository.findAll();
     }
 

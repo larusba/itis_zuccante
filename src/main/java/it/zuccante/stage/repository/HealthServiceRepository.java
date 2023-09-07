@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HealthServiceRepository extends Neo4jRepository<HealthService, String> {
-    List<HealthService> findAll();
+    //List<HealthService> findAll();
     @Query("MATCH (p:UnitaOperativa)\n" +
         "WHERE p.nome IN $healthServices\n" +
         "WITH p\n" +
         "MATCH (p)<-[:EROGA]-(:Prestazione)<-[:EROGA]-(o:UnitaOperativa)\n" +
         "RETURN DISTINCT Prestazione")
-    List<HealthService> findHealtServiceByName(List<String> UnitaOperativa);
+    List<HealthService> findHealthServiceByName(List<String> unitaOperativa);
 }
