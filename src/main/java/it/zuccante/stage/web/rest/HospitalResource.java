@@ -1,5 +1,6 @@
 package it.zuccante.stage.web.rest;
 
+import it.zuccante.stage.domain.HealthService;
 import it.zuccante.stage.domain.Hospital;
 import it.zuccante.stage.repository.HospitalRepository;
 import it.zuccante.stage.service.HospitalService;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,8 +22,13 @@ public class HospitalResource {
         this.hospitalService = hospitalService;
     }
 
-    @GetMapping("/hospitalServices")
+    @GetMapping("/hospitalByName")
     public Optional<Hospital> findHospital(HospitalDTO name){
         return hospitalService.findHospital(name);
+    }
+
+    @GetMapping("/hospitalAll")
+    public List<Hospital> getServiceList() {
+        return hospitalService.findAllHospital();
     }
 }

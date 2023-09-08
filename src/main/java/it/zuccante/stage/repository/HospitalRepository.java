@@ -1,5 +1,6 @@
 package it.zuccante.stage.repository;
 
+import it.zuccante.stage.domain.HealthService;
 import it.zuccante.stage.domain.Hospital;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
@@ -9,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HospitalRepository extends Neo4jRepository<Hospital, Long> {
+
+
+    @Query("MATCH (p:Ospedale) RETURN DISTINCT p")
+    List<Hospital> findAll();
 
     Optional<Hospital> findOneByName(String name);
 
