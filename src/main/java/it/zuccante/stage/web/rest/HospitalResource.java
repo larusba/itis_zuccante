@@ -6,6 +6,7 @@ import it.zuccante.stage.repository.HospitalRepository;
 import it.zuccante.stage.service.HospitalService;
 import it.zuccante.stage.service.dto.HealthServiceDTO;
 import it.zuccante.stage.service.dto.HospitalDTO;
+import it.zuccante.stage.service.dto.TrackDTO;
 import org.neo4j.driver.internal.value.MapValue;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class HospitalResource {
     }
 
     @GetMapping("/findNearestHospitalByHealthService")
-    public List<MapValue> findNearestHospitalByHealthService(@RequestParam List<String> healthServices, double latitudine, double longitudine ){
+    public List<TrackDTO> findNearestHospitalByHealthService(@RequestParam List<String> healthServices, double latitudine, double longitudine ){
         return hospitalService.findNearestHospitalByHealthService(healthServices, latitudine, longitudine);
     }
 }
