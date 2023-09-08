@@ -36,14 +36,24 @@ public class HospitalService {
         return this.hospitalRepository.findHospitalsByHealthServices(healthServiceStrings);
     }
 
-    public List<TrackDTO> findNearestHospitalByHealthService(List<String> healthServices, double latitudine, double logitudine) {
+    public TrackDTO findNearestHospitalByHealthService(List<String> healthServices, double latitudine, double logitudine) {
         List<MapValue> mapValue = this.hospitalRepository.findHospitalByShortestDistance(healthServices, latitudine, logitudine);
-        List<TrackDTO> track = new ArrayList<>();
-        track.add(new TrackDTO("",0,0,""));
-        track.get(0).setHospitalName(mapValue.get(0).get("hospital", ""));
-        track.get(0).setDuration(mapValue.get(0).get("duration", 0));
-        track.get(0).setDistance(mapValue.get(0).get("distance", 0d));
-        track.get(0).setCongestion(mapValue.get(0).get("congestion", ""));
+        double distMin = mapValue.get(0).get("distance", 42_000d);
+        int y = 0;
+        for (int i = 0; i < mapValue.size(); i++) {
+            if (distMin > mapValue.get(i).get("distance", 42_000d)){
+
+                distMin = mapValue.get(i).get("distance", 42_000d);
+                y = i;
+            }
+
+        }
+        TrackDTO track = new TrackDTO();
+        track.setHospitalName(mapValue.get(y).get("hospital", ""));
+        track.setDuration(mapValue.get(y).get("duration", 0d));
+        track.setDistance(mapValue.get(y).get("distance", 0d));
+        track.setCongestion(mapValue.get(y).get("congestion", ""));
+
         return track;
     }
 }

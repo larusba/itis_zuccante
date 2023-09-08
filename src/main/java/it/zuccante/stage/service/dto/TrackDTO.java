@@ -18,6 +18,9 @@ public class TrackDTO implements Serializable {
         this.congestion = congestion;
     }
 
+    public TrackDTO() {
+    }
+
     public String getHospitalName() {
         return hospitalName;
     }
