@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Node("Intervento")
-public class Intervation {
+public class Intervetion {
     @Property("nome")
     private String name;
 
@@ -70,7 +70,7 @@ public class Intervation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Intervation that = (Intervation) o;
+        Intervetion that = (Intervetion) o;
         return Objects.equals(name, that.name) && Objects.equals(cognome, that.cognome) && Objects.equals(numeroAmbulanza, that.numeroAmbulanza) && Objects.equals(luogoIntervento, that.luogoIntervento);
     }
 

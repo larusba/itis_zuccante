@@ -1,4 +1,4 @@
 package it.zuccante.stage.service;
 
-public class IntervationService {
+public class IntervetionService {
 }
