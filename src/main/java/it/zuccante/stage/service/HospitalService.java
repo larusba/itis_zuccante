@@ -46,14 +46,12 @@ public class HospitalService {
                 distMin = mapValue.get(i).get("distance", 42_000d);
                 y = i;
             }
-
         }
         TrackDTO track = new TrackDTO();
         track.setHospitalName(mapValue.get(y).get("hospital", ""));
         track.setDuration(mapValue.get(y).get("duration", 0d));
         track.setDistance(mapValue.get(y).get("distance", 0d));
         track.setCongestion(mapValue.get(y).get("congestion", ""));
-
         return track;
     }
 }
