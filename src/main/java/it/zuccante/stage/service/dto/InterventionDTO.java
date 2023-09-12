@@ -6,30 +6,30 @@ public class InterventionDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String name;
-    private String cognome;
+    private String nomePaziente;
+    private String cognomePaziente;
     private String numeroAmbulanza;
     private String luogoIntervento;
     private double latitude;
     private double longitude;
     private int tempoPercorrenza;
-    private String nomeHospedale;
+    private String nomeOspedale;
     private String nomePrestazione;
 
-    public String getName() {
-        return name;
+    public String getNomePaziente() {
+        return nomePaziente;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNomePaziente(String nomePaziente) {
+        this.nomePaziente = nomePaziente;
     }
 
-    public String getCognome() {
-        return cognome;
+    public String getCognomePaziente() {
+        return cognomePaziente;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setCognomePaziente(String cognomePaziente) {
+        this.cognomePaziente = cognomePaziente;
     }
 
     public String getNumeroAmbulanza() {
@@ -72,12 +72,12 @@ public class InterventionDTO implements Serializable {
         this.tempoPercorrenza = tempoPercorrenza;
     }
 
-    public String getNomeHospedale() {
-        return nomeHospedale;
+    public String getNomeOspedale() {
+        return nomeOspedale;
     }
 
-    public void setNomeHospedale(String nomeHospedale) {
-        this.nomeHospedale = nomeHospedale;
+    public void setNomeOspedale(String nomeOspedale) {
+        this.nomeOspedale = nomeOspedale;
     }
 
     public String getNomePrestazione() {

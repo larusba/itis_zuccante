@@ -20,15 +20,16 @@ public class InterventionService {
         this.interventionRepository = interventionRepository;
     }
     public Optional<Intervention> createIntervetion(InterventionDTO interventionDTO){
-        String ospedale = interventionDTO.getNomeHospedale();
+        String ospedale = interventionDTO.getNomeOspedale();
         String prestazione = interventionDTO.getNomePrestazione();
-        String nomePaziente = interventionDTO.getName();
-        String cognomePaziente = interventionDTO.getCognome();
+        String nomePaziente = interventionDTO.getNomePaziente();
+        String cognomePaziente = interventionDTO.getCognomePaziente();
         String numeroAmbulanza = interventionDTO.getNumeroAmbulanza();
         String luogoIntervento = interventionDTO.getLuogoIntervento();
         double latitudine = interventionDTO.getLatitude();
         double longitudine = interventionDTO.getLongitude();
         int tempoPercorrenza = 1234;
-        return interventionRepository.createIntervetion(ospedale, prestazione, nomePaziente, cognomePaziente, numeroAmbulanza, luogoIntervento, latitudine, longitudine, tempoPercorrenza);
+        return interventionRepository.createIntervetion(ospedale, prestazione, nomePaziente, cognomePaziente,
+            numeroAmbulanza, luogoIntervento, latitudine, longitudine, tempoPercorrenza);
     }
 }

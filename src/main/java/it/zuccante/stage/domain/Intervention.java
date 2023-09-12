@@ -14,10 +14,10 @@ import java.util.Set;
 @Node("Intervento")
 public class Intervention {
     @Property("nome")
-    private String name;
+    private String nomePaziente;
 
     @Property("cognome")
-    private String cognome;
+    private String cognomePaziente;
 
     @Id
     @Property("ambulanza")
@@ -40,20 +40,20 @@ public class Intervention {
     @Relationship(type = "SVOLTO", direction = Relationship.Direction.OUTGOING)
     private Set<Hospital> hospitals = new HashSet<>();
 
-    public String getName() {
-        return name;
+    public String getNomePaziente() {
+        return nomePaziente;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNomePaziente(String nomePaziente) {
+        this.nomePaziente = nomePaziente;
     }
 
-    public String getCognome() {
-        return cognome;
+    public String getCognomePaziente() {
+        return cognomePaziente;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setCognomePaziente(String cognomePaziente) {
+        this.cognomePaziente = cognomePaziente;
     }
 
     public String getNumeroAmbulanza() {
@@ -93,19 +93,19 @@ public class Intervention {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Intervention that = (Intervention) o;
-        return Objects.equals(name, that.name) && Objects.equals(cognome, that.cognome) && Objects.equals(numeroAmbulanza, that.numeroAmbulanza) && Objects.equals(luogoIntervento, that.luogoIntervento);
+        return Objects.equals(nomePaziente, that.nomePaziente) && Objects.equals(cognomePaziente, that.cognomePaziente) && Objects.equals(numeroAmbulanza, that.numeroAmbulanza) && Objects.equals(luogoIntervento, that.luogoIntervento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cognome, numeroAmbulanza, luogoIntervento);
+        return Objects.hash(nomePaziente, cognomePaziente, numeroAmbulanza, luogoIntervento);
     }
 
     @Override
     public String toString() {
         return "Intervation{" +
-            "name='" + name + '\'' +
-            ", cognome='" + cognome + '\'' +
+            "name='" + nomePaziente + '\'' +
+            ", cognome='" + cognomePaziente + '\'' +
             ", numeroAmbulanza='" + numeroAmbulanza + '\'' +
             ", luogoIntervento='" + luogoIntervento + '\'' +
             '}';
