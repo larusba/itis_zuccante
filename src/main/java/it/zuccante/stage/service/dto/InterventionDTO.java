@@ -1,11 +1,8 @@
 package it.zuccante.stage.service.dto;
 
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Property;
-
 import java.io.Serializable;
 
-public class IntervetionDTO  implements Serializable {
+public class InterventionDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Node("Intervento")
-public class Intervetion {
+public class Intervention {
     @Property("nome")
     private String name;
 
@@ -92,7 +92,7 @@ public class Intervetion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Intervetion that = (Intervetion) o;
+        Intervention that = (Intervention) o;
         return Objects.equals(name, that.name) && Objects.equals(cognome, that.cognome) && Objects.equals(numeroAmbulanza, that.numeroAmbulanza) && Objects.equals(luogoIntervento, that.luogoIntervento);
     }
 
