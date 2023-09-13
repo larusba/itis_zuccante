@@ -26,7 +26,7 @@ public class InterventionResource {
         this.interventionService = interventionService;
     }
 
-    @PostMapping("/createIntervetion")
+    @PostMapping("/createIntervention")
     public ResponseEntity<Intervention> createIntervetion(@RequestBody InterventionDTO interventionDTO){
         Optional<Intervention> intervention = interventionService.createIntervetion(interventionDTO);
         return intervention.map(intervetion -> ResponseEntity.ok().body(intervetion)).orElseThrow(BadHospitalOrHealthServiceNameException::new);
