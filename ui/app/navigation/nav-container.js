@@ -138,6 +138,9 @@ function NavContainer(props) {
     <View>
       <Text>Loading...</Text>
     </View>
+  ) : 
+  !props.account ? (
+    <LoginScreen navigation={navigationRef} />
   ) : (
     <NavigationContainer
       linking={linking}
