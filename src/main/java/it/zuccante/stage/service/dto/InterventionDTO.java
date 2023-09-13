@@ -12,7 +12,8 @@ public class InterventionDTO implements Serializable {
     private String luogoIntervento;
     private double latitude;
     private double longitude;
-    private int tempoPercorrenza;
+
+    private double tempoPercorrenza;
     private String nomeOspedale;
     private String nomePrestazione;
 
@@ -64,7 +65,7 @@ public class InterventionDTO implements Serializable {
         this.longitude = longitude;
     }
 
-    public int getTempoPercorrenza() {
+    public double getTempoPercorrenza() {
         return tempoPercorrenza;
     }
 

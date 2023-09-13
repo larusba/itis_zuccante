@@ -19,7 +19,7 @@ public interface InterventionRepository extends Neo4jRepository<Intervention, St
    Optional<Intervention> createIntervetion(@Param("ospedale")String ospedale, @Param("prestazione")String prestazione,
                                             @Param("nomePaziente")String nomePaziente, @Param("cognomePaziente")String cognomePaziente,
                                             @Param("numeroAmbulanza")String numeroAmbulanza, @Param("luogoIntervento")String luogoIntervento,
-                                            @Param("latitudine")double latitudine, @Param("longitudine")double longitudine, @Param("tempoPercorrenza")long tempoPercorrenza);
+                                            @Param("latitudine")double latitudine, @Param("longitudine")double longitudine, @Param("tempoPercorrenza")double tempoPercorrenza);
 
 }
 

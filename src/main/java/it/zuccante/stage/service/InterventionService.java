@@ -28,7 +28,7 @@ public class InterventionService {
         String luogoIntervento = interventionDTO.getLuogoIntervento();
         double latitudine = interventionDTO.getLatitude();
         double longitudine = interventionDTO.getLongitude();
-        int tempoPercorrenza = 1234;
+        double tempoPercorrenza = interventionDTO.getTempoPercorrenza();
         return interventionRepository.createIntervetion(ospedale, prestazione, nomePaziente, cognomePaziente,
             numeroAmbulanza, luogoIntervento, latitudine, longitudine, tempoPercorrenza);
     }
