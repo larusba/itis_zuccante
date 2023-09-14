@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppState, Text, useWindowDimensions, View } from 'react-native';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
@@ -7,6 +7,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useReduxDevToolsExtension } from '@react-navigation/devtools';
 import { connect } from 'react-redux';
+import * as Location from 'expo-location';
+
+
 // import screens
 import GPSLocationScreen from '../modules/gpsLocation/gpsLocation-screen.js';
 import HomeScreen from '../modules/home/home-screen';
@@ -114,6 +117,23 @@ const getScreens = (props) => {
 function NavContainer(props) {
   const { loaded, getAccount } = props;
   const lastAppState = 'active';
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location)
+    })();
+  }, [props.account]);
 
   React.useEffect(() => {
     return () => {
