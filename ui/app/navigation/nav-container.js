@@ -7,8 +7,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useReduxDevToolsExtension } from '@react-navigation/devtools';
 import { connect } from 'react-redux';
-
 // import screens
+import GPSLocationScreen from '../modules/gpsLocation/gpsLocation-screen.js';
 import HomeScreen from '../modules/home/home-screen';
 import LoginScreen from '../modules/login/login-screen';
 import AccountActions from '../shared/reducers/account.reducer';
@@ -47,6 +47,12 @@ export const drawerScreens = [
     name: 'Chat',
     route: 'chat',
     component: ChatScreen,
+    auth: true,
+  },
+  {
+    name: 'GPSLocation',
+    route: 'gpsLocation',
+    component: GPSLocationScreen,
     auth: true,
   },
 ];
