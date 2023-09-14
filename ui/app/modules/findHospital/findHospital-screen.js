@@ -4,6 +4,8 @@ import { Platform, Text, View, StyleSheet } from 'react-native';
 import { random } from 'lodash';
 export default function FindHospital() {
   const [query, setQuery] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [results, setResults] = useState([]);
   const [listHealthServices, setListHealtServices] = useState([]);
   useEffect(() => {
     (async () => {
@@ -17,15 +19,28 @@ export default function FindHospital() {
       setListHealtServices(await response.json());
     })();
   }, []);
+  function miaFunzione2(stringa) {
+    const lista = selected;
+    lista.push(stringa.target.textContent);
+    setSelected(lista);
+    console.log(selected);
+  }
   function miaFunzione(healthService, i) {
-    return <List.Item title={healthService} key={i} />;
+    return <List.Item title={healthService.name} onPress={miaFunzione2} key={i} />;
   }
   return (
     <View>
-      <Searchbar placeholder="Search" mode={'view'} onChangeText={e => setQuery(e)} />
+      <Searchbar
+        placeholder="Search"
+        mode={'view'}
+        onChangeText={query => {
+          const tmp = listHealthServices.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
+          setResults(tmp.slice(0, 5));
+          setQuery(query);
+        }}
+      />
 
-      {query.length !== 0 && <View style={styles.searchResult}>{listHealthServices.map(miaFunzione)}</View>}
-      {console.log(query)}
+      {results.length > 0 && query.length > 0 && <View style={styles.searchResult}>{results.map(miaFunzione)}</View>}
     </View>
   );
 }
