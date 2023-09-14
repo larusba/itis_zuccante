@@ -8,7 +8,7 @@ export default function GPSLocationScreen() {
   const [errorMsg, setErrorMsg] = useState(null);
 
 
-  let text = 'Waiting..';
+  let text = 'Getting GPS location...';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {

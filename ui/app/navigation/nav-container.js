@@ -9,7 +9,6 @@ import { useReduxDevToolsExtension } from '@react-navigation/devtools';
 import { connect } from 'react-redux';
 import * as Location from 'expo-location';
 
-
 // import screens
 import GPSLocationScreen from '../modules/gpsLocation/gpsLocation-screen.js';
 import HomeScreen from '../modules/home/home-screen';
@@ -17,12 +16,13 @@ import LoginScreen from '../modules/login/login-screen';
 import AccountActions from '../shared/reducers/account.reducer';
 import EntityStackScreen, { getEntityRoutes } from './entity-stack';
 import StorybookScreen from '../../storybook';
-import ChatScreen from '../modules/chat/chat-screen'
+import ChatScreen from '../modules/chat/chat-screen';
 import DrawerContent from './drawer/drawer-content';
 import { isReadyRef, navigationRef } from './nav-ref';
 import NotFound from './not-found-screen';
 import { ModalScreen } from './modal-screen';
 import { DrawerButton } from './drawer/drawer-button';
+import FindHospital from '../modules/findHospital/findHospital-screen.js';
 
 export const drawerScreens = [
   {
@@ -58,6 +58,12 @@ export const drawerScreens = [
     component: GPSLocationScreen,
     auth: true,
   },
+  {
+    name: 'Find nearest hospital',
+    route: 'findHospital',
+    component: FindHospital,
+    auth: true,
+  },
 ];
 if (__DEV__) {
   drawerScreens.push({
@@ -69,7 +75,7 @@ if (__DEV__) {
 }
 export const getDrawerRoutes = () => {
   const routes = {};
-  drawerScreens.forEach((screen) => {
+  drawerScreens.forEach(screen => {
     if (screen.route) {
       routes[screen.name] = screen.route;
     }
@@ -102,7 +108,7 @@ const linking = {
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const getScreens = (props) => {
+const getScreens = props => {
   const isAuthed = props.account !== null;
   return drawerScreens.map((screen, index) => {
     if (screen.auth === null || screen.auth === undefined) {
@@ -122,7 +128,6 @@ function NavContainer(props) {
 
   useEffect(() => {
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
@@ -131,7 +136,7 @@ function NavContainer(props) {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location)
+      console.log(location);
     })();
   }, [props.account]);
 
@@ -148,7 +153,7 @@ function NavContainer(props) {
   }, [loaded]);
 
   React.useEffect(() => {
-    const handleChange = (nextAppState) => {
+    const handleChange = nextAppState => {
       if (lastAppState.match(/inactive|background/) && nextAppState === 'active') {
         getAccount();
       }
@@ -164,8 +169,7 @@ function NavContainer(props) {
     <View>
       <Text>Loading...</Text>
     </View>
-  ) : 
-  !props.account ? (
+  ) : !props.account ? (
     <LoginScreen navigation={navigationRef} />
   ) : (
     <NavigationContainer
@@ -173,15 +177,17 @@ function NavContainer(props) {
       ref={navigationRef}
       onReady={() => {
         isReadyRef.current = true;
-      }}>
+      }}
+    >
       <Stack.Navigator>
         <Stack.Screen name="Home" options={{ headerShown: false }}>
           {() => (
             <Drawer.Navigator
-              drawerContent={(p) => <DrawerContent {...p} />}
+              drawerContent={p => <DrawerContent {...p} />}
               initialRouteName={drawerScreens[0].name}
               drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
-              screenOptions={{ headerShown: true, headerLeft: DrawerButton }}>
+              screenOptions={{ headerShown: true, headerLeft: DrawerButton }}
+            >
               {getScreens(props)}
             </Drawer.Navigator>
           )}
@@ -216,14 +222,14 @@ function NavContainer(props) {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     loaded: state.appState.rehydrationComplete,
     account: state.account.account,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     getAccount: () => dispatch(AccountActions.accountRequest()),
   };
