@@ -7,6 +7,7 @@ export default function FindHospital() {
   const [selected, setSelected] = useState([]);
   const [results, setResults] = useState([]);
   const [listHealthServices, setListHealtServices] = useState([]);
+  
   useEffect(() => {
     (async () => {
       const response = await fetch('http://192.168.1.212:8080/api/healthServices', {
@@ -28,6 +29,15 @@ export default function FindHospital() {
   function miaFunzione(healthService, i) {
     return <List.Item title={healthService.name} onPress={miaFunzione2} key={i} />;
   }
+  function miaFunzione4(name){
+    const miaLista = selected;
+    let i = miaLista.indexOf(name);
+    miaLista.splice(i, i+1);
+    setSelected(miaLista);
+  }
+  function miaFunzione3(healthService, i) {
+    return <List.Item title={healthService} onPress={miaFunzione4} key={i} />;
+  }
   return (
     <View>
       <Searchbar
@@ -41,13 +51,14 @@ export default function FindHospital() {
       />
 
       {results.length > 0 && query.length > 0 && <View style={styles.searchResult}>{results.map(miaFunzione)}</View>}
+      {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
     </View>
   );
 }
 const styles = StyleSheet.create({
   searchResult: {
-    marginTop: 40,
-    marginBottom: 160,
+    //marginTop: 40,
+    //marginBottom: 160,
     borderColor: '#20232a',
     borderWidth: 3,
   },
