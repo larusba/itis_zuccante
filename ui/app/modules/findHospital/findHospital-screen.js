@@ -7,7 +7,7 @@ export default function FindHospital() {
   const [selected, setSelected] = useState([]);
   const [results, setResults] = useState([]);
   const [listHealthServices, setListHealtServices] = useState([]);
-  
+
   useEffect(() => {
     (async () => {
       const response = await fetch('http://192.168.1.212:8080/api/healthServices', {
@@ -21,18 +21,17 @@ export default function FindHospital() {
     })();
   }, []);
   function miaFunzione2(stringa) {
-    const lista = selected;
+    const lista = [...selected];
     lista.push(stringa.target.textContent);
-    setSelected(lista);
-    console.log(selected);
+    if (!selected.includes(stringa.target.textContent)) setSelected(lista);
   }
   function miaFunzione(healthService, i) {
     return <List.Item title={healthService.name} onPress={miaFunzione2} key={i} />;
   }
-  function miaFunzione4(name){
-    const miaLista = selected;
-    let i = miaLista.indexOf(name);
-    miaLista.splice(i, i+1);
+  function miaFunzione4(name) {
+    const miaLista = [...selected];
+    let i = miaLista.indexOf(name.target.textContent);
+    miaLista.splice(i, 1);
     setSelected(miaLista);
   }
   function miaFunzione3(healthService, i) {
