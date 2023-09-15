@@ -136,7 +136,6 @@ function NavContainer(props) {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log(location);
     })();
   }, [props.account]);
 
