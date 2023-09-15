@@ -4,7 +4,8 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow AmbulanzaVeloce to use your location."
+          "locationAlwaysAndWhenInUsePermission": "Allow AmbulanzaVeloce to use your location.",
+          "isAndroidBackgroundLocationEnabled": true
         }
       ]
     ],
@@ -37,6 +38,6 @@
     },
     "scheme": "ui",
     "extra": {}
-    
+
   }
 }

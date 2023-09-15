@@ -1,4 +1,4 @@
-import { Searchbar, Searchview, List } from 'react-native-paper';
+import { Searchbar, Searchview, List , Button} from 'react-native-paper';
 import React, { useEffect, useState } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import { random } from 'lodash';
@@ -41,7 +41,7 @@ export default function FindHospital() {
     <View>
       <Searchbar
         placeholder="Search"
-        mode={'view'}
+        mode={'bar'}
         onChangeText={query => {
           const tmp = listHealthServices.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
           setResults(tmp.slice(0, 5));
@@ -50,16 +50,24 @@ export default function FindHospital() {
       />
 
       {results.length > 0 && query.length > 0 && <View style={styles.searchResult}>{results.map(miaFunzione)}</View>}
-      {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
+      <Button icon="ambulance" mode="elevated" onPress={() => console.log('Pressed')}>
+        Find hospital
+      </Button>
+      {selected.length > 0 && <View style={styles.paragraph}>{selected.map(miaFunzione3)}</View>}
     </View>
   );
 }
 const styles = StyleSheet.create({
   searchResult: {
-    //marginTop: 40,
-    //marginBottom: 160,
+    margin: 5,
     borderColor: '#20232a',
     borderWidth: 3,
+    borderRadius: 25,
   },
-  paragraph: {},
+  paragraph: {
+    margin: 5,
+    borderColor: '#20232a',
+    borderWidth: 3,
+    borderRadius: 25,
+  },
 });
