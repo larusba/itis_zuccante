@@ -27,6 +27,9 @@ export default function FindHospital() {
   //const [visible, setVisible] = React.useState(false);
   const onToggleSnackBar = () => setVisible(!visible);
   const onDismissSnackBar = () => setVisible(false);
+  const theme = {
+    dark: false,
+  }
 
   useEffect(() => {
     (async () => {
@@ -122,7 +125,7 @@ export default function FindHospital() {
   }
 
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <View>
         <Searchbar
           placeholder="Search"

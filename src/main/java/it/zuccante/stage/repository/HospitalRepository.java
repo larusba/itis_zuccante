@@ -17,9 +17,10 @@ public interface HospitalRepository extends Neo4jRepository<Hospital, Long> {
     @Query("MATCH (p:Ospedale) RETURN DISTINCT p\n" )
     List<Hospital> findAll();
 
-    @Query("MATCH (o:Ospedale)<-[s:SVOLTO]-(i:Intervento)\n" +
+    @Query("MATCH (o:Ospedale)\n" +
+           "OPTIONAL MATCH (o)<-[s:SVOLTO]-(i:Intervento)\n" +
            "WITH o, COUNT(i) as interventi\n" +
-            "RETURN {ospedale: o, interventi: interventi}")
+           "RETURN {ospedale: o, interventi: interventi}")
     List<MapValue>FindNumberOfInterventionByHospitalAll();
 
 

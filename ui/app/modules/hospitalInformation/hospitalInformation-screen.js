@@ -6,6 +6,12 @@ import config from './../../config/app-config.js';
 export default function HospitaInformation() {
   const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
   const [listHAndI, setListAAndI] = useState([]);
+  const images = [
+    '',
+    'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321ac733b36fa00b9ca1c25',
+    'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=63b6c124e94ef1008fb5c7d6',
+    'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321a95fd88c160098806917',
+  ]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +39,9 @@ export default function HospitaInformation() {
         </Card.Content>
         <Card.Cover
           source={{
-            uri: 'https://asugi.sanita.fvg.it/export/sites/aas1/it/news/img/ambulanza/IMG-20230808-WA0008.jpg',
+            uri: images[hospitalIntervetion.hospital.id],
           }}
+          style={styles.cardCover}
         />
         <Card.Actions>
           <Button>Mostra interventi </Button>
@@ -45,4 +52,10 @@ export default function HospitaInformation() {
   }
 
   return <View> {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}</View>;
+  
 }
+const styles = StyleSheet.create({
+  cardCover: {
+    height: 400,
+  },
+});
