@@ -8,5 +8,5 @@ public class HospitalIntervetionDTO {
     private static final long serialVersionUID = 1L;
 
     private HospitalDTO hospital;
-    private int CountIntervetion;
+    private int countIntervention;
 }

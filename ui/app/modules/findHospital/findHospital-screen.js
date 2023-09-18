@@ -1,9 +1,11 @@
-import { Modal, TextInput, Portal, PaperProvider, Searchbar, Searchview, List, Button } from 'react-native-paper';
+import { Modal, TextInput, Portal, PaperProvider, Searchbar, Searchview, List, Button, Snackbar } from 'react-native-paper';
 import { faker } from '@faker-js/faker';
 import React, { useEffect, useState } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
-import { random } from 'lodash';
 import * as Location from 'expo-location';
+import config from './../../config/app-config.js';
+console.log(config);
+
 export default function FindHospital() {
   const [name, setName] = useState(faker.person.firstName());
   const [surname, setSurname] = useState(faker.person.lastName());
@@ -22,10 +24,13 @@ export default function FindHospital() {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30 };
+  //const [visible, setVisible] = React.useState(false);
+  const onToggleSnackBar = () => setVisible(!visible);
+  const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch('http://192.168.1.237:8080/api/healthServices', {
+      const response = await fetch(`${config.apiUrl}api/healthServices`, {
         headers: {
           Authorization:
             'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
@@ -49,14 +54,38 @@ export default function FindHospital() {
   };
 
   const createIntervention = async () => {
-    console.log('bau');
-    const response = await fetch(healthServiceStringChain(), {
+    const data = {
+      nomePaziente: name,
+      cognomePaziente: surname,
+      numeroAmbulanza: ambulanceNumber,
+      luogoIntervento: address,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      tempoPercorrenza: Math.trunc(serverResponse.duration),
+      nomeOspedale: serverResponse.hospitalName,
+      nomePrestazione: selected,
+    };
+    const response = await fetch(`${config.apiUrl}api/createIntervention`, {
+      method: 'POST',
+      body: JSON.stringify(data),
       headers: {
+        'Content-Type': 'application/json',
         Authorization:
           'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
       },
     });
   };
+
+  function healthServiceStringChain() {
+    console.log('bauz');
+    let tmp = `${config.apiUrl}api/findNearestHospitalByHealthService?`;
+    for (let i = 0; i < selected.length; i++) {
+      tmp += 'healthServices=' + selected[i] + '&';
+    }
+    tmp += 'latitudine=' + location.coords.latitude + '&longitudine=' + location.coords.longitude;
+    console.log(tmp);
+    return tmp;
+  }
 
   useEffect(() => {
     (async () => {
@@ -70,23 +99,28 @@ export default function FindHospital() {
       setLocation(location);
     })();
   }, []);
+
   function miaFunzione2(stringa) {
     const lista = [...selected];
     lista.push(stringa.target.textContent);
     if (!selected.includes(stringa.target.textContent)) setSelected(lista);
   }
+
   function miaFunzione(healthService, i) {
     return <List.Item title={healthService.name} onPress={miaFunzione2} key={i} />;
   }
+
   function miaFunzione4(name) {
     const miaLista = [...selected];
     let i = miaLista.indexOf(name.target.textContent);
     miaLista.splice(i, 1);
     setSelected(miaLista);
   }
+
   function miaFunzione3(healthService, i) {
     return <List.Item title={healthService} onPress={miaFunzione4} key={i} />;
   }
+
   return (
     <PaperProvider>
       <View>
@@ -135,7 +169,13 @@ export default function FindHospital() {
             />
             <TextInput label="address" value={address} onChangeText={e => setAddress(e)} mode={'outlined'} style={styles.textInput} />
             <br></br>
-            <Button mode="elevated" onPress={(findHospitalHandle, hideModal)}>
+            <Button
+              mode="elevated"
+              onPress={() => {
+                createIntervention();
+                hideModal();
+              }}
+            >
               CREATE INTERVENTION
             </Button>
           </Modal>
@@ -143,16 +183,8 @@ export default function FindHospital() {
       </View>
     </PaperProvider>
   );
-  function healthServiceStringChain() {
-    let tmp = 'http://192.168.1.237:8080/api/findNearestHospitalByHealthService?';
-    for (let i = 0; i < selected.length; i++) {
-      tmp += 'healthServices=' + selected[i] + '&';
-    }
-    tmp += 'latitudine=' + location.coords.latitude + '&longitudine=' + location.coords.longitude;
-    console.log(tmp);
-    return tmp;
-  }
 }
+
 const styles = StyleSheet.create({
   searchResult: {
     margin: 1,

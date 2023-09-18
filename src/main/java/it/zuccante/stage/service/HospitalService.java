@@ -1,9 +1,7 @@
 package it.zuccante.stage.service;
 
-import it.zuccante.stage.domain.HealthService;
 import it.zuccante.stage.domain.Hospital;
 import it.zuccante.stage.repository.HospitalRepository;
-import it.zuccante.stage.service.dto.HealthServiceDTO;
 import it.zuccante.stage.service.dto.HospitalDTO;
 import it.zuccante.stage.service.dto.HospitalIntervetionDTO;
 import it.zuccante.stage.service.dto.TrackDTO;
@@ -53,7 +51,7 @@ public class HospitalService {
             int interventi = mapValue.get(i).get("interventi", 0);
             HospitalIntervetionDTO hospitalIntervetionDTO = new HospitalIntervetionDTO();
             hospitalIntervetionDTO.setHospital(hospital);
-            hospitalIntervetionDTO.setCountIntervetion(interventi);
+            hospitalIntervetionDTO.setCountIntervention(interventi);
             results.add(hospitalIntervetionDTO);
         }
         return results;

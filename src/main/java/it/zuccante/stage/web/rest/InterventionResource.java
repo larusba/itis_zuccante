@@ -6,11 +6,9 @@ import it.zuccante.stage.service.dto.InterventionDTO;
 import it.zuccante.stage.web.rest.errors.BadHospitalOrHealthServiceNameException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,10 +24,15 @@ public class InterventionResource {
         this.interventionService = interventionService;
     }
 
+
+
     @PostMapping("/createIntervention")
-    public ResponseEntity<Intervention> createIntervetion(@RequestBody InterventionDTO interventionDTO){
-        Optional<Intervention> intervention = interventionService.createIntervetion(interventionDTO);
-        return intervention.map(intervetion -> ResponseEntity.ok().body(intervetion)).orElseThrow(BadHospitalOrHealthServiceNameException::new);
+    public ResponseEntity<List<Intervention>> createIntervetion(@RequestBody InterventionDTO interventionDTO){
+        List<Intervention> intervention = interventionService.createIntervetion(interventionDTO);
+        if(intervention.isEmpty()) {
+            throw new BadHospitalOrHealthServiceNameException();
+        }
+        return ResponseEntity.ok().body(intervention);
     }
 
 }

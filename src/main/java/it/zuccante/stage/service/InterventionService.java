@@ -21,7 +21,7 @@ public class InterventionService {
     public InterventionService(InterventionRepository interventionRepository) {
         this.interventionRepository = interventionRepository;
     }
-    public Optional<Intervention> createIntervetion(InterventionDTO interventionDTO){
+    public List<Intervention> createIntervetion(InterventionDTO interventionDTO){
         String ospedale = interventionDTO.getNomeOspedale();
         List<String> prestazione = new ArrayList<>(interventionDTO.getNomePrestazione());
         String nomePaziente = interventionDTO.getNomePaziente();
@@ -31,10 +31,12 @@ public class InterventionService {
         double latitudine = interventionDTO.getLatitude();
         double longitudine = interventionDTO.getLongitude();
         double tempoPercorrenza = interventionDTO.getTempoPercorrenza();
+        List<Intervention> opt = new ArrayList<>();
         for (int i = 0; i < prestazione.size(); i++){
-            interventionRepository.createIntervetion(ospedale, prestazione.get(i), nomePaziente, cognomePaziente,
+            Optional<Intervention> intervetion = interventionRepository.createIntervetion(ospedale, prestazione.get(i), nomePaziente, cognomePaziente,
                 numeroAmbulanza, luogoIntervento, latitudine, longitudine, tempoPercorrenza);
+            intervetion.ifPresent(opt::add);
         }
-        return null;
+        return opt;
     }
 }

@@ -23,6 +23,7 @@ import NotFound from './not-found-screen';
 import { ModalScreen } from './modal-screen';
 import { DrawerButton } from './drawer/drawer-button';
 import FindHospital from '../modules/findHospital/findHospital-screen.js';
+import HospitaInformation from '../modules/hospitalInformation/hospitalInformation-screen.js';
 
 export const drawerScreens = [
   {
@@ -62,6 +63,12 @@ export const drawerScreens = [
     name: 'Find nearest hospital',
     route: 'findHospital',
     component: FindHospital,
+    auth: true,
+  },
+  {
+    name: 'About hospital',
+    route: 'hospitalInformation',
+    component: HospitaInformation,
     auth: true,
   },
 ];
