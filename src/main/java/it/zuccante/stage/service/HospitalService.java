@@ -3,8 +3,11 @@ package it.zuccante.stage.service;
 import it.zuccante.stage.domain.HealthService;
 import it.zuccante.stage.domain.Hospital;
 import it.zuccante.stage.repository.HospitalRepository;
+import it.zuccante.stage.service.dto.HealthServiceDTO;
 import it.zuccante.stage.service.dto.HospitalDTO;
+import it.zuccante.stage.service.dto.HospitalIntervetionDTO;
 import it.zuccante.stage.service.dto.TrackDTO;
+import org.neo4j.driver.Value;
 import org.neo4j.driver.internal.value.MapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +37,26 @@ public class HospitalService {
     }
     public List<Hospital> findHospitalByHealthService(List<String> healthServiceStrings) {
         return this.hospitalRepository.findHospitalsByHealthServices(healthServiceStrings);
+    }
+
+    public List<HospitalIntervetionDTO> FindNumberOfInterventionByHospitalAll() {
+        List<MapValue> mapValue = this.hospitalRepository.FindNumberOfInterventionByHospitalAll();
+        List<HospitalIntervetionDTO> results = new ArrayList<>();
+        for (int i = 0; i < mapValue.size(); i++) {
+            Value ospedale = mapValue.get(i).get("ospedale");
+            int id = ospedale.get("id", 1);
+            String address = ospedale.get("indirizzo", "");
+            String name = ospedale.get("nome", "");
+            double latitude = ospedale.get("latitudine", 0d);
+            double longitude = ospedale.get("longitudine", 0d);
+            HospitalDTO hospital = new HospitalDTO(id, name, address, latitude, longitude);
+            int interventi = mapValue.get(i).get("interventi", 0);
+            HospitalIntervetionDTO hospitalIntervetionDTO = new HospitalIntervetionDTO();
+            hospitalIntervetionDTO.setHospital(hospital);
+            hospitalIntervetionDTO.setCountIntervetion(interventi);
+            results.add(hospitalIntervetionDTO);
+        }
+        return results;
     }
 
     public TrackDTO findNearestHospitalByHealthService(List<String> healthServices, double latitudine, double logitudine) {

@@ -1,20 +1,19 @@
 package it.zuccante.stage.service.dto;
 
-import it.zuccante.stage.domain.Hospital;
+import lombok.*;
 
 import java.io.Serializable;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class HospitalDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private int id;
     private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String address;
+    private double latitude;
+    private double longitude;
 }

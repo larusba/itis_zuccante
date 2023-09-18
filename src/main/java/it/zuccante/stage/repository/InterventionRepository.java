@@ -21,5 +21,9 @@ public interface InterventionRepository extends Neo4jRepository<Intervention, St
                                             @Param("numeroAmbulanza")String numeroAmbulanza, @Param("luogoIntervento")String luogoIntervento,
                                             @Param("latitudine")double latitudine, @Param("longitudine")double longitudine, @Param("tempoPercorrenza")double tempoPercorrenza);
 
+
+
+
+
 }
 
