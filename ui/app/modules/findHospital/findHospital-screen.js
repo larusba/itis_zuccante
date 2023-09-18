@@ -25,7 +25,7 @@ export default function FindHospital() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch('http://192.168.1.212:8080/api/healthServices', {
+      const response = await fetch('http://192.168.1.237:8080/api/healthServices', {
         headers: {
           Authorization:
             'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
@@ -46,6 +46,16 @@ export default function FindHospital() {
     });
     setServerResponse(await response.json());
     setVisible(true);
+  };
+
+  const createIntervention = async () => {
+    console.log('bau');
+    const response = await fetch(healthServiceStringChain(), {
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
+      },
+    });
   };
 
   useEffect(() => {
@@ -91,10 +101,10 @@ export default function FindHospital() {
         />
 
         {results.length > 0 && query.length > 0 && <View style={styles.searchResult}>{results.map(miaFunzione)}</View>}
-        <Button icon="ambulance" mode="elevated" onPress={findHospitalHandle}>
+        <Button icon="ambulance" mode="elevated" style={styles.paragraph} onPress={findHospitalHandle}>
           Find hospital
         </Button>
-        {selected.length > 0 && <View style={styles.paragraph}>{selected.map(miaFunzione3)}</View>}
+        {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
 
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} style={styles.modal}>
@@ -125,7 +135,7 @@ export default function FindHospital() {
             />
             <TextInput label="address" value={address} onChangeText={e => setAddress(e)} mode={'outlined'} style={styles.textInput} />
             <br></br>
-            <Button mode="elevated" onPress={findHospitalHandle}>
+            <Button mode="elevated" onPress={(findHospitalHandle, hideModal)}>
               CREATE INTERVENTION
             </Button>
           </Modal>
@@ -134,7 +144,7 @@ export default function FindHospital() {
     </PaperProvider>
   );
   function healthServiceStringChain() {
-    let tmp = 'http://192.168.1.212:8080/api/findNearestHospitalByHealthService?';
+    let tmp = 'http://192.168.1.237:8080/api/findNearestHospitalByHealthService?';
     for (let i = 0; i < selected.length; i++) {
       tmp += 'healthServices=' + selected[i] + '&';
     }
@@ -145,15 +155,14 @@ export default function FindHospital() {
 }
 const styles = StyleSheet.create({
   searchResult: {
-    margin: 2,
+    margin: 1,
     borderColor: '#20232a',
-    borderWidth: 3,
+    borderWidth: 1,
     borderRadius: 20,
   },
   paragraph: {
-    margin: 2,
+    margin: 1,
     borderColor: '#20232a',
-    borderWidth: 3,
     borderRadius: 20,
   },
   modal: {
