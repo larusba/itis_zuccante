@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +23,7 @@ public class InterventionService {
     }
     public Optional<Intervention> createIntervetion(InterventionDTO interventionDTO){
         String ospedale = interventionDTO.getNomeOspedale();
-        String prestazione = interventionDTO.getNomePrestazione();
+        List<String> prestazione = new ArrayList<>(interventionDTO.getNomePrestazione());
         String nomePaziente = interventionDTO.getNomePaziente();
         String cognomePaziente = interventionDTO.getCognomePaziente();
         String numeroAmbulanza = interventionDTO.getNumeroAmbulanza();
@@ -29,7 +31,10 @@ public class InterventionService {
         double latitudine = interventionDTO.getLatitude();
         double longitudine = interventionDTO.getLongitude();
         double tempoPercorrenza = interventionDTO.getTempoPercorrenza();
-        return interventionRepository.createIntervetion(ospedale, prestazione, nomePaziente, cognomePaziente,
-            numeroAmbulanza, luogoIntervento, latitudine, longitudine, tempoPercorrenza);
+        for (int i = 0; i < prestazione.size(); i++){
+            interventionRepository.createIntervetion(ospedale, prestazione.get(i), nomePaziente, cognomePaziente,
+                numeroAmbulanza, luogoIntervento, latitudine, longitudine, tempoPercorrenza);
+        }
+        return null;
     }
 }

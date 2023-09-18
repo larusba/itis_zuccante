@@ -12,8 +12,9 @@ public interface InterventionRepository extends Neo4jRepository<Intervention, St
 
    @Query(
     "MATCH (o:Ospedale)-[:HA_UNITA_OPERATIVA]->(uo:UnitaOperativa)-[:EROGA]->(p:Prestazione) WHERE o.nome = $ospedale AND p.nome = $prestazione\n" +
-    "CREATE (i:Intervento {nome:$nomePaziente, cognome:$cognomePaziente, ambulanza:$numeroAmbulanza, luogo:$luogoIntervento, latitudine:$latitudine, longitudine:$longitudine})\n" +
-    "CREATE (o)<-[:SVOLTO {percorrenza:$tempoPercorrenza}]-(i)-[:RICHIEDE]->(p)\n" +
+    "MERGE (i:Intervento {nome:$nomePaziente, cognome:$cognomePaziente, ambulanza:$numeroAmbulanza, luogo:$luogoIntervento, latitudine:$latitudine, longitudine:$longitudine})\n" +
+    "MERGE (o)<-[:SVOLTO {percorrenza:$tempoPercorrenza}]-(i)\n" +
+    "MERGE (p)<-[:RICHIEDE]-(i)\n" +
     "RETURN i")
    Optional<Intervention> createIntervetion(@Param("ospedale")String ospedale, @Param("prestazione")String prestazione,
                                             @Param("nomePaziente")String nomePaziente, @Param("cognomePaziente")String cognomePaziente,

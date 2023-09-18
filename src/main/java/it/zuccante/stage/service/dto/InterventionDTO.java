@@ -1,6 +1,7 @@
 package it.zuccante.stage.service.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class InterventionDTO implements Serializable {
 
@@ -15,7 +16,7 @@ public class InterventionDTO implements Serializable {
 
     private double tempoPercorrenza;
     private String nomeOspedale;
-    private String nomePrestazione;
+    private List<String> nomePrestazione;
 
     public String getNomePaziente() {
         return nomePaziente;
@@ -81,11 +82,11 @@ public class InterventionDTO implements Serializable {
         this.nomeOspedale = nomeOspedale;
     }
 
-    public String getNomePrestazione() {
+    public List<String> getNomePrestazione() {
         return nomePrestazione;
     }
 
-    public void setNomePrestazione(String nomePrestazione) {
+    public void setNomePrestazione(List<String> nomePrestazione) {
         this.nomePrestazione = nomePrestazione;
     }
 
