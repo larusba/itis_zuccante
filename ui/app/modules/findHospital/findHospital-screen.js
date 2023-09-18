@@ -21,6 +21,8 @@ export default function FindHospital() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [visible, setVisible] = React.useState(false);
+  const [visibleBanana, setVisibleBanana] = React.useState(false);
+  const [msg, setMsg] = useState('');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30 };
@@ -29,7 +31,7 @@ export default function FindHospital() {
   const onDismissSnackBar = () => setVisible(false);
   const theme = {
     dark: false,
-  }
+  };
 
   useEffect(() => {
     (async () => {
@@ -45,7 +47,7 @@ export default function FindHospital() {
   }, []);
 
   const findHospitalHandle = async () => {
-    console.log('bau');
+    //console.log('bau');
     const response = await fetch(healthServiceStringChain(), {
       headers: {
         Authorization:
@@ -53,6 +55,7 @@ export default function FindHospital() {
       },
     });
     setServerResponse(await response.json());
+    setVisibleBanana(false);
     setVisible(true);
   };
 
@@ -77,10 +80,19 @@ export default function FindHospital() {
           'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
       },
     });
+    console.log('bauzzzz');
+    let json = await response.json();
+    console.log(json);
+    if (json.status) {
+      setMsg('Error in creating the intervention');
+    } else {
+      setMsg('Intervention created');
+    }
+    setVisibleBanana(true);
   };
 
   function healthServiceStringChain() {
-    console.log('bauz');
+    //console.log('bauz');
     let tmp = `${config.apiUrl}api/findNearestHospitalByHealthService?`;
     for (let i = 0; i < selected.length; i++) {
       tmp += 'healthServices=' + selected[i] + '&';
@@ -138,7 +150,7 @@ export default function FindHospital() {
         />
 
         {results.length > 0 && query.length > 0 && <View style={styles.searchResult}>{results.map(miaFunzione)}</View>}
-        <Button icon="ambulance" mode="elevated" style={styles.paragraph} onPress={findHospitalHandle}>
+        <Button icon="ambulance" disabled={!selected.length > 0} mode="elevated" style={styles.paragraph} onPress={findHospitalHandle}>
           Find hospital
         </Button>
         {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
@@ -184,6 +196,18 @@ export default function FindHospital() {
           </Modal>
         </Portal>
       </View>
+      <Snackbar
+        visible={visibleBanana}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: 'Ok',
+          onPress: () => {
+            setVisibleBanana(false);
+          },
+        }}
+      >
+        {msg}
+      </Snackbar>
     </PaperProvider>
   );
 }
