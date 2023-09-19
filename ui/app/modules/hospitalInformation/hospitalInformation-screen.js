@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, View, StyleSheet } from 'react-native';
-import { Avatar, Button, Card, Text, Badge } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Avatar, Button, Card, Text, Badge, Modal, Portal } from 'react-native-paper';
 import config from './../../config/app-config.js';
 
 export default function HospitaInformation() {
@@ -12,6 +12,11 @@ export default function HospitaInformation() {
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=63b6c124e94ef1008fb5c7d6',
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321a95fd88c160098806917',
   ];
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const [visible, setVisible] = React.useState(false);
+  const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30 };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,17 +49,35 @@ export default function HospitaInformation() {
           style={styles.cardCover}
         />
         <Card.Actions>
-          <Button>Mostra interventi </Button>
+          <Button onPress={showModal}>Mostra interventi </Button>
           <Badge size={40}>{hospitalIntervetion.countIntervention}</Badge>
         </Card.Actions>
       </Card>
     );
   }
 
-  return <View> {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}</View>;
+  return (
+    <View>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          style={styles.modalStyle}
+          contentContainerStyle={containerStyle}
+          theme={{ colors: { primary: 'green' } }}
+        >
+          <Text>Example Modal. Click outside this area to dismiss.</Text>
+        </Modal>
+      </Portal>
+      {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   cardCover: {
     height: 400,
+  },
+  modalStyle: {
+    position: 'fixed',
   },
 });

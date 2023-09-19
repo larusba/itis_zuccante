@@ -25,13 +25,10 @@ export default function FindHospital() {
   const [msg, setMsg] = useState('');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30 };
+  const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30, position: fixed };
   //const [visible, setVisible] = React.useState(false);
   const onToggleSnackBar = () => setVisible(!visible);
   const onDismissSnackBar = () => setVisible(false);
-  const theme = {
-    dark: false,
-  };
 
   useEffect(() => {
     (async () => {
@@ -137,7 +134,7 @@ export default function FindHospital() {
   }
 
   return (
-    <PaperProvider theme={theme}>
+    <>
       <View>
         <Searchbar
           placeholder="Search"
@@ -211,7 +208,7 @@ export default function FindHospital() {
           {msg}
         </Snackbar>
       </Portal>
-    </PaperProvider>
+    </>
   );
 }
 
