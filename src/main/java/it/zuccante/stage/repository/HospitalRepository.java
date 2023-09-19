@@ -37,13 +37,13 @@ public interface HospitalRepository extends Neo4jRepository<Hospital, Long> {
         "WHERE p.nome IN $healthServices\n" +
         "WITH p\n" +
         "MATCH (p)<-[:EROGA]-(:UnitaOperativa)<-[:HA_UNITA_OPERATIVA]-(o:Ospedale)\n" +
-        "WITH DISTINCT o.nome as ospedale, o.latitudine + \",\" + o.longitudine as arrivo\n" +
+        "WITH DISTINCT o.nome as ospedale, o.latitudine + \",\" + o.longitudine as arrivo, o\n" +
         "CALL apoc.load.json('https://dev.virtualearth.net/REST/V1/Routes/Driving?o=json&wp.0=' + $latitude + ',' + $longitude + '&wp.1=' + arrivo + '&avoid=minimizeTolls&optimize=timeAvoidClosure,timeWithTraffic&key=AgwssaPczXIe2FEQ1cUXtnLVv0Juo3nEfL0OqKVpudIaFdZNqxPK5Wf7wMPdPN3P') YIELD value\n" +
-        "WITH ospedale, value.resourceSets as resourceSets\n" +
+        "WITH ospedale, value.resourceSets as resourceSets, o\n" +
         "UNWIND resourceSets AS resourceSet\n" +
-        "WITH ospedale, resourceSet.resources as resources\n" +
+        "WITH ospedale, resourceSet.resources as resources, o\n" +
         "UNWIND resources AS resource\n" +
-        "WITH  ospedale as hospital , resource.travelDuration as duration , resource.travelDistance as distance , resource.trafficCongestion as congestion\n" +
-        "RETURN {hospital:hospital, duration:duration, distance:distance, congestion:congestion } as risultato")
+        "WITH  o.latitudine as lat, o.longitudine as lon, ospedale as hospital , resource.travelDuration as duration , resource.travelDistance as distance , resource.trafficCongestion as congestion\n" +
+        "RETURN {lat: lat, lon: lon, hospital:hospital, duration:duration, distance:distance, congestion:congestion } as risultato")
     List<MapValue> findHospitalByShortestDistance(@Param("healthServices") List<String> healthServices, @Param("latitude")double latitude, @Param("longitude")double longitude);
 }

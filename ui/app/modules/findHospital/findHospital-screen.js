@@ -1,4 +1,4 @@
-import { Modal, TextInput, Portal, PaperProvider, Searchbar, Searchview, List, Button, Snackbar } from 'react-native-paper';
+import { Modal, TextInput, Portal, ActivityIndicator, MD2Colors, Searchbar, Searchview, List, Button, Snackbar } from 'react-native-paper';
 import { faker } from '@faker-js/faker';
 import React, { useEffect, useState } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
@@ -40,6 +40,7 @@ export default function FindHospital() {
       });
 
       setListHealtServices(await response.json());
+      console.log('setListHealtServices pijati');
     })();
   }, []);
 
@@ -51,9 +52,17 @@ export default function FindHospital() {
           'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
       },
     });
-    setServerResponse(await response.json());
+    const json = await response.json();
+    setServerResponse(json);
     setVisibleSnackbar(false);
     setVisible(true);
+    console.log('nearestHospital pijato', json);
+  };
+
+  const imageMap = async () => {
+    const response = await fetch(
+      'https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=45.5033742,12.2362233&wp.1=45.4224654,12.0655365&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000, 1000'
+    );
   };
 
   const createIntervention = async () => {
@@ -109,6 +118,7 @@ export default function FindHospital() {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+      console.log('Location pijata');
     })();
   }, []);
 
@@ -151,7 +161,11 @@ export default function FindHospital() {
           Find hospital
         </Button>
         {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
-
+        <Portal>
+          <Modal visible={!location || listHealthServices.length === 0} dismissable={false}>
+            <ActivityIndicator animating={true} color={MD2Colors.red800} />
+          </Modal>
+        </Portal>
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} style={styles.modal}>
             <TextInput label="Hospital" value={serverResponse.hospitalName} disabled={true} mode={'outlined'} style={styles.textInput} />
@@ -180,6 +194,15 @@ export default function FindHospital() {
               style={styles.textInput}
             />
             <TextInput label="address" value={address} onChangeText={e => setAddress(e)} mode={'outlined'} style={styles.textInput} />
+            {location?.coords && (
+              <img
+                position="fixed"
+                height={400}
+                width={400}
+                src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${serverResponse.latitude},${serverResponse.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
+                alt="mia mappa non tanto mia"
+              ></img>
+            )}
             <br></br>
             <Button
               mode="elevated"
@@ -231,5 +254,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     textAlign: 'center',
+    width: 300,
+  },
+  mapPos: {
+    position: 'flex',
   },
 });

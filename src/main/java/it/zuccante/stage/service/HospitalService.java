@@ -73,6 +73,8 @@ public class HospitalService {
         track.setDuration(mapValue.get(y).get("duration", 0d));
         track.setDistance(mapValue.get(y).get("distance", 0d));
         track.setCongestion(mapValue.get(y).get("congestion", ""));
+        track.setLongitude(mapValue.get(y).get("lon").asDouble());
+        track.setLatitude(mapValue.get(y).get("lat").asDouble());
         return track;
     }
 }
