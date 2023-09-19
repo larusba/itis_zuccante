@@ -25,7 +25,7 @@ export default function App() {
 
   return displayApp ? (
     <Provider store={store}>
-      <PaperProvider>
+      <PaperProvider theme={theme}>
         <NavContainer />
       </PaperProvider>
     </Provider>

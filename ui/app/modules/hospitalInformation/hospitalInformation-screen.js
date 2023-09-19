@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Avatar, Button, Card, Text, Badge, Modal, Portal } from 'react-native-paper';
+import { Avatar, Button, Card, Text, Badge, Modal, Portal, PaperProvider } from 'react-native-paper';
 import config from './../../config/app-config.js';
 
 export default function HospitaInformation() {
@@ -37,7 +37,7 @@ export default function HospitaInformation() {
 
   function miaFunzione(hospitalIntervetion, i) {
     return (
-      <Card key={i} mode="contained">
+      <Card key={i} mode="view">
         <Card.Content>
           <Text variant="titleLarge">{hospitalIntervetion.hospital.name}</Text>
           <Text variant="bodyMedium">{hospitalIntervetion.hospital.address}</Text>
@@ -49,15 +49,31 @@ export default function HospitaInformation() {
           style={styles.cardCover}
         />
         <Card.Actions>
-          <Button>Mostra interventi </Button>
-          <Badge size={40}>{hospitalIntervetion.countIntervention}</Badge>
+          <Button onPress={showModal}>Mostra interventi </Button>
+          <Badge size={45}>{hospitalIntervetion.countIntervention}</Badge>
         </Card.Actions>
       </Card>
     );
   }
 
-  return <View> {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}</View>;
+  return (
+    <View>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          style={styles.modalStyle}
+          contentContainerStyle={containerStyle}
+          theme={{ colors: { primary: 'green' } }}
+        >
+          <Text>Example Modal. Click outside this area to dismiss.</Text>
+        </Modal>
+      </Portal>
+      {listHAndI.length > 0 && <View>{listHAndI.map(miaFunzione)}</View>}
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
   cardCover: {
     height: 400,

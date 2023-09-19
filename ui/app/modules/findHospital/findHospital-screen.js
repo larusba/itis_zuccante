@@ -25,7 +25,7 @@ export default function FindHospital() {
   const [msg, setMsg] = useState('');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30, position: fixed };
+  const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30 };
   //const [visible, setVisible] = React.useState(false);
   const onToggleSnackBar = () => setVisible(!visible);
   const onDismissSnackBar = () => setVisible(false);
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   modal: {
     margin: '10%',
     textAlign: 'center',
-    position: 'fixed',
+    //position: 'fixed',
   },
   textInput: {
     textAlign: 'center',
