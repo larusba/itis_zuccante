@@ -24,5 +24,11 @@ public interface InterventionRepository extends Neo4jRepository<Intervention, St
 
    @Query("MATCH (i:Intervento) RETURN DISTINCT i" )
    List<Intervention> findAll();
+
+    @Query("MATCH (o:Ospedale)\n" +
+           "WHERE o.nome = $ospedale\n" +
+           "MATCH (o)<-[:SVOLTO]-(i:Intervento)\n" +
+           "RETURN DISTINCT i")
+    List<Intervention> findInterventionsByHospitalName(@Param("ospedale")String hospitalName);
 }
 

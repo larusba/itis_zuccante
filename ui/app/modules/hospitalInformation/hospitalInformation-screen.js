@@ -49,29 +49,14 @@ export default function HospitaInformation() {
           style={styles.cardCover}
         />
         <Card.Actions>
-          <Button onPress={showModal}>Mostra interventi </Button>
+          <Button>Mostra interventi </Button>
           <Badge size={40}>{hospitalIntervetion.countIntervention}</Badge>
         </Card.Actions>
       </Card>
     );
   }
 
-  return (
-    <View>
-      <Portal>
-        <Modal
-          visible={visible}
-          onDismiss={hideModal}
-          style={styles.modalStyle}
-          contentContainerStyle={containerStyle}
-          theme={{ colors: { primary: 'green' } }}
-        >
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
-        </Modal>
-      </Portal>
-      {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}
-    </View>
-  );
+  return <View> {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}</View>;
 }
 const styles = StyleSheet.create({
   cardCover: {

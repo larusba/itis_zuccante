@@ -43,4 +43,8 @@ public class InterventionService {
     public List<Intervention> findAll(){
         return interventionRepository.findAll();
     }
+
+    public List<Intervention> findInterventionsByHospitalName(String hospitalName){
+        return interventionRepository.findInterventionsByHospitalName(hospitalName);
+    }
 }
