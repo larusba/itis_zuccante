@@ -4,8 +4,8 @@ import { Avatar, Button, Card, Text, Badge, Modal, Portal, PaperProvider } from 
 import config from './../../config/app-config.js';
 
 export default function HospitaInformation() {
-  const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
-  const [listHAndI, setListAAndI] = useState([]);
+  const [listHAndI, setListHAndI] = useState([]);
+  const [listInterventions, setListInterventions] = useState([]);
   const images = [
     '',
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321ac733b36fa00b9ca1c25',
@@ -26,13 +26,27 @@ export default function HospitaInformation() {
             'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
         },
       });
-      setListAAndI(await response.json());
+      setListHAndI(await response.json());
     };
     fetchData();
-    const timer = setInterval(fetchData, 1000);
+    const timer = setInterval(fetchData, 5000);
     return () => {
       clear(timer);
     };
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(`${config.apiUrl}api/findInterventionsByHospitalName?hospitalName=` + 'Ospedale%20di%20Mestre', {
+        headers: {
+          Authorization:
+            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
+        },
+      });
+
+      setListInterventions(await response.json());
+      console.log(listInterventions);
+    })();
   }, []);
 
   function miaFunzione(hospitalIntervetion, i) {
@@ -49,7 +63,9 @@ export default function HospitaInformation() {
           style={styles.cardCover}
         />
         <Card.Actions>
-          <Button onPress={showModal}>Mostra interventi </Button>
+          <Button disabled={hospitalIntervetion.countIntervention <= 0} onPress={showModal}>
+            Mostra interventi{' '}
+          </Button>
           <Badge size={45}>{hospitalIntervetion.countIntervention}</Badge>
         </Card.Actions>
       </Card>
