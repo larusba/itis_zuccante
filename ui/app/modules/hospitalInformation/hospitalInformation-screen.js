@@ -11,7 +11,7 @@ export default function HospitaInformation() {
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321ac733b36fa00b9ca1c25',
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=63b6c124e94ef1008fb5c7d6',
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321a95fd88c160098806917',
-  ]
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +32,7 @@ export default function HospitaInformation() {
 
   function miaFunzione(hospitalIntervetion, i) {
     return (
-      <Card key={i}>
+      <Card key={i} mode="contained">
         <Card.Content>
           <Text variant="titleLarge">{hospitalIntervetion.hospital.name}</Text>
           <Text variant="bodyMedium">{hospitalIntervetion.hospital.address}</Text>
@@ -52,7 +52,6 @@ export default function HospitaInformation() {
   }
 
   return <View> {listHAndI.length > 0 && <>{listHAndI.map(miaFunzione)}</>}</View>;
-  
 }
 const styles = StyleSheet.create({
   cardCover: {

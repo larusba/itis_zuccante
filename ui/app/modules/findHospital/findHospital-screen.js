@@ -21,7 +21,7 @@ export default function FindHospital() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [visible, setVisible] = React.useState(false);
-  const [visibleBanana, setVisibleBanana] = React.useState(false);
+  const [visibleSnackbar, setVisibleSnackbar] = React.useState(false);
   const [msg, setMsg] = useState('');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -55,7 +55,7 @@ export default function FindHospital() {
       },
     });
     setServerResponse(await response.json());
-    setVisibleBanana(false);
+    setVisibleSnackbar(false);
     setVisible(true);
   };
 
@@ -88,7 +88,7 @@ export default function FindHospital() {
     } else {
       setMsg('Intervention created');
     }
-    setVisibleBanana(true);
+    setVisibleSnackbar(true);
   };
 
   function healthServiceStringChain() {
@@ -196,18 +196,21 @@ export default function FindHospital() {
           </Modal>
         </Portal>
       </View>
-      <Snackbar
-        visible={visibleBanana}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: 'Ok',
-          onPress: () => {
-            setVisibleBanana(false);
-          },
-        }}
-      >
-        {msg}
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          duration={1000}
+          visible={visibleSnackbar}
+          onDismiss={onDismissSnackBar}
+          action={{
+            label: 'Ok',
+            onPress: () => {
+              setVisibleSnackbar(false);
+            },
+          }}
+        >
+          {msg}
+        </Snackbar>
+      </Portal>
     </PaperProvider>
   );
 }

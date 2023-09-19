@@ -39,4 +39,8 @@ public class InterventionService {
         }
         return opt;
     }
+
+    public List<Intervention> findAll(){
+        return interventionRepository.findAll();
+    }
 }

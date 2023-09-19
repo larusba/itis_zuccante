@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface InterventionRepository extends Neo4jRepository<Intervention, String> {
@@ -21,9 +22,7 @@ public interface InterventionRepository extends Neo4jRepository<Intervention, St
                                             @Param("numeroAmbulanza")String numeroAmbulanza, @Param("luogoIntervento")String luogoIntervento,
                                             @Param("latitudine")double latitudine, @Param("longitudine")double longitudine, @Param("tempoPercorrenza")double tempoPercorrenza);
 
-
-
-
-
+   @Query("MATCH (i:Intervento) RETURN DISTINCT i" )
+   List<Intervention> findAll();
 }
 

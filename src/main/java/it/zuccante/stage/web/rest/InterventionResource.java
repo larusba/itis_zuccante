@@ -35,4 +35,9 @@ public class InterventionResource {
         return ResponseEntity.ok().body(intervention);
     }
 
+    @GetMapping("/findAll")
+    public List<Intervention> findAll(){
+        return interventionService.findAll();
+    }
+
 }
