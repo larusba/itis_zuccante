@@ -38,6 +38,16 @@ export const drawerScreens = [
     auth: false,
   },
   {
+    name: 'EntityStack',
+    isStack: true,
+    component: EntityStackScreen,
+    options: {
+      title: 'Entities',
+      headerShown: false,
+    },
+    auth: true,
+  },
+  {
     name: 'Chat',
     route: 'chat',
     component: ChatScreen,
