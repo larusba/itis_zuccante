@@ -240,7 +240,7 @@ export default function FindHospital() {
                   height={444}
                   width={444}
                   src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${selectedHospital?.latitude},${selectedHospital?.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
-                  alt={'mio mondo non propriamente mio'}
+                  alt={'mia mappa non propriamente mia'}
                 ></img>
               </View>
             )}
