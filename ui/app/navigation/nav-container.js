@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import * as Location from 'expo-location';
 
 // import screens
-import MapScreen from '../modules/map/map-screen.js';
 import GPSLocationScreen from '../modules/gpsLocation/gpsLocation-screen.js';
 import HomeScreen from '../modules/home/home-screen';
 import LoginScreen from '../modules/login/login-screen';
@@ -70,12 +69,6 @@ export const drawerScreens = [
     name: 'About hospital',
     route: 'hospitalInformation',
     component: HospitaInformation,
-    auth: true,
-  },
-  {
-    name: 'Map',
-    route: 'map',
-    component: MapScreen,
     auth: true,
   },
 ];
