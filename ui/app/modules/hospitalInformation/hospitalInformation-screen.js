@@ -50,7 +50,7 @@ export default function HospitaInformation() {
 
   function miaFunzione(hospitalIntervetion, i) {
     return (
-      <Card key={i} mode="view">
+      <Card key={i} mode="view" style={styles.cardStyle}>
         <Card.Content>
           <Text variant="titleLarge">{hospitalIntervetion.hospital.name}</Text>
           <Text variant="bodyMedium">{hospitalIntervetion.hospital.address}</Text>
@@ -92,18 +92,17 @@ export default function HospitaInformation() {
   }
 
   return (
-    <View>
+    <View style={styles.cardStyle}>
       <Portal>
         <Modal
           visible={visible}
-          onDismiss={hideModal}
           style={styles.modalStyle}
           contentContainerStyle={containerStyle}
           theme={{ colors: { backdrop: 'transparent' } }}
         >
-          <Text>{listInterventions.map(miaFunzione2)}</Text>
-          <Button visible={true} onPress={hideModal}>
-            a
+          <Text style={styles.interventionBoxStyle}>{listInterventions.map(miaFunzione2)}</Text>
+          <Button visible={true} onPress={hideModal} mode="elevated" style={styles.closeButton}>
+            close
           </Button>
         </Modal>
       </Portal>
@@ -122,5 +121,16 @@ const styles = StyleSheet.create({
   },
   interventionsView: {
     padding: 5,
+  },
+  closeButton: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: 300,
+  },
+  interventionBoxStyle: {
+    textAlign: 'center',
+  },
+  cardStyle: {
+    backgroundColor: 'white',
   },
 });

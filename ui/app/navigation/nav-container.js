@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppState, Text, useWindowDimensions, View } from 'react-native';
+import { AppState, Text, useWindowDimensions, View, StyleSheet } from 'react-native';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
@@ -179,6 +179,7 @@ function NavContainer(props) {
     <LoginScreen navigation={navigationRef} />
   ) : (
     <NavigationContainer
+      style={styles.navigationBarStyle}
       linking={linking}
       ref={navigationRef}
       onReady={() => {
@@ -186,7 +187,7 @@ function NavContainer(props) {
       }}
     >
       <Stack.Navigator>
-        <Stack.Screen name="Home" options={{ headerShown: false }}>
+        <Stack.Screen style={styles.navigationBarStyle} name="Home" options={{ headerShown: false }}>
           {() => (
             <Drawer.Navigator
               drawerContent={p => <DrawerContent {...p} />}
@@ -240,5 +241,9 @@ const mapDispatchToProps = dispatch => {
     getAccount: () => dispatch(AccountActions.accountRequest()),
   };
 };
-
+const styles = StyleSheet.create({
+  navigationBarStyle: {
+    position: 'fixed',
+  },
+});
 export default connect(mapStateToProps, mapDispatchToProps)(NavContainer);

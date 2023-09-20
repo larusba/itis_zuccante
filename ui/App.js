@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Provider } from 'react-redux';
+import { StyleSheet } from 'react-native';
 import createStore from './app/shared/reducers';
 import * as SplashScreen from 'expo-splash-screen';
 import { PaperProvider } from 'react-native-paper';
@@ -24,10 +25,15 @@ export default function App() {
   }, [displayApp, setDisplayApp]);
 
   return displayApp ? (
-    <Provider store={store}>
+    <Provider style={styles.navigationBarStyle} store={store}>
       <PaperProvider theme={theme}>
-        <NavContainer />
+        <NavContainer style={styles.navigationBarStyle} />
       </PaperProvider>
     </Provider>
   ) : null;
 }
+const styles = StyleSheet.create({
+  navigationBarStyle: {
+    position: 'fixed',
+  },
+});
