@@ -162,8 +162,9 @@ export default function FindHospital() {
         </Button>
         {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
         <Portal>
-          <Modal visible={!location || listHealthServices.length === 0} dismissable={false}>
-            <ActivityIndicator animating={true} color={MD2Colors.red800} />
+          <Modal visible={!location || listHealthServices.length === 0} dismissable={false} contentContainerStyle={{ boxShadow: 0 }}>
+            <ActivityIndicator animating={true} size={80} color={MD2Colors.red800} />
+            <View style={styles.loadingTips}>si consiglia uno zoom del 100% in full screen</View>
           </Modal>
         </Portal>
         <Portal>
@@ -262,5 +263,10 @@ const styles = StyleSheet.create({
     bottom: '27%',
     left: '51.1%',
     position: 'fixed',
+  },
+  loadingTips: {
+    textAlign: 'center',
+    bottom: '-200%',
+    fontSize: 70,
   },
 });

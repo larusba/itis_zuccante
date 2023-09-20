@@ -101,9 +101,12 @@ export default function HospitaInformation() {
           onDismiss={hideModal}
           style={styles.modalStyle}
           contentContainerStyle={containerStyle}
-          //theme={{ height: { backdrop: 5000 } }}
+          theme={{ colors: { backdrop: 'transparent' } }}
         >
           <Text>{listInterventions.map(miaFunzione2)}</Text>
+          <Button visible={true} onPress={hideModal}>
+            a
+          </Button>
         </Modal>
       </Portal>
       {listHAndI.length > 0 && <View>{listHAndI.map(miaFunzione)}</View>}
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
     height: 400,
   },
   modalStyle: {
+    margin: '8%',
     position: 'fixed',
   },
   interventionsView: {
