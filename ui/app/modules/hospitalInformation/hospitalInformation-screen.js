@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Avatar, Button, Card, Text, Badge, Modal, Portal, Divider } from 'react-native-paper';
 import config from './../../config/app-config.js';
 import { find } from 'lodash';
+import { ar } from '@faker-js/faker';
 
 export default function HospitaInformation() {
   const [listHAndI, setListHAndI] = useState([]);
@@ -15,7 +16,6 @@ export default function HospitaInformation() {
     'https://www.aulss3.veneto.it/myportal/AU12VE/api/content/download?id=6321a95fd88c160098806917',
   ];
 
-  const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const [visible, setVisible] = React.useState(false);
   const containerStyle = { backgroundColor: 'white', padding: 15, borderRadius: 20, fontSize: 30 };
@@ -37,18 +37,16 @@ export default function HospitaInformation() {
     };
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(`${config.apiUrl}api/findInterventionsByHospitalName?hospitalName=Ospedale%20di%20Mestre`, {
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
-        },
-      });
-
-      setListInterventions(await response.json());
-    })();
-  }, []);
+  const findInterventions = async hospitalName => {
+    const response = await fetch(`${config.apiUrl}api/findInterventionsByHospitalName?hospitalName=${hospitalName}`, {
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
+      },
+    });
+    setListInterventions(await response.json());
+    setVisible(true);
+  };
 
   function miaFunzione(hospitalIntervetion, i) {
     return (
@@ -64,7 +62,7 @@ export default function HospitaInformation() {
           style={styles.cardCover}
         />
         <Card.Actions>
-          <Button disabled={hospitalIntervetion.countIntervention <= 0} onPress={showModal}>
+          <Button disabled={hospitalIntervetion.countIntervention <= 0} onPress={e => findInterventions(hospitalIntervetion.hospital.name)}>
             Show Interventions
           </Button>
           <Badge size={45}>{hospitalIntervetion.countIntervention}</Badge>
