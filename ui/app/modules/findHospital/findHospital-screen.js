@@ -196,7 +196,6 @@ export default function FindHospital() {
             <TextInput label="address" value={address} onChangeText={e => setAddress(e)} mode={'outlined'} style={styles.textInput} />
             {location?.coords && (
               <img
-                position="fixed"
                 height={400}
                 width={400}
                 src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${serverResponse.latitude},${serverResponse.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
