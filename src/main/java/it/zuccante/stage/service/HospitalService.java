@@ -58,7 +58,6 @@ public class HospitalService {
     public List<TrackDTO> findNearestHospitalByHealthService(List<String> healthServices, double latitudine, double logitudine) {
         List<MapValue> mapValue = this.hospitalRepository.findHospitalByShortestDistance(healthServices, latitudine, logitudine);
         List<TrackDTO> tracklList = new ArrayList<>();
-        double distMin = mapValue.get(0).get("distance", 42_000d);
 
         for (int y = 0; y < mapValue.size(); y++) {
             TrackDTO track = new TrackDTO();

@@ -81,12 +81,6 @@ export default function FindHospital() {
     setVisible(true);
   };
 
-  const imageMap = async () => {
-    const response = await fetch(
-      'https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=45.5033742,12.2362233&wp.1=45.4224654,12.0655365&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000, 1000'
-    );
-  };
-
   const createIntervention = async () => {
     const data = {
       nomePaziente: name,
@@ -246,9 +240,6 @@ export default function FindHospital() {
                   height={444}
                   width={444}
                   src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${selectedHospital?.latitude},${selectedHospital?.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
-                  srcSet={
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/1200px-Earth_Western_Hemisphere_transparent_background.png'
-                  }
                   alt={'mio mondo non propriamente mio'}
                 ></img>
               </View>
