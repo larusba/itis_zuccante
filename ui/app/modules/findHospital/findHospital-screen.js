@@ -195,13 +195,14 @@ export default function FindHospital() {
             />
             <TextInput label="address" value={address} onChangeText={e => setAddress(e)} mode={'outlined'} style={styles.textInput} />
             {location?.coords && (
-              <img
-                position="fixed"
-                height={400}
-                width={400}
-                src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${serverResponse.latitude},${serverResponse.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
-                alt="mia mappa non tanto mia"
-              ></img>
+              <View style={styles.mapPos}>
+                <img
+                  height={444}
+                  width={444}
+                  src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${serverResponse.latitude},${serverResponse.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
+                  alt="mia mappa non tanto mia"
+                ></img>
+              </View>
             )}
             <br></br>
             <Button
@@ -248,15 +249,18 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   modal: {
-    margin: '10%',
+    margin: '20%',
     textAlign: 'center',
-    //position: 'fixed',
+    position: 'fixed',
   },
   textInput: {
     textAlign: 'center',
-    width: 300,
+    width: 450,
   },
   mapPos: {
-    position: 'flex',
+    borderRadius: 5,
+    bottom: '29.2%',
+    left: '51.2%',
+    position: 'fixed',
   },
 });
