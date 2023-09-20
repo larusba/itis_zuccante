@@ -38,16 +38,6 @@ export const drawerScreens = [
     auth: false,
   },
   {
-    name: 'EntityStack',
-    isStack: true,
-    component: EntityStackScreen,
-    options: {
-      title: 'Entities',
-      headerShown: false,
-    },
-    auth: true,
-  },
-  {
     name: 'Chat',
     route: 'chat',
     component: ChatScreen,
@@ -187,7 +177,7 @@ function NavContainer(props) {
       }}
     >
       <Stack.Navigator>
-        <Stack.Screen style={styles.navigationBarStyle} name="Home" options={{ headerShown: false }}>
+        <Stack.Screen name="Home" options={{ headerShown: false }}>
           {() => (
             <Drawer.Navigator
               drawerContent={p => <DrawerContent {...p} />}

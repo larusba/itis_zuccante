@@ -25,9 +25,9 @@ export default function App() {
   }, [displayApp, setDisplayApp]);
 
   return displayApp ? (
-    <Provider style={styles.navigationBarStyle} store={store}>
+    <Provider store={store}>
       <PaperProvider theme={theme}>
-        <NavContainer style={styles.navigationBarStyle} />
+        <NavContainer />
       </PaperProvider>
     </Provider>
   ) : null;

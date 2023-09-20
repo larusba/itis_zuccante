@@ -50,7 +50,7 @@ export default function HospitaInformation() {
 
   function miaFunzione(hospitalIntervetion, i) {
     return (
-      <Card key={i} mode="view" style={styles.cardStyle}>
+      <Card key={i} mode="outlined">
         <Card.Content>
           <Text variant="titleLarge">{hospitalIntervetion.hospital.name}</Text>
           <Text variant="bodyMedium">{hospitalIntervetion.hospital.address}</Text>
@@ -100,10 +100,16 @@ export default function HospitaInformation() {
           contentContainerStyle={containerStyle}
           theme={{ colors: { backdrop: 'transparent' } }}
         >
+          <Button
+            labelStyle={{ fontSize: 30 }}
+            icon={'close-circle-outline'}
+            textColor="#000000"
+            rippleColor={'transparent'}
+            visible={true}
+            onPress={hideModal}
+            style={styles.closeButton}
+          ></Button>
           <Text style={styles.interventionBoxStyle}>{listInterventions.map(miaFunzione2)}</Text>
-          <Button visible={true} onPress={hideModal} mode="elevated" style={styles.closeButton}>
-            close
-          </Button>
         </Modal>
       </Portal>
       {listHAndI.length > 0 && <View>{listHAndI.map(miaFunzione)}</View>}
@@ -123,14 +129,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   closeButton: {
-    marginLeft: 'auto',
+    marginLeft: '96.5%',
     marginRight: 'auto',
-    width: 300,
   },
   interventionBoxStyle: {
     textAlign: 'center',
   },
   cardStyle: {
-    backgroundColor: 'white',
+    backgroundColor: '#d9d9d9',
   },
 });
