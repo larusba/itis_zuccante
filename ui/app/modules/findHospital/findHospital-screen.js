@@ -16,6 +16,7 @@ export default function FindHospital() {
   const [serverResponse, setServerResponse] = useState([]);
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState([]);
+  const [selectedHospital, setSelectedHospital] = useState(null);
   const [results, setResults] = useState([]);
   const [listHealthServices, setListHealtServices] = useState([]);
   const [location, setLocation] = useState(null);
@@ -44,6 +45,18 @@ export default function FindHospital() {
     })();
   }, []);
 
+  const findHospitalAndInterventions = async () => {
+    const response = await fetch(`${config.apiUrl}api/FindNumberOfInterventionByHospitalAll`, {
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aCI6IlJPTEVfQURNSU4sUk9MRV9VU0VSIiwiZXhwIjoxNjk3MjgxMzMyfQ.uETEWdLIwmUwKCvc28egLtnQOnd7Tm-Ky6bxGC2oz9pS_-8dAjlbWXc-X2RU8lSv9Z2rCMvPL1SynzzMoNUraw',
+      },
+    });
+    const json = await response.json();
+    console.log('findHospitalAndInterventions', json);
+    return json;
+  };
+
   const findHospitalHandle = async () => {
     //console.log('bau');
     const response = await fetch(healthServiceStringChain(), {
@@ -53,10 +66,19 @@ export default function FindHospital() {
       },
     });
     const json = await response.json();
+    console.log('nearestHospital pijato', json);
+    const hospitalInterventions = await findHospitalAndInterventions();
+    const map = new Map();
+    hospitalInterventions.forEach(i => map.set(i.hospital.name, i.countIntervention));
+    console.log('map', map);
+    const ser = json.map(item => {
+      item.interventions = map.get(item.hospitalName);
+      return item;
+    });
+    console.log(await ser);
     setServerResponse(json);
     setVisibleSnackbar(false);
     setVisible(true);
-    console.log('nearestHospital pijato', json);
   };
 
   const imageMap = async () => {
@@ -73,8 +95,8 @@ export default function FindHospital() {
       luogoIntervento: address,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
-      tempoPercorrenza: Math.trunc(serverResponse.duration),
-      nomeOspedale: serverResponse.hospitalName,
+      tempoPercorrenza: Math.trunc(selectedHospital.duration),
+      nomeOspedale: selectedHospital.hospitalName,
       nomePrestazione: selected,
     };
     const response = await fetch(`${config.apiUrl}api/createIntervention`, {
@@ -95,6 +117,7 @@ export default function FindHospital() {
       setMsg('Intervention created');
     }
     setVisibleSnackbar(true);
+    setSelectedHospital(null);
   };
 
   function healthServiceStringChain() {
@@ -162,29 +185,51 @@ export default function FindHospital() {
         </Button>
         {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
         <Portal>
+          <Modal visible={serverResponse.length > 0} contentContainerStyle={{ boxShadow: 0 }}>
+            {serverResponse.map((track, i) => (
+              <Button
+                onPress={e => {
+                  //show motion tarcker
+                  console.log('setSelectedHospital', track, e);
+                  setSelectedHospital(track);
+                  setServerResponse([]);
+                }}
+                key={i}
+              >
+                {track.hospitalName} Intervent: {track.interventions} durations: {track.duration} distance: {track.distance}
+              </Button>
+            ))}
+          </Modal>
+        </Portal>
+        <Portal>
           <Modal visible={!location || listHealthServices.length === 0} dismissable={false} contentContainerStyle={{ boxShadow: 0 }}>
             <ActivityIndicator animating={true} size={80} color={MD2Colors.red800} />
             <View style={styles.loadingTips}>si consiglia uno zoom del 100% in full screen</View>
           </Modal>
         </Portal>
         <Portal>
-          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} style={styles.modal}>
-            <TextInput label="Hospital" value={serverResponse.hospitalName} disabled={true} mode={'outlined'} style={styles.textInput} />
+          <Modal
+            visible={selectedHospital}
+            onDismiss={() => setSelectedHospital(null)}
+            contentContainerStyle={containerStyle}
+            style={styles.modal}
+          >
+            <TextInput label="Hospital" value={selectedHospital?.hospitalName} disabled={true} mode={'outlined'} style={styles.textInput} />
             <TextInput
               label="duration (min)"
-              value={Math.trunc(serverResponse.duration / 60)}
+              value={Math.trunc(selectedHospital?.duration / 60)}
               disabled={true}
               mode={'outlined'}
               style={styles.textInput}
             />
             <TextInput
               label="distance (km)"
-              value={Math.trunc(serverResponse.distance)}
+              value={Math.trunc(selectedHospital?.distance)}
               disabled={true}
               mode={'outlined'}
               style={styles.textInput}
             />
-            <TextInput label="congestion" value={serverResponse.congestion} disabled={true} mode={'outlined'} style={styles.textInput} />
+            <TextInput label="congestion" value={selectedHospital?.congestion} disabled={true} mode={'outlined'} style={styles.textInput} />
             <TextInput label="name" value={name} mode={'outlined'} onChangeText={e => setName(e)} style={styles.textInput} />
             <TextInput label="surname" value={surname} mode={'outlined'} onChangeText={e => setSurname(e)} style={styles.textInput} />
             <TextInput
@@ -200,19 +245,13 @@ export default function FindHospital() {
                 <img
                   height={444}
                   width={444}
-                  src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${serverResponse.latitude},${serverResponse.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
+                  src={`https://dev.virtualearth.net/REST/v1/Imagery/Map/Road/Routes?wp.0=${location?.coords?.latitude},${location?.coords?.longitude}&wp.1=${selectedHospital?.latitude},${selectedHospital?.longitude}&key=AgAOc6viEwsi16q0TRSkotHwE8lxjz_pY3dlRqpSxmmdV3rZ635LfgIjoeHhChlt&mapSize=1000,1000`}
                   alt="mia mappa non tanto mia"
                 ></img>
               </View>
             )}
             <br></br>
-            <Button
-              mode="elevated"
-              onPress={() => {
-                createIntervention();
-                hideModal();
-              }}
-            >
+            <Button mode="elevated" onPress={() => createIntervention()}>
               CREATE INTERVENTION
             </Button>
           </Modal>
