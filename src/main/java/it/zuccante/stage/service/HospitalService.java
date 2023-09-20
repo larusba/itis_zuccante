@@ -11,9 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class HospitalService {
@@ -57,25 +55,33 @@ public class HospitalService {
         return results;
     }
 
-    public TrackDTO findNearestHospitalByHealthService(List<String> healthServices, double latitudine, double logitudine) {
+    public List<TrackDTO> findNearestHospitalByHealthService(List<String> healthServices, double latitudine, double logitudine) {
         List<MapValue> mapValue = this.hospitalRepository.findHospitalByShortestDistance(healthServices, latitudine, logitudine);
+        List<TrackDTO> tracklList = new ArrayList<>();
         double distMin = mapValue.get(0).get("distance", 42_000d);
-        int y = 0;
-        for (int i = 0; i < mapValue.size(); i++) {
-            if (distMin > mapValue.get(i).get("distance", 42_000d)){
 
-                distMin = mapValue.get(i).get("distance", 42_000d);
-                y = i;
-            }
+        for (int y = 0; y < mapValue.size(); y++) {
+            TrackDTO track = new TrackDTO();
+            track.setHospitalName(mapValue.get(y).get("hospital", ""));
+            track.setDuration(mapValue.get(y).get("duration", 0));
+            track.setDistance(mapValue.get(y).get("distance", 0d));
+            track.setCongestion(mapValue.get(y).get("congestion", ""));
+            track.setLongitude(mapValue.get(y).get("lon").asDouble());
+            track.setLatitude(mapValue.get(y).get("lat").asDouble());
+            tracklList.add(track);
         }
-        TrackDTO track = new TrackDTO();
-        track.setHospitalName(mapValue.get(y).get("hospital", ""));
-        track.setDuration(mapValue.get(y).get("duration", 0d));
-        track.setDistance(mapValue.get(y).get("distance", 0d));
-        track.setCongestion(mapValue.get(y).get("congestion", ""));
-        track.setLongitude(mapValue.get(y).get("lon").asDouble());
-        track.setLatitude(mapValue.get(y).get("lat").asDouble());
-        return track;
+
+        Collections.sort(tracklList, new Comparator<TrackDTO>() {
+            @Override
+            public int compare(TrackDTO o1, TrackDTO o2) {
+                return  o1.getDuration() - o2.getDuration();
+            }
+        });
+
+        return  tracklList;
+
     }
+
+
 }
 

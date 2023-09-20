@@ -40,7 +40,7 @@ public class HospitalResource {
     }
 
     @GetMapping("/findNearestHospitalByHealthService")
-    public TrackDTO findNearestHospitalByHealthService(@RequestParam List<String> healthServices, double latitudine, double longitudine ){
+    public List<TrackDTO> findNearestHospitalByHealthService(@RequestParam List<String> healthServices, double latitudine, double longitudine ){
         return hospitalService.findNearestHospitalByHealthService(healthServices, latitudine, longitudine);
     }
 
