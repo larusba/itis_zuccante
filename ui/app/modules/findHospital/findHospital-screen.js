@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   modal: {
-    margin: '20%',
+    margin: '17%',
     textAlign: 'center',
     position: 'fixed',
   },
@@ -259,8 +259,8 @@ const styles = StyleSheet.create({
   },
   mapPos: {
     borderRadius: 5,
-    bottom: '29.2%',
-    left: '51.2%',
+    bottom: '27%',
+    left: '51.1%',
     position: 'fixed',
   },
 });
