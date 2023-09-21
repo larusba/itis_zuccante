@@ -38,6 +38,12 @@ export const drawerScreens = [
     auth: false,
   },
   {
+    name: 'Chat',
+    route: 'chat',
+    component: ChatScreen,
+    auth: true,
+  },
+  {
     name: 'GPSLocation',
     route: 'gpsLocation',
     component: GPSLocationScreen,
