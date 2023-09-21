@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Avatar, Button, Card, Text, Badge, Modal, Portal, Divider } from 'react-native-paper';
 import config from './../../config/app-config.js';
 import { find } from 'lodash';
@@ -50,23 +50,26 @@ export default function HospitaInformation() {
 
   function miaFunzione(hospitalIntervetion, i) {
     return (
-      <Card key={i} mode="outlined">
+      <Card key={i} mode="">
         <Card.Content>
           <Text variant="titleLarge">{hospitalIntervetion.hospital.name}</Text>
           <Text variant="bodyMedium">{hospitalIntervetion.hospital.address}</Text>
         </Card.Content>
+        <Divider />
         <Card.Cover
           source={{
             uri: images[hospitalIntervetion.hospital.id],
           }}
           style={styles.cardCover}
         />
+        <Divider />
         <Card.Actions>
           <Button disabled={hospitalIntervetion.countIntervention <= 0} onPress={e => findInterventions(hospitalIntervetion.hospital.name)}>
             Show Interventions
           </Button>
           <Badge size={45}>{hospitalIntervetion.countIntervention}</Badge>
         </Card.Actions>
+        <Divider />
       </Card>
     );
   }
@@ -92,33 +95,31 @@ export default function HospitaInformation() {
   }
 
   return (
-    <View style={styles.cardStyle}>
-      <Portal>
-        <Modal
-          visible={visible}
-          style={styles.modalStyle}
-          contentContainerStyle={containerStyle}
-          theme={{ colors: { backdrop: 'transparent' } }}
-        >
-          <Button
-            labelStyle={{ fontSize: 30 }}
-            icon={'close-circle-outline'}
-            textColor="#000000"
-            rippleColor={'transparent'}
-            visible={true}
-            onPress={hideModal}
-            style={styles.closeButton}
-          ></Button>
-          <Text style={styles.interventionBoxStyle}>{listInterventions.map(miaFunzione2)}</Text>
-        </Modal>
-      </Portal>
-      {listHAndI.length > 0 && <View>{listHAndI.map(miaFunzione)}</View>}
-    </View>
+    <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <View style={styles.cardStyle}>
+        <Portal>
+          <Modal visible={visible} onDismiss={hideModal} style={styles.modalStyle} contentContainerStyle={containerStyle}>
+            <Button
+              labelStyle={{ fontSize: 30 }}
+              icon={'close-circle-outline'}
+              textColor="#000000"
+              rippleColor={'transparent'}
+              visible={true}
+              onPress={hideModal}
+              style={styles.closeButton}
+            ></Button>
+            <Text style={styles.interventionBoxStyle}>{listInterventions.map(miaFunzione2)}</Text>
+          </Modal>
+        </Portal>
+        {listHAndI.length > 0 && <View>{listHAndI.map(miaFunzione)}</View>}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   cardCover: {
+    borderRadius: 0,
     height: 400,
   },
   modalStyle: {
@@ -136,6 +137,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   cardStyle: {
-    backgroundColor: '#d9d9d9',
+    backgroundColor: 'white',
   },
 });
