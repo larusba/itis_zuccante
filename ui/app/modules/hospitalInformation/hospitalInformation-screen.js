@@ -99,16 +99,18 @@ export default function HospitaInformation() {
       <View style={styles.cardStyle}>
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} style={styles.modalStyle} contentContainerStyle={containerStyle}>
-            <Button
-              labelStyle={{ fontSize: 30 }}
-              icon={'close-circle-outline'}
-              textColor="#000000"
-              rippleColor={'transparent'}
-              visible={true}
-              onPress={hideModal}
-              style={styles.closeButton}
-            ></Button>
-            <Text style={styles.interventionBoxStyle}>{listInterventions.map(miaFunzione2)}</Text>
+            <View>
+              <Button
+                labelStyle={{ fontSize: 30 }}
+                icon={'close-circle-outline'}
+                textColor="#000000"
+                rippleColor={'transparent'}
+                visible={true}
+                onPress={hideModal}
+                style={styles.closeButton}
+              ></Button>
+              <Text style={styles.interventionBoxStyle}>{listInterventions.map(miaFunzione2)}</Text>
+            </View>
           </Modal>
         </Portal>
         {listHAndI.length > 0 && <View>{listHAndI.map(miaFunzione)}</View>}

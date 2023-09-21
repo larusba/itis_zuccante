@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Platform, Text, View, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
 import config from './../../config/app-config.js';
+import * as Device from 'expo-device';
 console.log(config);
 
 export default function FindHospital() {
@@ -160,6 +161,10 @@ export default function FindHospital() {
     return <List.Item title={healthService} onPress={miaFunzione4} key={i} />;
   }
 
+  function hospitalSelectionHandle() {
+    setServerResponse([]);
+    return false;
+  }
   return (
     <>
       <View>
@@ -179,7 +184,7 @@ export default function FindHospital() {
         </Button>
         {selected.length > 0 && <View style={styles.searchResult}>{selected.map(miaFunzione3)}</View>}
         <Portal>
-          <Modal visible={serverResponse.length > 0} contentContainerStyle={{ boxShadow: 0 }}>
+          <Modal visible={serverResponse.length > 0} onDismiss={hospitalSelectionHandle} contentContainerStyle={{ boxShadow: 0 }}>
             {serverResponse.map((track, i) => (
               <Button
                 onPress={e => {
@@ -189,6 +194,7 @@ export default function FindHospital() {
                   setServerResponse([]);
                 }}
                 key={i}
+                style={styles.hospitalSelectionStyle}
               >
                 {track.hospitalName} Intervent: {track.interventions} durations: {track.duration} distance: {track.distance}
               </Button>
@@ -208,33 +214,63 @@ export default function FindHospital() {
             contentContainerStyle={containerStyle}
             style={styles.modal}
           >
-            <TextInput label="Hospital" value={selectedHospital?.hospitalName} disabled={true} mode={'outlined'} style={styles.textInput} />
+            <TextInput
+              label="Hospital"
+              value={selectedHospital?.hospitalName}
+              disabled={true}
+              mode={'outlined'}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
+            />
             <TextInput
               label="duration (min)"
               value={Math.trunc(selectedHospital?.duration / 60)}
               disabled={true}
               mode={'outlined'}
-              style={styles.textInput}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
             />
             <TextInput
               label="distance (km)"
               value={Math.trunc(selectedHospital?.distance)}
               disabled={true}
               mode={'outlined'}
-              style={styles.textInput}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
             />
-            <TextInput label="congestion" value={selectedHospital?.congestion} disabled={true} mode={'outlined'} style={styles.textInput} />
-            <TextInput label="name" value={name} mode={'outlined'} onChangeText={e => setName(e)} style={styles.textInput} />
-            <TextInput label="surname" value={surname} mode={'outlined'} onChangeText={e => setSurname(e)} style={styles.textInput} />
+            <TextInput
+              label="congestion"
+              value={selectedHospital?.congestion}
+              disabled={true}
+              mode={'outlined'}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
+            />
+            <TextInput
+              label="name"
+              value={name}
+              mode={'outlined'}
+              onChangeText={e => setName(e)}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
+            />
+            <TextInput
+              label="surname"
+              value={surname}
+              mode={'outlined'}
+              onChangeText={e => setSurname(e)}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
+            />
             <TextInput
               label="ambulance number🥵🍆🥶"
               value={ambulanceNumber}
               onChangeText={e => setAmbulanceNumber(e)}
               mode={'outlined'}
-              style={styles.textInput}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
             />
-            <TextInput label="address" value={address} onChangeText={e => setAddress(e)} mode={'outlined'} style={styles.textInput} />
-            {location?.coords && (
+            <TextInput
+              label="address"
+              value={address}
+              onChangeText={e => setAddress(e)}
+              mode={'outlined'}
+              style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
+            />
+            {location?.coords && Device.deviceType == 3 && (
               <View style={styles.mapPos}>
                 <img
                   height={444}
@@ -271,6 +307,12 @@ export default function FindHospital() {
 }
 
 const styles = StyleSheet.create({
+  hospitalSelectionStyle: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 0,
+    fontSize: 30,
+  },
   searchResult: {
     margin: 1,
     borderColor: '#20232a',
@@ -287,9 +329,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     position: 'fixed',
   },
-  textInput: {
+  textInputDesktop: {
     textAlign: 'center',
     width: 450,
+  },
+  textInputPhone: {
+    textAlign: 'center',
   },
   mapPos: {
     borderRadius: 5,
@@ -299,7 +344,7 @@ const styles = StyleSheet.create({
   },
   loadingTips: {
     textAlign: 'center',
-    bottom: '-200%',
-    fontSize: 70,
+    bottom: '-100%',
+    fontSize: 50,
   },
 });
