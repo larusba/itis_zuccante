@@ -257,7 +257,7 @@ export default function FindHospital() {
               style={Device.deviceType == 3 ? styles.textInputDesktop : styles.textInputPhone}
             />
             <TextInput
-              label="ambulance number🥵🍆🥶"
+              label="ambulance number"
               value={ambulanceNumber}
               onChangeText={e => setAmbulanceNumber(e)}
               mode={'outlined'}
